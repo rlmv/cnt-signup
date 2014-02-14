@@ -9,8 +9,6 @@
     "express": "3.4.8",
     "connect": "*",
     "jade": "*",
-    "stylus": "*",
-    "cas_validate": "*",
-    "xcas": "*"
+    "stylus": "*"
   }
 }
