@@ -12,6 +12,9 @@ module.exports = function(req, res, next) {
     // should this be mounted here? or explictly in app.js?
     if (req.url == "/logout") {
 	cas.logout(req, res); // can add logout redirect params here
+	req.session.destroy(function(err) {
+	    if (err) throw err;
+	});
     }
     
     if (req.session.user) {
