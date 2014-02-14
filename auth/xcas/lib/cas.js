@@ -506,7 +506,17 @@ CAS.prototype.validate = function(ticket, callback, service, renew)
                     callback(new Error("No username?"), false);
                     return;
                 }
+
                 var username = elemUser[0];
+
+		// hack hack - get dartmouth CAS data:
+		var netid = elemSuccess['cas:netid'][0];
+		var name = elemSuccess['cas:name'][0];
+		var attributes = {
+		    username: username,
+		    netid: netid,
+		    name: name
+		};
 		
                 callback(undefined, true, username, {
                     'username': username,
