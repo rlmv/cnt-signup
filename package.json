@@ -7,7 +7,10 @@
   },
   "dependencies": {
     "express": "3.4.8",
+    "connect": "*",
     "jade": "*",
-    "stylus": "*"
+    "stylus": "*",
+    "cas_validate": "*",
+    "xcas": "*"
   }
 }
