@@ -5,6 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
+var views = require('./routes/routes.js');
 var user = require('./routes/user');
 
 var http = require('http');
@@ -32,11 +33,12 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/this_week', routes.this_week);
-app.post('/this_week', routes.trip_signup);
-app.post('/add_trip', routes.add_trip);
 app.get('/users', user.list);
-app.get('/add_trip', routes.view_add_trip);
+
+app.get('/this_week', views.this_week);
+app.post('/this_week', views.trip_signup);
+app.post('/add_trip', views.add_trip);
+app.get('/add_trip', views.view_add_trip);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
