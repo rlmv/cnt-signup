@@ -1,14 +1,19 @@
 {
   "name": "CnT Sign Up",
   "version": "0.0.1",
-  "description": "A signup page for CnT",
-  "keywords": [],
-  "author": "David Rice <davidrice1992@gmailcom>",
-  "repository": { "type": "git", "url": "git://github.com/D-Rice/CnT Sign Up.git" },
-  "dependencies": {},
-  "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
   },
-  "main": "index"
+  "dependencies": {
+    "pg": "2.x",
+    "express": "3.4.8",
+    "connect": "*",
+    "jade": "*",
+    "stylus": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rlmv/cnt-signup.git"
+  }
 }
