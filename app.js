@@ -34,8 +34,9 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/this_week', routes.this_week);
 app.post('/this_week', routes.trip_signup);
+app.post('/add_trip', routes.add_trip);
 app.get('/users', user.list);
-app.get('/add_trip', routes.add_trip);
+app.get('/add_trip', routes.view_add_trip);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

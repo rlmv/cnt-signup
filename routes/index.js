@@ -12,9 +12,14 @@ exports.trip_signup = function(req, res){
     res.redirect("/this_week");
 };
 
-exports.add_trip = function(req, res){
+exports.view_add_trip = function(req, res){
     res.render('add_trip', { title: 'Add a Trip to the Site'});
 };
+
+exports.add_trip = function(req, res){
+    console.log(req.body);
+    res.redirect("/add_trip");
+}
 
 exports.this_week = function(req, res){
     var mytrips = [];
