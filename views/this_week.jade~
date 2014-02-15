@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  #container
+    #header
+      h1 title
+      p Welcome to #{title}
+    #content
+      #sidebar
+        h1 Your Tools!
+        ul
+          li View Past Trips
+          li Manage Current Trips
+          li Add Trip
+      #main
+        ul
+          each trip in trips
+            li
+              ul
+                each value, key in trip
+                  li #{key} : #{value}

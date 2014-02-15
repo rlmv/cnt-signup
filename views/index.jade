@@ -3,7 +3,4 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  - var tripno = 0
-  each trip in trips
-    each value, key in trip
-      p #{key} : #{value}
+  a(href='/this_week') This Week in CnT
