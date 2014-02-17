@@ -26,10 +26,11 @@ module.exports = function(req, res, next) {
 	
 	// create session for user:
 	req.session.regenerate(function(err) {
-	    
 	    if (err) return next(err);
-	    // change this to user object? keyed on db id?
-	    req.session.auth = extended;
+	    
+	    // the auth object contains {name, username, netid} fields
+	    req.session.auth = extended.attributes;
+
 	    // should we redirect? pass through with next()? (strip ticket?)
 	    res.redirect('/');
 	});
