@@ -13,11 +13,11 @@ module.exports = function(req, res, next) {
     if (req.url == "/logout") {
 	cas.logout(req, res); // can add logout redirect params here
 	req.session.destroy(function(err) {
-	    if (err) throw err;
+	    if (err) return next(err);
 	});
     }
     
-    if (req.session.user) {
+    if (req.session.auth) {
 	return next();
     }
     
@@ -27,8 +27,10 @@ module.exports = function(req, res, next) {
 	// create session for user:
 	req.session.regenerate(function(err) {
 	    if (err) return next(err);
-	    // change this to user object? keyed on db id?
-	    req.session.user = username;
+	    
+	    // the auth object contains {name, username, netid} fields
+	    req.session.auth = extended.attributes;
+
 	    // should we redirect? pass through with next()? (strip ticket?)
 	    res.redirect('/');
 	});

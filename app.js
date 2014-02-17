@@ -5,11 +5,10 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-
 var auth = require('./auth/auth');
+var user = require('./auth/user');
 
 var app = express();
 
@@ -27,6 +26,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('secret goes here'));
 app.use(express.session());
 app.use(auth);
+app.use(user); // save user object on req - should evt. pull from db
 
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
@@ -38,7 +38,6 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
