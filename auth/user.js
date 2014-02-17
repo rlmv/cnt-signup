@@ -12,7 +12,7 @@ module.exports = function(req, res, next) {
     
     // pull the user from the database here - 
     // for now we're just saving the username 
-    req.user = req.session.auth.name;
+    req.user = req.session.auth;
 
     next();
 }
