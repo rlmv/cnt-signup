@@ -8,7 +8,7 @@ module.exports = function(service, logout_url) {
 	throw new Error('no service defined');
     }
     
-    // logs out of CAS service
+    // path to log out of CAS service
     logout_url = logout_url || '/logout';
 
     // instantiate CAS object
@@ -20,8 +20,10 @@ module.exports = function(service, logout_url) {
 
     return function(req, res, next) {
 	
+	// logout path 
 	if (req.url == logout_url) {
-	    cas.logout(req, res); // can add logout redirect params here
+	    // can add logout redirect params here, if we want:
+	    cas.logout(req, res); 
 	    req.session.destroy(function(err) {
 		if (err) return next(err);
 	    });
@@ -41,7 +43,6 @@ module.exports = function(service, logout_url) {
 		// the auth object contains {name, username, netid} fields
 		req.session.auth = extended.attributes;
 
-		// should we redirect? pass through with next()? (strip ticket?)
 		return next();
 	    });
 	});
