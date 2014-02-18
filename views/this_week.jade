@@ -7,7 +7,7 @@ block content
   #container
     #header
       h1 title
-      p Welcome to #{title}
+      p Welcome #{user}
     #content
       #sidebar
         h1 Your Tools!
@@ -21,4 +21,4 @@ block content
               ul
                 each value, key in trip
                   li #{key} : #{value}
-                +signup(trip)
+                +signup(trip, user)
