@@ -23,7 +23,9 @@ if (!global.hasOwnProperty('db')) {
   global.db = {
     Sequelize: Sequelize,
     sequelize: sequelize,
-    User:      sequelize.import(__dirname + '/user')
+    User:      sequelize.import(__dirname + '/user'),
+    Signup:    sequelize.import(__dirname + '/signup'),
+    Trip:      sequelize.import(__dirname + '/trip')
  
     // add your other models here, use the same format as for user
   }
@@ -32,6 +34,17 @@ if (!global.hasOwnProperty('db')) {
     Associations can be defined here. E.g. like this:
     global.db.User.hasMany(global.db.SomethingElse)
   */
+
+  global.db.User.hasMany(global.db.Signup, {as: 'SignupsAsLeader'});
+  global.db.User.hasMany(global.db.Signup, {as: 'SignupsAsHeeler'});
+  global.db.User.hasMany(global.db.Signup, {as: 'SignupsAsTrippee'});
+  global.db.Signup.belongsTo(global.db.User);
+  global.db.Trip.hasMany(global.db.Signup, {as: 'TrippeeSignups'});
+  global.db.Trip.hasOne(global.db.Signup, {as: 'LeaderSignup'});
+  global.db.Trip.hasOne(global.db.Signup, {as: 'HeelerSignup'});
+  global.db.Signup.belongsTo(global.db.Trip);
+
+
 }
  
 module.exports = global.db
