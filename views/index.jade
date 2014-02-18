@@ -1,11 +1,11 @@
 extends layout
 
 block content
-  h1=title
-  p Welcome #{user.name}
-  p. 
-    Your Dartmouth WebAuth username is 
-    #{user.username}
-    and your netid is 
-    #{user.netid}
+  h1#=title
+  p#content Welcome #{user}
+  //p. 
+  //  Your Dartmouth WebAuth username is 
+  //  #{user.username}
+  //  and your netid is 
+  //  #{user.netid}
   a(href='/this_week') This Week in CnT
