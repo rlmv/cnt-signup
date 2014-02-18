@@ -1,16 +1,18 @@
 {
-  "name": "CnT Sign Up",
+  "name": "CnT_Sign_Up",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "pg": "2.x",
     "express": "3.4.8",
     "connect": "*",
     "jade": "*",
-    "stylus": "*"
+    "stylus": "*",
+    "sequelize": "~1.7.0-rc6",
+    "pg": "~2.11.1",
+    "mysql": "~2.0.1"
   },
   "repository": {
     "type": "git",
