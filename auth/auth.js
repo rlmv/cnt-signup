@@ -3,16 +3,26 @@ var CAS = require('./xcas');
 
 module.exports = function(options) {
 
+    options = options || {};
+
+    // service is the url of our app
+    if (!options.service) {
+	throw new Error('no service defined');
+    }
+    
+    // logs out of CAS service
+    options.logout_url = options.logout_url || '/logout';
+
+    // instantiate CAS object
     var cas = new CAS({
 	base_url: 'https://login.dartmouth.edu/cas/',
-	service: 'http://localhost:3000',
+	service: options.service,
 	version: 2.0
     });
 
     return function(req, res, next) {
-    
-	// should this be mounted here? or explictly in app.js?
-	if (req.url == "/logout") {
+	
+	if (req.url == options.logout_url) {
 	    cas.logout(req, res); // can add logout redirect params here
 	    req.session.destroy(function(err) {
 		if (err) return next(err);
