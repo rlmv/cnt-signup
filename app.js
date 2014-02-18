@@ -4,8 +4,11 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
 var http = require('http');
+
+var routes = require('./routes');
+var views = require('./routes/routes.js');
+
 var path = require('path');
 var auth = require('./auth/auth');
 var user = require('./auth/user');
@@ -20,6 +23,7 @@ app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(express.bodyParser());
 app.use(express.methodOverride());
 
 // auth stuff
@@ -38,6 +42,11 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+
+app.get('/this_week', views.this_week);
+app.post('/this_week', views.trip_signup);
+app.post('/add_trip', views.add_trip);
+app.get('/add_trip', views.view_add_trip);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

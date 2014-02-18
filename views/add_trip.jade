@@ -1,0 +1,23 @@
+extends layout
+
+
+block content
+
+
+  #container
+    #header
+      h1 #{title}
+      p Welcome to #{title}
+    #content
+      form(method='post' enctype='multipart/form-data')
+        text Time:
+        input(type='text' name='time')
+        br
+        text Destination:
+        input(type='text' name='dest')
+        br
+        text Cost:
+        input(type='text' name='cost')
+        //We need to include hidden fields where we can process identity
+        //information here
+        input(type='submit', value='Add Trip')

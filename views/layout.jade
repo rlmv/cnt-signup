@@ -1,7 +1,24 @@
+
+mixin signup(trip)
+      form(method='post' enctype='multipart/form-data')
+        text Dietary Requirement:
+        input(type='text' name='diet')
+        br
+        text Comments:
+        input(type='text' name='comments')
+        br
+        input(type='text' name='trip_id' value='#{trip.id}' hidden='True')
+        //We need to include fields for the user, to be populated from the
+        //identity information we have
+        input(type='submit', value='Signup')
+  
+
 doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type='text/javascript' src='js/scripts.js')
+    script(type='text/javascript' src='js/jquery-1.4.2.min.js')
   body
     block content
