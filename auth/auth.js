@@ -32,7 +32,7 @@ module.exports = function(req, res, next) {
 	    req.session.auth = extended.attributes;
 
 	    // should we redirect? pass through with next()? (strip ticket?)
-	    res.redirect('/');
+	    return next();
 	});
     });
 }
