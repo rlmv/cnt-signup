@@ -4,14 +4,13 @@
  */
 
 var express = require('express');
-var http = require('http');
-
 var routes = require('./routes');
 var views = require('./routes/routes.js');
-
+var user = require('./routes/user');
+var http = require('http');
 var path = require('path');
 var auth = require('./auth/auth');
-var user = require('./auth/user');
+var db = require('./models');
 
 var app = express();
 
@@ -48,6 +47,13 @@ app.post('/this_week', views.trip_signup);
 app.post('/add_trip', views.add_trip);
 app.get('/add_trip', views.view_add_trip);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+
+db.sequelize.sync().complete(function(err) {
+  if (err) {
+    throw err
+  } else {
+    http.createServer(app).listen(app.get('port'), function(){
+      console.log('Express server listening on port ' + app.get('port'))
+    })
+  }
 });
