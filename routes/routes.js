@@ -15,7 +15,8 @@ exports.trip_signup = function(req, res){
  */
 
 exports.view_add_trip = function(req, res){
-    res.render('add_trip', { title: 'Add a Trip to the Site'});
+    res.render('add_trip', { title: 'Add a Trip to the Site',
+                             user: req.user.name});
 };
 
 /*
@@ -70,5 +71,6 @@ exports.this_week = function(req, res){
     mytrips.push(trip4)
     console.log(mytrips)
     res.render('this_week', { title: 'This Week in Cabin and Trail',
-		          trips: mytrips});
+		              trips: mytrips,
+                              user: req.user.name });
 };
