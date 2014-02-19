@@ -1,5 +1,6 @@
 
 var CAS = require('./xcas');
+var url = require('url');
 
 module.exports = function(service, logout_url) {
 
@@ -44,8 +45,9 @@ module.exports = function(service, logout_url) {
 		
 		// the auth object contains {name, username, netid} fields
 		req.session.auth = extended.attributes;
-
-		return next();
+		
+		// remove the ticket from url
+		res.redirect(url.parse(req.url).pathname);
 	    });
 	});
     };
