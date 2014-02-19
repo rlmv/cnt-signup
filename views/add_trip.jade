@@ -8,15 +8,29 @@ block content
       p Welcome  #{user}
     #content
       form(method='post' enctype='multipart/form-data')
+        text Trip Title:
+        input(type='text' name='title')
+        br
         text Start Date and Time:
         input(type='text' id='startpicker' name='start')
         script
-          $(function(){$('#startpicker').datetimepicker();});
+          $(function(){$('#startpicker').datetimepicker({format:'m/d/Y H:i', minDate:'0', step:30});});
         br
-        text Destination:
-        input(type='text' name='dest')
+        text End Date and Time:
+        input(type='text' id='endpicker' name='end')
+        script
+          $(function(){$('#endpicker').datetimepicker();});
         br
-        text Cost:
-        input(type='text' name='cost')
+        text Cost for D.O.C. members:
+        //from http://www.webstutorial.com/jquery-allow-only-numbers/jquery
+        input(type='text' name='costDOC' class="onlyNumbers")
+        br
+        text Cost for non-D.O.C. members:
+        input(type='text' name='costNonDOC' class="onlyNumbers")
+        br
+        text Description:
+        br
+        textarea(name="description" rows="5" cols="60")
+        br
         input(type='text' name='leader' value='#{user}' hidden='True')
         input(type='submit', value='Add Trip')
