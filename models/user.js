@@ -4,10 +4,28 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define("User", {
     netid: DataTypes.STRING,
     name: DataTypes.STRING,
-    email: DataTypes.STRING, 
-    isLeader: { type: DataTypes.BOOLEAN, defaultValue: false },
-    isChair: { type: DataTypes.BOOLEAN, defaultValue: false },
-    isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-    isOPO: { type: DataTypes.BOOLEAN, defaultValue: false },
+    email: { 
+    	type : DataTypes.STRING,
+    	allowNull : true,
+    	validate : {
+    		isEmail: true
+    	}
+    }, 
+    isLeader: {
+    	type: DataTypes.BOOLEAN,
+    	defaultValue: false
+    },
+    isChair: {
+    	type: DataTypes.BOOLEAN,
+    	defaultValue: false
+    },
+    isAdmin: {
+    	type: DataTypes.BOOLEAN,
+    	defaultValue: false
+    },
+    isOPO: {
+    	type: DataTypes.BOOLEAN,
+    	defaultValue: false
+    }
   })
 }

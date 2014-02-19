@@ -1,8 +1,6 @@
 extends layout
 
-
 block content
-
 
   #container
     #header
@@ -10,8 +8,10 @@ block content
       p Welcome  #{user}
     #content
       form(method='post' enctype='multipart/form-data')
-        text Time:
-        input(type='text' name='time')
+        text Start Date and Time:
+        input(type='text' id='startpicker' name='start')
+        script
+          $(function(){$('#startpicker').datetimepicker();});
         br
         text Destination:
         input(type='text' name='dest')
