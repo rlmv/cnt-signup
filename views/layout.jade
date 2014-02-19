@@ -1,11 +1,12 @@
 
 mixin signup(trip, user)
       form(method='post' enctype='multipart/form-data')
-        text Dietary Requirement:
+        text Dietary Restrictions:
         input(type='text' name='diet')
         br
         text Comments:
-        input(type='text' name='comments')
+        br
+        textarea(name ="comments" rows="4" cols="50")
         br
         input(type='text' name='trip_id' value='#{trip.id}' hidden='True')
         input(type='text' name='user' value='#{user}' hidden='True')
@@ -21,5 +22,6 @@ html
     link(rel='stylesheet', type='text/css', href='/stylesheets/jquery.datetimepicker.css')
     script(src='js/jquery.js')
     script(src='js/jquery.datetimepicker.js')
+    script(src='js/onlyNumbers.js')
   body
     block content
