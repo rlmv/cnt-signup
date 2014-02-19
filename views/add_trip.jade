@@ -5,11 +5,15 @@ block content
   #container
     #header
       h1 #{title}
-      p Welcome  #{user}
+      text Welcome  #{user}
+      form(method='post' action="/logout") 
+        input(type="submit" value="Not you?")
+      br
     #content
+    p
       form(method='post' enctype='multipart/form-data')
-        text Trip Title:
-        input(type='text' name='title')
+        text Trip Title: 
+        input(type='text' name='title' style="width:200px;")
         br
         text Start Date and Time:
         input(type='text' id='startpicker' name='start')
@@ -21,16 +25,33 @@ block content
         script
           $(function(){$('#endpicker').datetimepicker();});
         br
-        text Cost for D.O.C. members:
+        text Cost for D.O.C. members: 
         //from http://www.webstutorial.com/jquery-allow-only-numbers/jquery
-        input(type='text' name='costDOC' class="onlyNumbers")
+        input(type='text' name='costDOC' style="width:30px;" class="onlyNumbers")
         br
-        text Cost for non-D.O.C. members:
-        input(type='text' name='costNonDOC' class="onlyNumbers")
+        text Cost for non-D.O.C. members: 
+        input(type='text' name='costNonDOC' style="width:30px;" class="onlyNumbers")
         br
         text Description:
         br
         textarea(name="description" rows="5" cols="60")
         br
-        input(type='text' name='leader' value='#{user}' hidden='True')
+        br
+        text I am this trip's: 
+        input(type="radio" name="whoCreated" value="leader")
+        text Leader 
+        input(type="radio" name="whoCreated" value="heeler")
+        text Heeler
+        br
+        text (If you selected "heeler", your leader will need to signup before the public can see your trip)
+        //we could consider adding the ability to send a leader an invitation email from here
+        input(type='text' name='creator' value='#{netid}' hidden='True')
+        br
+        text My dietary restrictions:
+        input(type='text' name='diet' style="width:200px;")
+        br
+        text My additonal information (ex: my shoe size, gear I need from DOR, etc.):
+        br
+        textarea(name="comments" rows="4" cols="50")
+        br
         input(type='submit', value='Add Trip')
