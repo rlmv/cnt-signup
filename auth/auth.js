@@ -29,10 +29,12 @@ module.exports = function(service, logout_url) {
 	    });
 	}
 	
+	// user is already authenticated
 	if (req.session.auth) {
 	    return next();
 	}
 	
+	// else, authenticate
 	cas.authenticate(req, res, function(err, status, username, extended) {
 	    if (err) return next(err);
 	    
