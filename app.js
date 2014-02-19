@@ -28,7 +28,7 @@ app.use(express.methodOverride());
 // auth stuff
 app.use(express.cookieParser('secret goes here'));
 app.use(express.session());
-app.use(auth);
+app.use(auth('http:/localhost:3000', '/logout'));
 app.use(user); // save user object on req - should evt. pull from db
 
 app.use(app.router);
