@@ -5,9 +5,9 @@ module.exports = function(sequelize, DataTypes) {
     netid: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING, 
-    isLeader: DataTypes.BOOLEAN,
-    isChair: DataTypes.BOOLEAN,
-    isAdmin: DataTypes.BOOLEAN,
-    isOPO: DataTypes.BOOLEAN
+    isLeader: { type: DataTypes.BOOLEAN, defaultValue: false },
+    isChair: { type: DataTypes.BOOLEAN, defaultValue: false },
+    isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
+    isOPO: { type: DataTypes.BOOLEAN, defaultValue: false },
   })
 }
