@@ -1,3 +1,4 @@
+var db = require('../models');
 
 /*
  * POST signup for a trip.
