@@ -24,7 +24,6 @@ PSQL_DB="/usr/local/var/postgres"
 export PATH="$PSQL_HOME/bin/:$PATH"
 alias psql_init="pg_ctl initdb -D $PSQL_DB"
 alias psql_start="pg_ctl -D $PSQL_DB -l $PSQL_DB/server.log start"
-alias psql_stop="pg_ctl -D $PSQL_DB stop -s -m fast"
 ```
       
 Be sure to export the aliases:
@@ -57,4 +56,4 @@ GRANT ALL PRIVILEGES ON DATABASE cnt TO root;
 
 You should now be able to run the website.
 
-Use `psql_stop` to stop the PostgreSQL server.
+
