@@ -17,7 +17,12 @@ if (!global.hasOwnProperty('db')) {
   } else {
     // the application is executed on the local machine ... use mysql
     //args are database, username, password
-    sequelize = new Sequelize('CNTSignupDB', 'root', null)
+    sequelize = new Sequelize('cntsignupdb', 'root', null, {
+	dialect: 'postgres', 
+	protocol: 'postgres',
+	port: 5432,
+	host: 'localhost'
+    });
   }
  
   global.db = {
