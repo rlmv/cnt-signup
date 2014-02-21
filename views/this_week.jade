@@ -1,8 +1,6 @@
 extends layout
 
-
 block content
-
 
   #container
     #header
@@ -17,8 +15,24 @@ block content
       #main
         ul
           each trip in trips
+            - trip = trip.values
             li
               ul
-                each value, key in trip
-                  li #{key} : #{value}
+                h3 Trip: #{trip.title}
+                b Description: 
+                text #{trip.description}
+                br
+                b Starts: 
+                text #{trip.startTime}
+                br
+                b Ends: 
+                text #{trip.endTime}
+                br
+                b Cost for D.O.C. members: 
+                text $#{trip.costDOC}
+                br
+                b Cost for non-members: 
+                text $#{trip.costNonDOC}
+                br
                 +signup(trip, user)
+                br

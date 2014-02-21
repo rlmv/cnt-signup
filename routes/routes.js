@@ -107,22 +107,18 @@ exports.this_week = function(req, res){
      */
 
 
-    db.Trip  // fetch all trips that start later than now
-	.findAll({ 
+    db.Trip.findAll({ // fetch all trips that start later than now
 	    where: {
- 		startTime: {
-		    gt: new Date()
-		}
+ 		    startTime: {
+		      gt: new Date()
+		    }
 	    },
 	    order: 'startTime DESC'
-	})
-	.success(function(trips) {
-	    
+	  }).success(function(trips) {
 	    res.render('this_week', { 
-		title: 'This Week in Cabin and Trail',
-		trips: trips,
-                user: req.user.name 
+		    title: 'This Week in Cabin and Trail',
+		    trips: trips,
+        user: req.user.name 
 	    });
-	});
-
+	 });
 };
