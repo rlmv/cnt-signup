@@ -52,7 +52,9 @@ exports.add_trip = function(req, res){
        costDOC: body.costDOC,
        costNonDOC: body.costNonDOC
    }).complete(function(err, trip) {
-
+       
+       // is it better form to use the .succes/.error paradigm for callbacks?
+       
        if (err) throw err;
 
        // choose the type of signup: as heeler/leader
