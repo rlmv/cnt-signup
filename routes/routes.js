@@ -35,7 +35,7 @@ exports.view_add_trip = function(req, res){
 exports.add_trip = function(req, res){
     /* create a trip object and a signup object and store each in the database
      * with the proper associations. check the radio button result to see 
-     * if the person signing up is a leader or a heeler to choose the right association. 
+     * if the person signing up is leader/heeler to choose the right association. 
      * Maybe moment.js has a utility for calculating trip durations, etc. 
      */
     
@@ -44,48 +44,48 @@ exports.add_trip = function(req, res){
     // formatted by datetimepicker: 2014/02/27 10:15	    
     var date_format = "YYYY/MM/DD HH:mm";
     
-    var trip = db.Trip.build({
-	title: body.title,
-	description: body.description,
-	startTime: moment(body.start, date_format),
-	endTime: moment(body.end, date_format),
-	costDOC: body.costDOC,
-	costNonDOC: body.costNonDOC
-    })
+   db.Trip.create({
+       title: body.title,
+       description: body.description,
+       startTime: moment(body.start, date_format),
+       endTime: moment(body.end, date_format),
+       costDOC: body.costDOC,
+       costNonDOC: body.costNonDOC
+   }).complete(function(err, trip) {
 
-    if (body.whoCreated == 'leader') {
-	trip.createLeaderSignup({
-	    comments: body.comments,
-	    dietary_restrictions: body.diet
-	})
-	.complete(function(err, signup) {
-	    if (err) throw err;
-	    req.user.addSignupAsLeader(signup)
-		.success(function(){})
-		.error(function(err){});
-	});
+       if (err) throw err;
 
-/*	success(function(signup) {
-	    req.user.addSignupAsLeader(signup)
-		.success(function(){})
-		.error(function(err){});
-	}).error(function(err) {
-	    // handle error
-	}); */
+       // choose the type of signup: as heeler/leader
+       // note, this will probably change. I think we want the 
+       // heeler/leader association to be selected automatically
+       // based on the user profile.
+       var trip_createSignup = null;
+       var user_addSignup = null;
+       if (body.whoCreated == 'leader') {
+	   trip_createSignup = trip.createLeaderSignup;
+	   user_addSignup = req.user.addSignupAsLeader;
+       } else if (body.whoCreated == 'heeler') { 
+	   trip_createSignup = trip.createHeelerSignup;
+	   user_addSignup = req.user.addSignupAsHeeler;
+       } else { // not specified?
+	   throw new Error("heeler/leader not specified");
+       }
+       
+       // add signup to trip for creator
+       trip_createSignup.call(trip, {
+	   comments: body.comments,
+	   dietary_restrictions: body.diet
+       })
+	   .complete(function(err, signup) {
+	       if (err) throw err;
+	       // link to user
+	       user_addSignup.call(req.user, signup)
+		   .complete(function(err) {
+		       if (err) throw err;
+		   });
+	   });
 
-    } else { // == 'heeler'
-	create__Signup = trip.createHeelerSignup;
-    }
-    
-    // populate user/heeler connections
-    trip.save().complete(function(err) {
-	if (err) {
-	    // handle error. how?
-	    throw err;
-	} else {
-	    console.log("created trip!: " + trip);
-	}
-    });
+   });
     
 
     //we could route to different pages based on success of db access
