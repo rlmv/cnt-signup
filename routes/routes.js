@@ -42,7 +42,7 @@ exports.add_trip = function(req, res){
     var body = req.body;
 
     // formatted by datetimepicker: 2014/02/27 10:15	    
-    var date_format = "YYYY/MM/DD HH:mM";
+    var date_format = "YYYY/MM/DD HH:mm";
     
     db.Trip
 	.create({
@@ -79,41 +79,22 @@ exports.this_week = function(req, res){
      * guarantee you a spot. You need a confirmation email. 
      */
 
-    //instead of hardcoding these trips in, let's talk to the db!
-    var mytrips = [];
-    var signups = [];
-    signups.push("David");
-    var trip1 = { id : 0,
-                  leader : 'bo',
-		  time : 'dawn patrol', 
-		  dest : 'on the dance floor',
-		  cost : 'guarantee of a good time',
-		  signups : signups}
-    var trip2 = { id : 1,
-                  leader : 'graham',
-		  time : 'early in the morning', 
-		  dest : 'for breakfast',
-		  cost : 'small bills',
-		  signups : signups}
-    var trip3 = { id : 2,
-                  leader : 'Amith',
-		  time : 'Middle of the day', 
-		  dest : 'Doctors Office',
-		  cost : 'Medicine',
-		  signups : signups}
-    var trip4 = { id : 3,
-                  leader : 'Jason',
-		  time : 'Evening Hours', 
-		  dest : 'Romantic Valentines Day DInner',
-		  cost : 'True Love',
-		  signups : signups}
 
-    mytrips.push(trip1)
-    mytrips.push(trip2)
-    mytrips.push(trip3)
-    mytrips.push(trip4)
-    console.log(mytrips)
-    res.render('this_week', { title: 'This Week in Cabin and Trail',
-		              trips: mytrips,
-                              user: req.user.name });
+    db.Trip  // fetch all trips that start later than now
+/*	.findAll({ where: {
+ 	    startTime: {
+		gt: moment()  // later than now.
+	    }
+	}}) 
+*/
+	.findAll()
+	.success(function(trips) {
+	    
+	    res.render('this_week', { 
+		title: 'This Week in Cabin and Trail',
+		trips: trips,
+                user: req.user.name 
+	    });
+	});
+
 };

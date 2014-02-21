@@ -49,7 +49,7 @@ app.get('/add_trip', views.view_add_trip);
 
 
 db.sequelize
-    .sync({ force: true })
+    .sync()
     .complete(function(err) {
 	if (err) {
 	    throw err
