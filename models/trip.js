@@ -1,7 +1,7 @@
 //sequelize automatically adds an id : INT field (and createdAt, updatedAt)
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define("Trip", {
-    start_time: {
+    startTime: {
     	type: DataTypes.DATE,
     	allowNull: true, //change to false later. we really want this info
     	validate: {
@@ -11,21 +11,21 @@ module.exports = function(sequelize, DataTypes) {
     		//you'd have to use the custom validator functionality
     	}
     },
-    end_time: {
+    endTime: {
     	type: DataTypes.DATE,
     	allowNull: true, //change to false later. we really want this info
     	validate: {
     		isDate: true
     	}
     },
-    cost_nonDOC: {
+    costNonDOC: {
     	type: DataTypes.INTEGER,
     	defaultValue: 0,
     	validate: {
     		min: 0
     	}
     },
-    cost_DOC: {
+    costDOC: {
     	type: DataTypes.INTEGER,
     	defaultValue: 0,
     	validate: {

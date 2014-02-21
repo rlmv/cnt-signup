@@ -1,5 +1,5 @@
 var db = require('../models');
-
+var moment = require('moment');
 /*
  * POST signup for a trip.
  */
@@ -33,19 +33,38 @@ exports.view_add_trip = function(req, res){
  */
 
 exports.add_trip = function(req, res){
-    /* this should create a trip object and a signup object and store each in the database
-     * with the proper associations. check the radio button result to see if the person signing up is
-     * a leader or a heeler to choose the right association. 
-     * the data will have to be reformatted as DATETIME for mysql storage, or as 
-     * TIMESTAMP WITH TIME ZONE for PostgreSQL storage. Alternatively, we could just store it as 
-     * a string since it should be a standard format, and maybe moment.js would have a utility 
-     * for calculating trip durations, etc. 
+    /* create a trip object and a signup object and store each in the database
+     * with the proper associations. check the radio button result to see 
+     * if the person signing up is a leader or a heeler to choose the right association. 
+     * Maybe moment.js has a utility for calculating trip durations, etc. 
      */
+    
+    var body = req.body;
 
-    //instead of just printing, add to the db!
-    console.log(req.body);
+    // formatted by datetimepicker: 2014/02/27 10:15	    
+    var date_format = "YYYY/MM/DD HH:mM";
+    
+    db.Trip
+	.create({
+	   title: body.title,
+	   description: body.description,
+	   startTime: moment(body.start, date_format),
+	   endTime: moment(body.end, date_format),
+	   costDOC: body.costDOC,
+	   costNonDOC: body.costNonDOC
+	})
+	.complete(function(err, trip) {
+	    if (err) {
+		// handle error. how?
+		throw err;
+	    } else {
+		console.log("created trip!: " + trip);
+	    }
+	});
+    
+
     //we could route to different pages based on success of db access
-    res.redirect("/add_trip");
+    res.redirect("/");
 }
 
 /*
