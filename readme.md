@@ -13,6 +13,8 @@ until the leader/heeler explicitly adds them, giving them permission?
 PostgreSQL:
 ---------
 
+[Download and install PostgreSQL.](http://www.postgresql.org/download/) 
+
 Add aliases to your .bashrc file (make sure PG_HOME points to the directory in which PostgreSQL is installed):
 
 ```
