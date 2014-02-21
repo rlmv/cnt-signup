@@ -81,13 +81,12 @@ exports.this_week = function(req, res){
 
 
     db.Trip  // fetch all trips that start later than now
-/*	.findAll({ where: {
+	.findAll({ where: {
  	    startTime: {
-		gt: moment()  // later than now.
+		gt: new Date()
 	    }
 	}}) 
-*/
-	.findAll()
+//	.findAll()
 	.success(function(trips) {
 	    
 	    res.render('this_week', { 
