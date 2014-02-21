@@ -16,8 +16,8 @@ if (!global.hasOwnProperty('db')) {
     })
   } else { // local machine - use SQLite
       sequelize = new Sequelize('cnt', null, null, {
-	  dialect: 'sqlite', 
-	  storage: 'cnt.db'
+	      dialect: 'sqlite', 
+	    storage: 'cnt.db'
       })
   }
  
@@ -36,6 +36,7 @@ if (!global.hasOwnProperty('db')) {
     global.db.User.hasMany(global.db.SomethingElse)
   */
 
+  
   global.db.User.hasMany(global.db.Signup, {as: 'SignupAsLeader'});
   global.db.User.hasMany(global.db.Signup, {as: 'SignupAsHeeler'});
   global.db.User.hasMany(global.db.Signup, {as: 'SignupAsTrippee'});
