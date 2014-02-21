@@ -13,7 +13,7 @@ until the leader/heeler explicitly adds them, giving them permission?
 Getting PostgreSQL running:
 --------------------------
 
-[Download and install PostgreSQL](http://www.postgresql.org/download/) using the default settings. There's apparently a graphical app for OSX which lets you skip some of the following stuff, however I can't use it on my computer so you're on your own that out... David, I'm not entirely sure how this plays with Linux. The OSX installer prompts for a password for the 'postgres' superuser account; not sure how that gets set up if you do an apt-get install. But 
+[Download and install PostgreSQL](http://www.postgresql.org/download/) using the default settings. Apparently there is a graphical app for OSX which lets you skip some of the following stuff, however I can't use it on my computer so you're on your own figuring it out... David, I'm not entirely sure how this plays with Linux. The OSX installer prompts for a password for the 'postgres' superuser account; not sure how that gets set up if you do an apt-get install. 
 
 Add these aliases to your .bashrc file (make sure PSQL_HOME points to the directory in which PostgreSQL is installed):
 
