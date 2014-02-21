@@ -17,12 +17,17 @@ if (!global.hasOwnProperty('db')) {
   } else {
     // the application is executed on the local machine ... use mysql
     //args are database, username, password
-    sequelize = new Sequelize('cnt', 'root', 'root', {
+/*   sequelize = new Sequelize('cnt', 'root', 'root', {
 	dialect: 'postgres', 
 	protocol: 'postgres',
 	port: 5432,
 	host: 'localhost'
     });
+*/
+      sequelize = new Sequelize('cnt', null, null, {
+	  dialect: 'sqlite', 
+	  storage: './sqlite.db'
+      })
   }
  
   global.db = {
