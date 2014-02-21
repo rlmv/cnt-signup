@@ -13,21 +13,21 @@ until the leader/heeler explicitly adds them, giving them permission?
 PostgreSQL:
 ---------
 
-[Download and install PostgreSQL.](http://www.postgresql.org/download/) 
+[Download and install PostgreSQL](http://www.postgresql.org/download/) using the default settings. There's also a graphical app for OSX which lets you skip some of the following stuff, however I can't use it on my computer so you're on your own with that... Also, I'm not entirely sure how this plays with Linux, David--the OSX installer prompts for a password for the 'postgres' user account.
 
 Add aliases to your .bashrc file (make sure PG_HOME points to the directory in which PostgreSQL is installed):
 
 ```
 # PostgreSQL setup
-PG_HOME="/Library/PostgreSQL/9.3"
-PG_DB="/usr/local/var/postgres"
-export PATH="$PG_HOME/bin/:$PATH"
-alias psql_init="pg_ctl initdb -D $PG_DB"
-alias psql_start="pg_ctl -D $PG_DB -l $PG_DB/server.log start"
-alias psql_stop="pg_ctl -D $PG_DB stop -s -m fast"
+PSQL_HOME="/Library/PostgreSQL/9.3"
+PSQL_DB="/usr/local/var/postgres"
+export PATH="$PSQL_HOME/bin/:$PATH"
+alias psql_init="pg_ctl initdb -D $PSQL_DB"
+alias psql_start="pg_ctl -D $PSQL_DB -l $PSQL_DB/server.log start"
+alias psql_stop="pg_ctl -D $PSQL_DB stop -s -m fast"
 ```
       
-Export aliases:
+Be sure to export the aliases:
 ```
 source ~/.bashrc
 ```
@@ -44,7 +44,16 @@ psql_start
 
 Create the CnT signup db:
 ```
-./scripts/create_db.sh
+psql -d template1 -U postgres
+```
+When prompted, enter the password you choose when installing Postgres. At the psql prompt enter the following:
+```
+CREATE USER root WITH PASSWORD 'root';
+CREATE DATABASE cnt;
+GRANT ALL PRIVILEGES ON DATABASE cnt TO root;
+\q
 ```
 
 You should now be able to run the website.
+
+Use `psql_stop` to stop the PostgreSQL server.
