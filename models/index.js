@@ -14,19 +14,10 @@ if (!global.hasOwnProperty('db')) {
       host:     match[3],
       logging:  true //false
     })
-  } else {
-    // the application is executed on the local machine ... use mysql
-    //args are database, username, password
-/*   sequelize = new Sequelize('cnt', 'root', 'root', {
-	dialect: 'postgres', 
-	protocol: 'postgres',
-	port: 5432,
-	host: 'localhost'
-    });
-*/
+  } else { // local machine - use SQLite
       sequelize = new Sequelize('cnt', null, null, {
 	  dialect: 'sqlite', 
-	  storage: './sqlite.db'
+	  storage: 'cnt.db'
       })
   }
  
