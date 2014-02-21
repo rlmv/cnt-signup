@@ -47,7 +47,6 @@ app.post('/this_week', views.trip_signup);
 app.post('/add_trip', views.add_trip);
 app.get('/add_trip', views.view_add_trip);
 
-
 db.sequelize
     .sync()
     .complete(function(err) {

@@ -44,27 +44,52 @@ exports.add_trip = function(req, res){
     // formatted by datetimepicker: 2014/02/27 10:15	    
     var date_format = "YYYY/MM/DD HH:mm";
     
-    db.Trip
-	.create({
-	   title: body.title,
-	   description: body.description,
-	   startTime: moment(body.start, date_format),
-	   endTime: moment(body.end, date_format),
-	   costDOC: body.costDOC,
-	   costNonDOC: body.costNonDOC
+    var trip = db.Trip.build({
+	title: body.title,
+	description: body.description,
+	startTime: moment(body.start, date_format),
+	endTime: moment(body.end, date_format),
+	costDOC: body.costDOC,
+	costNonDOC: body.costNonDOC
+    })
+
+    if (body.whoCreated == 'leader') {
+	trip.createLeaderSignup({
+	    comments: body.comments,
+	    dietary_restrictions: body.diet
 	})
-	.complete(function(err, trip) {
-	    if (err) {
-		// handle error. how?
-		throw err;
-	    } else {
-		console.log("created trip!: " + trip);
-	    }
+	.complete(function(err, signup) {
+	    if (err) throw err;
+	    req.user.addSignupAsLeader(signup)
+		.success(function(){})
+		.error(function(err){});
 	});
+
+/*	success(function(signup) {
+	    req.user.addSignupAsLeader(signup)
+		.success(function(){})
+		.error(function(err){});
+	}).error(function(err) {
+	    // handle error
+	}); */
+
+    } else { // == 'heeler'
+	create__Signup = trip.createHeelerSignup;
+    }
+    
+    // populate user/heeler connections
+    trip.save().complete(function(err) {
+	if (err) {
+	    // handle error. how?
+	    throw err;
+	} else {
+	    console.log("created trip!: " + trip);
+	}
+    });
     
 
     //we could route to different pages based on success of db access
-    res.redirect("/");
+    res.redirect("/this_week");
 }
 
 /*
