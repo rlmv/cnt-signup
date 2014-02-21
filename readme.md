@@ -10,12 +10,12 @@ Should people simply not get notified that they're actually on the trip
 until the leader/heeler explicitly adds them, giving them permission?
 
 
-PostgreSQL:
----------
+Getting PostgreSQL running:
+--------------------------
 
-[Download and install PostgreSQL](http://www.postgresql.org/download/) using the default settings. There's also a graphical app for OSX which lets you skip some of the following stuff, however I can't use it on my computer so you're on your own with that... Also, I'm not entirely sure how this plays with Linux, David--the OSX installer prompts for a password for the 'postgres' user account.
+[Download and install PostgreSQL](http://www.postgresql.org/download/) using the default settings. There's apparently a graphical app for OSX which lets you skip some of the following stuff, however I can't use it on my computer so you're on your own that out... David, I'm not entirely sure how this plays with Linux. The OSX installer prompts for a password for the 'postgres' superuser account; not sure how that gets set up if you do an apt-get install. But 
 
-Add aliases to your .bashrc file (make sure PG_HOME points to the directory in which PostgreSQL is installed):
+Add these aliases to your .bashrc file (make sure PSQL_HOME points to the directory in which PostgreSQL is installed):
 
 ```
 # PostgreSQL setup
@@ -32,7 +32,7 @@ Be sure to export the aliases:
 source ~/.bashrc
 ```
 
-Initialize Postgres database:
+Initialize the Postgres database:
 ```
 psql_init
 ```
@@ -46,6 +46,7 @@ Create the CnT signup db:
 ```
 psql -d template1 -U postgres
 ```
+
 When prompted, enter the password you choose when installing Postgres. At the psql prompt enter the following:
 ```
 CREATE USER root WITH PASSWORD 'root';
