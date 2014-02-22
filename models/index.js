@@ -41,9 +41,10 @@ if (!global.hasOwnProperty('db')) {
   global.db.User.hasMany(global.db.Signup, {as: 'SignupAsHeeler'});
   global.db.User.hasMany(global.db.Signup, {as: 'SignupAsTrippee'});
   global.db.Signup.belongsTo(global.db.User);
-  global.db.Trip.hasMany(global.db.Signup, {as: 'TrippeeSignups'});
-  global.db.Trip.hasOne(global.db.Signup, {as: 'LeaderSignup'});
-  global.db.Trip.hasOne(global.db.Signup, {as: 'HeelerSignup'});
+  global.db.Trip.hasMany(global.db.Signup, {as: 'WaitlistTrippeeSignup'});
+  global.db.Trip.hasMany(global.db.Signup, {as: 'ApprovedTrippeeSignup'});
+  global.db.Trip.hasOne(global.db.Signup, {as: 'LeaderSignup', foreignKey: 'LeaderSignupID'});
+  global.db.Trip.hasOne(global.db.Signup, {as: 'HeelerSignup', foreignKey: 'HeelerSignupID'});
   global.db.Signup.belongsTo(global.db.Trip);
 
 

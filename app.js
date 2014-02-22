@@ -4,6 +4,21 @@
  */
 
 var express = require('express');
+var app = express();
+
+var mailer = require('express-mailer');
+mailer.extend(app, {
+  from: 'no-reply@example.com',
+  host: 'smtp.gmail.com', // hostname
+  secureConnection: true, // use SSL
+  port: 465, // port for secure SMTP
+  transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
+  auth: {
+    user: 'doc.trip.manager@gmail.com',
+    pass: 'supersecure'
+  }
+});
+
 var routes = require('./routes');
 var views = require('./routes/routes.js');
 var user = require('./auth/user');
@@ -11,8 +26,6 @@ var http = require('http');
 var path = require('path');
 var auth = require('./auth/auth');
 var db = require('./models');
-
-var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);

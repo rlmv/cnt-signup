@@ -1,5 +1,6 @@
 var db = require('../models');
 var moment = require('moment');
+
 /*
  * POST signup for a trip.
  */
@@ -11,6 +12,31 @@ exports.trip_signup = function(req, res){
      * the signup later. 
      * It would be nice to sent them an email with the trip info saying we got their info. 
      */ 
+    var body = req.body;
+
+    db.Trip.find(body.trip_id).success(function(trip){
+      console.log('Found trip');
+      trip.createWaitlistTrippeeSignup({
+        comments: body.comments,
+        dietary_restrictions: body.diet
+      }).success(function(signup){
+        req.user.addSignupAsTrippee(signup).success(function(){
+
+              res.mailer.send('signup_received', {
+                to: req.user.email, // REQUIRED. This can be a comma delimited string just like a normal email to field. 
+                subject: 'Signup for ' + trip.values.title, // REQUIRED.
+                user: req.user.name
+              }, function (err) {
+                if (err) {
+                  throw err
+                }
+              });
+
+        })
+      })
+    });
+
+
 
     //instead of printing, change db
     console.log(req.body);
@@ -41,19 +67,19 @@ exports.add_trip = function(req, res){
     
     var body = req.body;
 
-    // formatted by datetimepicker: 2014/02/27 10:15	    
+    // formatted by datetimepicker: 2014/02/27 10:15      
     var date_format = "YYYY/MM/DD HH:mm";
     
-   db.Trip.create({
-       title: body.title,
-       description: body.description,
-       startTime: moment(body.start, date_format),
-       endTime: moment(body.end, date_format),
-       costDOC: body.costDOC,
-       costNonDOC: body.costNonDOC
-   }).complete(function(err, trip) {
+     db.Trip.create({
+         title: body.title,
+         description: body.description,
+         startTime: moment(body.start, date_format),
+         endTime: moment(body.end, date_format),
+         costDOC: body.costDOC,
+         costNonDOC: body.costNonDOC
+     }).complete(function(err, trip) {
        
-       // is it better form to use the .succes/.error paradigm for callbacks?
+       // is it better form to use the .success/.error paradigm for callbacks?
        
        if (err) throw err;
 
@@ -64,28 +90,28 @@ exports.add_trip = function(req, res){
        var trip_createSignup = null;
        var user_addSignup = null;
        if (body.whoCreated == 'leader') {
-	   trip_createSignup = trip.createLeaderSignup;
-	   user_addSignup = req.user.addSignupAsLeader;
+         trip_createSignup = trip.createLeaderSignup;
+         user_addSignup = req.user.addSignupAsLeader;
        } else if (body.whoCreated == 'heeler') { 
-	   trip_createSignup = trip.createHeelerSignup;
-	   user_addSignup = req.user.addSignupAsHeeler;
+         trip_createSignup = trip.createHeelerSignup;
+         user_addSignup = req.user.addSignupAsHeeler;
        } else { // not specified?
-	   throw new Error("heeler/leader not specified");
+         throw new Error("heeler/leader not specified");
        }
        
        // add signup to trip for creator
        trip_createSignup.call(trip, {
-	   comments: body.comments,
-	   dietary_restrictions: body.diet
+         comments: body.comments,
+         dietary_restrictions: body.diet
        })
-	   .complete(function(err, signup) {
-	       if (err) throw err;
-	       // link to user
-	       user_addSignup.call(req.user, signup)
-		   .complete(function(err) {
-		       if (err) throw err;
-		   });
-	   });
+     .complete(function(err, signup) {
+         if (err) throw err;
+         // link to user
+         user_addSignup.call(req.user, signup)
+       .complete(function(err) {
+           if (err) throw err;
+       });
+     });
 
    });
     
@@ -108,17 +134,24 @@ exports.this_week = function(req, res){
 
 
     db.Trip.findAll({ // fetch all trips that start later than now
-	    where: {
- 		    startTime: {
-		      gt: new Date()
-		    }
-	    },
-	    order: 'startTime DESC'
-	  }).success(function(trips) {
-	    res.render('this_week', { 
-		    title: 'This Week in Cabin and Trail',
-		    trips: trips,
+      where: {
+        startTime: {
+          gt: new Date()
+        }
+      }, 
+      include: [
+        {model: db.Signup, as: 'LeaderSignup'}
+      ],
+      order: 'startTime DESC'
+    }).success(function(trips) {
+      trips = trips.filter(function(trip){ //don't worry, this behaves synchronously, i checked the spec
+        return (trip.leaderSignup);
+      });
+      res.render('this_week', { 
+        title: 'This Week in Cabin and Trail',
+        trips: trips,
         user: req.user.name 
-	    });
-	 });
+      });
+   });
 };
+
