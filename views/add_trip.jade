@@ -23,7 +23,7 @@ block content
         text End Date and Time:
         input(type='text' id='endpicker' name='end')
         script
-          $(function(){$('#endpicker').datetimepicker();});
+          $(function(){$('#endpicker').datetimepicker({minDate:'0', step:30});});
         br
         text Cost for D.O.C. members: 
         //from http://www.webstutorial.com/jquery-allow-only-numbers/jquery

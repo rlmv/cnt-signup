@@ -15,7 +15,6 @@ exports.trip_signup = function(req, res){
     var body = req.body;
 
     db.Trip.find(body.trip_id).success(function(trip){
-      console.log('Found trip');
       trip.createWaitlistTrippeeSignup({
         comments: body.comments,
         dietary_restrictions: body.diet
