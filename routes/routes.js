@@ -57,7 +57,18 @@ exports.view_add_trip = function(req, res){
     // if leader, display all trips that have been suggested that need 
     // leaders or healers. each trip should, as appropriate, have 
     // buttons for 'lead this trip' and 'want to heel' and signup form.
-    
+    db.Trip.find({ 
+	where: {
+//	    getHeelerSignup(): null
+//	    HeelerSignupID: null  // OR these ^^
+	}	
+    })
+    .success(function(trips) {
+	console.log(trips);
+    })
+	.error(function(err) {
+	    throw err;
+	});
 
     // otherwise, display all trips that need heelers, with
     // 'want to heel' buttons and signup form.
@@ -156,7 +167,7 @@ exports.this_week = function(req, res){
       ],
       order: 'startTime DESC'
     }).success(function(trips) {
-      trips = trips.filter(function(trip){ //don't worry, this behaves synchronously, i checked the spec
+      trips = trips.filter(function(trip){ //don't worry, this behaves synchronously
         return (trip.leaderSignup);
       });
       res.render('this_week', { 
