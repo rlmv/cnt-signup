@@ -1,5 +1,6 @@
 var db = require('../models');
 var moment = require('moment');
+var util = require('util');
 
 /*
  * POST signup for a trip.
@@ -56,15 +57,8 @@ exports.view_add_trip = function(req, res){
 
     // if leader, display all trips that have been suggested that need 
     // leaders or healers. each trip should, as appropriate, have 
-    // buttons for 'lead this trip' and 'want to heel' and signup form.
-/*    db.Trip.find({ 
-	where: 
-	    ['HeelerSignupID IS NULL'],
-//	    HeelerSignupID: null  // OR these ^^
-	include: [ Signup ]
+    // buttons for 'lead this trip' and 'want to heel' signup form.
 	
-    })*/
-
     //  http://www.sitepoint.com/understanding-sql-joins-mysql-database/
     // http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html
     db.sequelize.query(
@@ -73,8 +67,9 @@ exports.view_add_trip = function(req, res){
 	// try to include leader and heeler signups if they exist
 	'LEFT JOIN Signups AS Leader ON Leader.TripToLeadId = Trips.id ' + 
 	'LEFT JOIN Signups AS Heeler ON Heeler.TripToHeelId = Trips.id ' +
-	// if no leader/heeler signups exist, then select this trip
-	'WHERE Heeler.TripToHeelId IS NULL OR Leader.TripToLeadId IS NULL')
+	// if missing a leader or heeler signup, then select this trip
+	'WHERE Heeler.TripToHeelId IS NULL OR Leader.TripToLeadId IS NULL',
+	db.Trip) // load Trip object
     .success(function(trips) {
 	console.log(trips);
     })

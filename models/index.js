@@ -49,7 +49,8 @@ if (!global.hasOwnProperty('db')) {
 					     foreignKey: 'TripToLeadId'});
     global.db.Trip.hasOne(global.db.Signup, {as: 'HeelerSignup', 
 					     foreignKey: 'TripToHeelId'});
-    //  global.db  .Signup.belongsTo(global.db.Trip);
+//    global.db.Signup.belongsTo(global.db.Trip, {as: 'LeaderSignup',
+//						foreignKey: 'TripToLeadId'});
 
 
 }
