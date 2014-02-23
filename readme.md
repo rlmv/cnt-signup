@@ -1,3 +1,14 @@
+
+Nodemon:
+--------
+`nodemon` is a sweet continuous deployment tool for Node. It can watches your files and reloads the running app when changes have been made. 
+``` 
+npm install -g nodemon
+nodemon app.js
+```
+
+Checkout
+
 Spec
 ======
 
