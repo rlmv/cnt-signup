@@ -36,16 +36,20 @@ if (!global.hasOwnProperty('db')) {
     global.db.User.hasMany(global.db.SomethingElse)
   */
 
-  
-  global.db.User.hasMany(global.db.Signup, {as: 'SignupAsLeader'});
-  global.db.User.hasMany(global.db.Signup, {as: 'SignupAsHeeler'});
-  global.db.User.hasMany(global.db.Signup, {as: 'SignupAsTrippee'});
-  global.db.Signup.belongsTo(global.db.User);
-  global.db.Trip.hasMany(global.db.Signup, {as: 'WaitlistTrippeeSignup'});
-  global.db.Trip.hasMany(global.db.Signup, {as: 'ApprovedTrippeeSignup'});
-  global.db.Trip.hasOne(global.db.Signup, {as: 'LeaderSignup', foreignKey: 'LeaderSignupID'});
-  global.db.Trip.hasOne(global.db.Signup, {as: 'HeelerSignup', foreignKey: 'HeelerSignupID'});
-  global.db.Signup.belongsTo(global.db.Trip);
+    
+    global.db.User.hasMany(global.db.Signup, {as: 'SignupAsLeader'});
+    global.db.User.hasMany(global.db.Signup, {as: 'SignupAsHeeler'});
+    global.db.User.hasMany(global.db.Signup, {as: 'SignupAsTrippee', foreignKey: "SignupAsTrippeeId"});
+    //  global.db.Signup.belongsTo(global.db.User);
+    global.db.Trip.hasMany(global.db.Signup, {as: 'WaitlistSignup',
+					      foreignKey: 'WaitlistedOnTripId'});
+    global.db.Trip.hasMany(global.db.Signup, {as: 'ApprovedSignup',
+					      foreignKey: 'ApprovedOnTripId'});
+    global.db.Trip.hasOne(global.db.Signup, {as: 'LeaderSignup', 
+					     foreignKey: 'TripToLeadId'});
+    global.db.Trip.hasOne(global.db.Signup, {as: 'HeelerSignup', 
+					     foreignKey: 'TripToHeelId'});
+    //  global.db  .Signup.belongsTo(global.db.Trip);
 
 
 }

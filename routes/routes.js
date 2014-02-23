@@ -57,18 +57,30 @@ exports.view_add_trip = function(req, res){
     // if leader, display all trips that have been suggested that need 
     // leaders or healers. each trip should, as appropriate, have 
     // buttons for 'lead this trip' and 'want to heel' and signup form.
-    db.Trip.find({ 
-	where: {
-//	    getHeelerSignup(): null
+/*    db.Trip.find({ 
+	where: 
+	    ['HeelerSignupID IS NULL'],
 //	    HeelerSignupID: null  // OR these ^^
-	}	
-    })
+	include: [ Signup ]
+	
+    })*/
+
+    //  http://www.sitepoint.com/understanding-sql-joins-mysql-database/
+    // http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html
+    db.sequelize.query(
+	'SELECT Trips.* '+  // all trip fields
+	'FROM Trips ' +     
+	// try to include leader and heeler signups if they exist
+	'LEFT JOIN Signups AS Leader ON Leader.TripToLeadId = Trips.id ' + 
+	'LEFT JOIN Signups AS Heeler ON Heeler.TripToHeelId = Trips.id ' +
+	// if no leader/heeler signups exist, then select this trip
+	'WHERE Heeler.TripToHeelId IS NULL OR Leader.TripToLeadId IS NULL')
     .success(function(trips) {
 	console.log(trips);
     })
-	.error(function(err) {
-	    throw err;
-	});
+    .error(function(err) {
+	throw err;
+    });
 
     // otherwise, display all trips that need heelers, with
     // 'want to heel' buttons and signup form.
@@ -159,8 +171,8 @@ exports.this_week = function(req, res){
     db.Trip.findAll({ // fetch all trips that start later than now
       where: {
         startTime: {
-          gt: new Date()
-        }
+            gt: new Date()
+        },
       }, 
       include: [
         {model: db.Signup, as: 'LeaderSignup'}
