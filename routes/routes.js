@@ -53,9 +53,17 @@ exports.view_add_trip = function(req, res){
      * unclaimed leader/heeler spots (depend on whether the user is
      * a leader. We need separate claim_trip_as_leader/healer POSTS.
      */
+
+    // if leader, display all trips that have been suggested that need 
+    // leaders or healers. each trip should, as appropriate, have 
+    // buttons for 'lead this trip' and 'want to heel' and signup form.
+    
+
+    // otherwise, display all trips that need heelers, with
+    // 'want to heel' buttons and signup form.
     
     
-    res.render('add_trip', { title: 'Add a Trip to the Site' });
+    res.render('lead_trip', { title: 'Lead a trip' });
 };
 
 
