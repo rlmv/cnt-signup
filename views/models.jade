@@ -1,0 +1,17 @@
+
+mixin display_trip(trip)
+    h3 Trip: #{trip.title}
+    b Description: 
+    text #{trip.description}
+    br
+    b Starts: 
+    text #{trip.startTime}
+    br
+    b Ends: 
+    text #{trip.endTime}
+    br
+    b Cost for D.O.C. members: 
+    text $#{trip.costDOC}
+    br
+    b Cost for non-members: 
+    text $#{trip.costNonDOC}

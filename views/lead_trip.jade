@@ -1,5 +1,6 @@
 extends layout
 include forms
+include models
 
 block content
 
@@ -57,6 +58,7 @@ block content
     p
       ul
         each trip in trips
-          li #{trip.title}
+          li 
+              +display_trip(trip)
 
 

@@ -1,5 +1,6 @@
 extends layout
 include forms
+include models
 
 block content
 
@@ -19,21 +20,7 @@ block content
             - trip = trip.values
             li
               ul
-                h3 Trip: #{trip.title}
-                b Description: 
-                text #{trip.description}
-                br
-                b Starts: 
-                text #{trip.startTime}
-                br
-                b Ends: 
-                text #{trip.endTime}
-                br
-                b Cost for D.O.C. members: 
-                text $#{trip.costDOC}
-                br
-                b Cost for non-members: 
-                text $#{trip.costNonDOC}
+                +display_trip(trip)
                 br
                 +trippee_signup(trip, user)
                 br
