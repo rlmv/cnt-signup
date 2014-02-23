@@ -45,31 +45,48 @@ The "claim a trip" sections should have signup forms for each trip and behave ap
 
 ###Others see:
 	1. A link to the "My past trips" page
-	2. A "Trips I'm heeling" section. This should not appear if no trips are being heeled. 
+	2. A "Trips I'm heeling" section. 
+		* This should not appear if no trips are being heeled. 
+		* Link to each trip's "Trip Control" page.
 	3. A "Trips I'm on" section.
 	4. A "Trips I've requested to be on" section. 
 
 Both "Trips I'm on" and "Trips I've requested to be on" should look like the "Sign up for trips" listing, with additions...
 * Have a "Drop trip" button (**Question**: What should this button's behavior be? Should we ask for an optional reason? Send email to leader and/or heeler? Just drop and require that leader/heeler check the site to be informed?)	
 * Instead of the standard "Signup" form, display the user's current signup info, and allow them to change it by editing the contents of text fields and hitting "Update comments" or "Update dietary rescritions".
+* If the user has requested to heel a trip, but has not been approved as a heeler, this should be indicated in that trip's listing. 
 
 
 "My past trips" page layout:
-------------------------------
+-----------------------------
+Sort from most recent to least recent. 
+**EXTRA:** Have a "show trippees" expandable menu for each trip. At the bottom of the trippee listing should be a "blitz trip" button. 
+
+"Trip control" page layout:
+----------------------------
+1. List all trip info
+	* All of the trip's information fields should be updateable, ala the "Manage my trips" signup-editing. 
+2. List all trippees. The trippee list...
+	* Should be sorted into a "Waitlist" and an "Accepted" list. Obviously it should be possible to move trippees between these lists.
+		* Moving somebody from "Waitlist" to "Accepted" should send that trippee an email notification. 
+	* Should display each trippee's signup info, including desire to heel. 
+	* The leader should be able to promote __ANY__ trippee to heeler, regardless of indicated desire to heel. 
+		* Conversely, the leader should be able to demote a heeler to trippee. 
+3. There should be a "blitz trip" button that adds the trip information to the email body.
+	+ **QUESTION:** Should we offer a text field into which the message can be typed, or should we try to use the user's default mail program. Attachments are tricky via the site, but what will happen if somebody's using a Robo lobby computer and we use a `mailto`?
+	+ **EXTRA:** It would be nice to allow the user to automatically attach the OPO medform or waiver.
 
 To-Do
 ======
-
 * Heroku Dataclips for Rory and other OPO administators
 	*Related: Is there any advantage to an in-app utility to collect each of a number of selected trip statistics during a given time period?
+* We need to figure out how to incorporate OPO in general. Julie needs to be able to check trips, for instance. 
 * We're going to want a utility to compile the "THIS WEEK" blitz. 
 * Work out how trips should be transferred between leaders/heelers
+* Figure out protection for various parts of the site. The "Trip control" page, for instance, needs to be inaccessible by everyone except the trip's leader and heeler. 
 
-
-How should we gracefully handle potentially fluctiating trip capacities?
-Should people simply not get notified that they're actually on the trip
-until the leader/heeler explicitly adds them, giving them permission?
-
+Other
+======
 
 auth/user middleware
 --------------------
