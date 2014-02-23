@@ -31,15 +31,10 @@ exports.trip_signup = function(req, res){
                   throw err
                 }
               });
-
         })
       })
     });
 
-
-
-    //instead of printing, change db
-    console.log(req.body);
     //give them an error code based on the status of the trip
     res.redirect("/this_week");
 };

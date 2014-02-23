@@ -58,8 +58,10 @@ block content
     p
       ul
         each trip in trips
-          li 
-              +display_trip(trip)
-              +leader_signup(trip)
+            li 
+                +display_trip(trip)
+                // change this so that the signup is conditional
+                // on leader status
+                +leader_signup(trip)
 
 
