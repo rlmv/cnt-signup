@@ -12,7 +12,7 @@ module.exports = function(req, res, next) {
     }
     
     var auth = req.session.auth;
-    
+
     db.User 
 	.find({ where: {netid: auth.netid} })
 	.complete(function(err, user) {
@@ -30,14 +30,14 @@ module.exports = function(req, res, next) {
 			if (err) {
 			    return next(err);
 			} else {
-			    req.user = user;
+			    req.user = res.locals.user = user;
 			    next();
 			}
 		    });
 
 	    } else {
 		// user found - attach to request
-		req.user = user;
+		req.user = res.locals.user = user;
 		next();
 	    }
 	})

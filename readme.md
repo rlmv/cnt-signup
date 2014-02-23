@@ -9,4 +9,10 @@ How should we gracefully handle potentially fluctiating trip capacities?
 Should people simply not get notified that they're actually on the trip
 until the leader/heeler explicitly adds them, giving them permission?
 
+
+auth/user middleware
+--------------------
+attaches the user object (pulled from the database) to the requests. Also exposes the user object in all templates; no need to pass {user: req.user} to res.render.
+
+
  
