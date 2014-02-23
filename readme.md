@@ -7,7 +7,6 @@ npm install -g nodemon
 nodemon app.js
 ```
 
-Checkout
 
 Spec
 ======
