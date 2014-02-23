@@ -48,9 +48,7 @@ exports.trip_signup = function(req, res){
  */
 
 exports.view_add_trip = function(req, res){
-    res.render('add_trip', { title: 'Add a Trip to the Site',
-                             user: req.user.name,
-                             netid: req.user.netid});
+    res.render('add_trip', { title: 'Add a Trip to the Site' });
 };
 
 /*
