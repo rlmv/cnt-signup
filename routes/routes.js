@@ -46,17 +46,30 @@ exports.trip_signup = function(req, res){
 /*
  * GET add a trip page.
  */
-
 exports.view_add_trip = function(req, res){
-    res.render('add_trip', { title: 'Add a Trip to the Site',
-                             user: req.user.name,
-                             netid: req.user.netid});
+    /* 
+     * --> 'Lead a trip' page. This should have the add_trip form 
+     * at the top of the page, and below list all trips which have 
+     * unclaimed leader/heeler spots (depend on whether the user is
+     * a leader. We need separate claim_trip_as_leader/healer POSTS.
+     */
+
+    // if leader, display all trips that have been suggested that need 
+    // leaders or healers. each trip should, as appropriate, have 
+    // buttons for 'lead this trip' and 'want to heel' and signup form.
+    
+
+    // otherwise, display all trips that need heelers, with
+    // 'want to heel' buttons and signup form.
+    
+    
+    res.render('lead_trip', { title: 'Lead a trip' });
 };
+
 
 /*
  * POST adding a trip.
  */
-
 exports.add_trip = function(req, res){
     /* create a trip object and a signup object and store each in the database
      * with the proper associations. check the radio button result to see 

@@ -5,7 +5,7 @@ block content
   #container
     #header
       h1 #{title}
-      text Welcome  #{user}
+      text Welcome  #{user.name}
       form(method='post' action="/logout") 
         input(type="submit" value="Not you?")
       br
@@ -44,8 +44,6 @@ block content
         text Heeler
         br
         text (If you selected "heeler", your leader will need to signup before the public can see your trip)
-        //we could consider adding the ability to send a leader an invitation email from here
-        input(type='text' name='creator' value='#{netid}' hidden='True')
         br
         text My dietary restrictions:
         input(type='text' name='diet' style="width:200px;")
