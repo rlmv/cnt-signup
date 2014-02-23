@@ -1,5 +1,6 @@
 Spec
 ======
+**NOTE:** Because there is no fundamental difference between heelers and the general public (other than self-identification), the terms "heelers" and "others" are used synonomously throughout. 
 
 Everyone should always have a nav menu with:
 * Sign up for trips
@@ -48,9 +49,9 @@ The "claim a trip" sections should have signup forms for each trip and behave ap
 	3. A "Trips I'm on" section.
 	4. A "Trips I've requested to be on" section. 
 
-	* Both "Trips I'm on" and "Trips I've requested to be on" should look like the "Sign up for trips" listing, with additions...
-		* Have a "Drop trip" button (**Question**: What should this button's behavior be? Should we ask for an optional reason? Send email to leader and/or heeler? Just drop and require that leader/heeler check the site to be informed?)	
-		* Instead of the standard "Signup" form, display the user's current signup info, and allow them to change it by editing the contents of text fields and hitting "Update comments" or "Update dietary rescritions".
+Both "Trips I'm on" and "Trips I've requested to be on" should look like the "Sign up for trips" listing, with additions...
+* Have a "Drop trip" button (**Question**: What should this button's behavior be? Should we ask for an optional reason? Send email to leader and/or heeler? Just drop and require that leader/heeler check the site to be informed?)	
+* Instead of the standard "Signup" form, display the user's current signup info, and allow them to change it by editing the contents of text fields and hitting "Update comments" or "Update dietary rescritions".
 
 
 "My past trips" page layout:
