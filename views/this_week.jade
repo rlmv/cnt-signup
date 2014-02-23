@@ -1,4 +1,5 @@
 extends layout
+include forms
 
 block content
 
@@ -34,5 +35,5 @@ block content
                 b Cost for non-members: 
                 text $#{trip.costNonDOC}
                 br
-                +signup(trip, user)
+                +trippee_signup(trip, user)
                 br

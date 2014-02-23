@@ -1,18 +1,4 @@
 
-mixin signup(trip, user)
-      form(method='post' enctype='multipart/form-data')
-        text Your Dietary Restrictions:
-        input(type='text' name='diet')
-        br
-        text Comments:
-        br
-        textarea(name ="comments" rows="4" cols="50")
-        br
-        input(type='text' name='trip_id' value='#{trip.id}' hidden='True')
-        input(type='text' name='user' value='#{user}' hidden='True')
-        input(type='submit', value='Signup')
-  
-
 doctype html
 html
   head

@@ -61,14 +61,19 @@ exports.view_add_trip = function(req, res){
 	
     //  http://www.sitepoint.com/understanding-sql-joins-mysql-database/
     // http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html
+    
+    
     db.sequelize.query(
-	'SELECT Trips.* '+  // all trip fields
-	'FROM Trips ' +     
+	// all trip fields, + indication of whether has heeler/leader
+	['SELECT Trips.*,',
+	 'Heeler.TripToHeelId AS Heeler,',  // ids of associated signups
+	 'Leader.TripToLeadId AS Leader',
+	'FROM Trips',
 	// try to include leader and heeler signups if they exist
-	'LEFT JOIN Signups AS Leader ON Leader.TripToLeadId = Trips.id ' + 
-	'LEFT JOIN Signups AS Heeler ON Heeler.TripToHeelId = Trips.id ' +
+	'LEFT JOIN Signups AS Leader ON Leader.TripToLeadId = Trips.id',
+	'LEFT JOIN Signups AS Heeler ON Heeler.TripToHeelId = Trips.id',
 	// if missing a leader or heeler signup, then select this trip
-	'WHERE Heeler.TripToHeelId IS NULL OR Leader.TripToLeadId IS NULL',
+	'WHERE Heeler.TripToHeelId IS NULL OR Leader.TripToLeadId IS NULL'].join(' '),
 	db.Trip) // load Trip object
     .success(function(trips) {
 	console.log(trips);
