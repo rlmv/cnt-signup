@@ -1,13 +1,12 @@
 extends layout
-
+include forms
 
 block content
-
 
   #container
     #header
       h1#title=title
-      p Welcome #{user}
+      p Welcome #{user.name}
     #content
       #sidebar
         h1 Your Tools!
@@ -17,8 +16,24 @@ block content
       #main
         ul
           each trip in trips
+            - trip = trip.values
             li
               ul
-                each value, key in trip
-                  li #{key} : #{value}
-                +signup(trip, user)
+                h3 Trip: #{trip.title}
+                b Description: 
+                text #{trip.description}
+                br
+                b Starts: 
+                text #{trip.startTime}
+                br
+                b Ends: 
+                text #{trip.endTime}
+                br
+                b Cost for D.O.C. members: 
+                text $#{trip.costDOC}
+                br
+                b Cost for non-members: 
+                text $#{trip.costNonDOC}
+                br
+                +trippee_signup(trip, user)
+                br

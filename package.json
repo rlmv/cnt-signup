@@ -12,7 +12,9 @@
     "stylus": "*",
     "sequelize": "~1.7.0-rc6",
     "pg": "~2.11.1",
-    "mysql": "~2.0.1"
+    "sqlite3": "*",
+    "moment": "*",
+    "express-mailer": "~0.2.3"
   },
   "repository": {
     "type": "git",

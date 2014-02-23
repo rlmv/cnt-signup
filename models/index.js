@@ -14,16 +14,19 @@ if (!global.hasOwnProperty('db')) {
       host:     match[3],
       logging:  true //false
     })
-  } else {
-    // the application is executed on the local machine ... use mysql
-    //args are database, username, password
-    sequelize = new Sequelize('CNTSignupDB', 'root', null)
+  } else { // local machine - use SQLite
+      sequelize = new Sequelize('cnt', null, null, {
+	      dialect: 'sqlite', 
+	    storage: 'cnt.db'
+      })
   }
  
   global.db = {
     Sequelize: Sequelize,
     sequelize: sequelize,
-    User:      sequelize.import(__dirname + '/user')
+    User:      sequelize.import(__dirname + '/user'),
+    Signup:    sequelize.import(__dirname + '/signup'),
+    Trip:      sequelize.import(__dirname + '/trip')
  
     // add your other models here, use the same format as for user
   }
@@ -32,6 +35,24 @@ if (!global.hasOwnProperty('db')) {
     Associations can be defined here. E.g. like this:
     global.db.User.hasMany(global.db.SomethingElse)
   */
+
+    
+    global.db.User.hasMany(global.db.Signup, {as: 'SignupAsLeader'});
+    global.db.User.hasMany(global.db.Signup, {as: 'SignupAsHeeler'});
+    global.db.User.hasMany(global.db.Signup, {as: 'SignupAsTrippee', foreignKey: "SignupAsTrippeeId"});
+    //  global.db.Signup.belongsTo(global.db.User);
+    global.db.Trip.hasMany(global.db.Signup, {as: 'WaitlistSignup',
+					      foreignKey: 'WaitlistedOnTripId'});
+    global.db.Trip.hasMany(global.db.Signup, {as: 'ApprovedSignup',
+					      foreignKey: 'ApprovedOnTripId'});
+    global.db.Trip.hasOne(global.db.Signup, {as: 'LeaderSignup', 
+					     foreignKey: 'TripToLeadId'});
+    global.db.Trip.hasOne(global.db.Signup, {as: 'HeelerSignup', 
+					     foreignKey: 'TripToHeelId'});
+//    global.db.Signup.belongsTo(global.db.Trip, {as: 'LeaderSignup',
+//						foreignKey: 'TripToLeadId'});
+
+
 }
  
 module.exports = global.db

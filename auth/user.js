@@ -1,4 +1,5 @@
 
+var db = require('../models');
 
 // pull the user object from the database and save
 // it on the request
@@ -10,10 +11,25 @@ module.exports = function(req, res, next) {
 	next(err);
     }
     
-    // pull the user from the database here - 
-    // for now we're just saving the username 
-    req.user = req.session.auth;
+    var auth = req.session.auth;
 
-    next();
+    // is it possible for a user's name to be changed in WebAuth?
+    // At some point we may want this to just findOrCreate on netid, 
+    // and then add/update name if created.
+    db.User.findOrCreate({ netid: auth.netid,
+			   name: auth.name,
+			   email: auth.netid + '@dartmouth.edu'
+			 })
+	.success(function(user, created) {
+	    if (created) {
+		console.log('created user ' + auth.name + 'in db');
+	    };
+	    // attach user to request and expose in template engine
+	    req.user = res.locals.user = user;
+	    next();
+	})
+	.error(function(err) {
+	    next(err);
+	});
 }
     
