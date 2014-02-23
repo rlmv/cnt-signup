@@ -167,7 +167,6 @@ exports.this_week = function(req, res){
      * guarantee you a spot. You need a confirmation email. 
      */
 
-
     db.Trip.findAll({ // fetch all trips that start later than now
       where: {
         startTime: {

@@ -1,0 +1,12 @@
+
+/* config file for nodemon continuous deployment */
+
+{
+    "ignore": [
+	"cnt.db",
+	"readme.md",
+	".git/*",
+	".gitignore"
+    ]
+}
+
