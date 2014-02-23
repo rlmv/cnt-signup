@@ -76,7 +76,9 @@ exports.view_add_trip = function(req, res){
 	'WHERE Heeler.TripToHeelId IS NULL OR Leader.TripToLeadId IS NULL'].join(' '),
 	db.Trip) // load Trip object
     .success(function(trips) {
-	console.log(trips);
+	res.render('lead_trip', {
+	    trips: trips
+	});
     })
     .error(function(err) {
 	throw err;
@@ -84,9 +86,7 @@ exports.view_add_trip = function(req, res){
 
     // otherwise, display all trips that need heelers, with
     // 'want to heel' buttons and signup form.
-    
-    
-    res.render('lead_trip', { title: 'Lead a trip' });
+
 };
 
 
@@ -184,8 +184,7 @@ exports.this_week = function(req, res){
       });
       res.render('this_week', { 
         title: 'This Week in Cabin and Trail',
-        trips: trips,
-        user: req.user.name 
+        trips: trips
       });
    });
 };

@@ -54,3 +54,9 @@ block content
         textarea(name="comments" rows="4" cols="50")
         br
         input(type='submit', value='Add Trip')
+    p
+      ul
+        each trip in trips
+          li #{trip.title}
+
+
