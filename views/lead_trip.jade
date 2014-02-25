@@ -62,6 +62,8 @@ block content
                 +display_trip(trip)
                 // change this so that the signup is conditional
                 // on leader status
-                +leader_signup(trip)
-
+                if trip.leader_signup
+                    +heeler_signup(trip)
+                else
+                    +leader_signup(trip)
 

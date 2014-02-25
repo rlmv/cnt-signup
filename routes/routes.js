@@ -63,7 +63,7 @@ exports.view_add_trip = function(req, res){
 	.where('start_time').gt(new Date());
     
     if (req.user.is_leader) {
-	query.where('leader_signup').equals(null);
+	query.or([{ leader_signup: null }, { heeler_signup: null }]);
     } else {
 	query.where('heeler_signup').equals(null);
     }
