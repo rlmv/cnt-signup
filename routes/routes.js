@@ -27,7 +27,7 @@ exports.trip_signup = function(req, res){
 	    trip.waitlist_signups.push(signup)
 	    trip.save(function(err, trip) {
 		if (err) throw err;
-		console.log(trip);
+
 		res.mailer.send('signup_received', {
 		    to: req.user.email, // REQUIRED. This can be a comma 
 		    //  delimited string just like a normal email to field. 
@@ -36,6 +36,7 @@ exports.trip_signup = function(req, res){
 		}, function (err) {
 		    if (err) throw err;
 		});
+
 		res.redirect("/this_week");
 	    });
 	});
@@ -57,16 +58,23 @@ exports.view_add_trip = function(req, res){
     // leaders or healers. each trip should, as appropriate, have 
     // buttons for 'lead this trip' and 'want to heel' signup form.
 
-    db.Trip
-	.find(function(err, trips) {
-	    if (err) throw err;
-	    res.render('lead_trip', {
-		trips: trips
-	    });
+    var query = db.Trip
+	.find()
+	.where('start_time').gt(new Date());
+    
+    if (req.user.is_leader) {
+	query.where('leader_signup').equals(null);
+    } else {
+	query.where('heeler_signup').equals(null);
+    }
+	
+    query.exec(function(err, trips) {
+	if (err) throw err;
+	res.render('lead_trip', {
+	    trips: trips
 	});
-
-    // otherwise, display all trips that need heelers, with
-    // 'want to heel' buttons and signup form.
+    });
+	    
 
 };
 
@@ -134,7 +142,7 @@ exports.this_week = function(req, res){
 
     db.Trip.find()
 	.where('start_time').gt(new Date())
-//	.where('leader_signup').ne(null)
+	.where('leader_signup').ne(null)
 	.populate('leader_signup')
 	.populate('heeler_signup')
 	.sort('-start_time') // 'start_time'?

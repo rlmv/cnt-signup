@@ -31,10 +31,10 @@ var userSchema = Schema({
     netid: String,
     name: String,
     email: String,
-    isLeader: Boolean,
-    isChair: Boolean,
-    isAdmin: Boolean,
-    isOPO: Boolean
+    is_leader: Boolean,
+    is_chair: Boolean,
+    is_admin: Boolean,
+    is_opo: Boolean
 });
 
 
