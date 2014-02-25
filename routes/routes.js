@@ -132,24 +132,19 @@ exports.this_week = function(req, res){
      * guarantee you a spot. You need a confirmation email. 
      */
 
-    db.Trip.findAll({ // fetch all trips that start later than now
-      where: {
-        startTime: {
-            gt: new Date()
-        },
-      }, 
-      include: [
-        {model: db.Signup, as: 'LeaderSignup'}
-      ],
-      order: 'startTime DESC'
-    }).success(function(trips) {
-      trips = trips.filter(function(trip){ //don't worry, this behaves synchronously
-        return (trip.leaderSignup);
-      });
-      res.render('this_week', { 
-        title: 'This Week in Cabin and Trail',
-        trips: trips
-      });
-   });
+    db.Trip.find()
+	.where('start_time').gt(new Date())
+	.populate('leader_signup')
+	.populate('heeler_signup')
+	.sort('-start_time') // 'start_time'?
+    // include condition that trip is published - has leader
+	.exec(function(err, trips) {
+	    if (err) throw err;
+	    console.log(trips);
+	    res.render('this_week', {
+		title: 'This Week in Cabin and Trail',
+		trips: trips
+	    });
+	});
 };
 

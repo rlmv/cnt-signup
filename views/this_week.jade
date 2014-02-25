@@ -17,7 +17,6 @@ block content
       #main
         ul
           each trip in trips
-            - trip = trip.values
             li
               ul
                 +display_trip(trip)
