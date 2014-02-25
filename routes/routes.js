@@ -31,7 +31,7 @@ exports.trip_signup = function(req, res){
 		res.mailer.send('signup_received', {
 		    to: req.user.email, // REQUIRED. This can be a comma 
 		    //  delimited string just like a normal email to field. 
-		    subject: 'Signup for ' + trip.values.title, // REQUIRED.
+		    subject: 'Signup for ' + trip.title, // REQUIRED.
 		    user: req.user.name
 		}, function (err) {
 		    if (err) throw err;
