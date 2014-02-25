@@ -60,7 +60,8 @@ app.get('/', routes.index);
 app.get('/this_week', views.this_week);
 app.post('/this_week', views.trip_signup);
 app.post('/add_trip', views.add_trip);
-app.get('/add_trip', views.view_add_trip);
+app.get('/lead_trip', views.get_lead_trip);
+app.post('/lead_trip', views.post_lead_trip);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'))

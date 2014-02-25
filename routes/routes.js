@@ -44,9 +44,9 @@ exports.trip_signup = function(req, res){
 };
 
 /*
- * GET add a trip page.
+ * GET lead a trip page.
  */
-exports.view_add_trip = function(req, res){
+exports.get_lead_trip = function(req, res) {
     /* 
      * --> 'Lead a trip' page. This should have the add_trip form 
      * at the top of the page, and below list all trips which have 
@@ -80,7 +80,7 @@ exports.view_add_trip = function(req, res){
 /* 
  * POST lead a trip
  */
-exports.lead_trip = function(req, res) {
+exports.post_lead_trip = function(req, res) {
 
     var body = req.body;
 
@@ -107,7 +107,7 @@ exports.lead_trip = function(req, res) {
 		}
 		trip.save(function(err, signup) {
 		    if (err) throw err;
-		    res.redirect('/manage_trips');
+		    res.redirect('/lead_trip');
 		});
 		
 	    });
