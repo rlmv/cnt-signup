@@ -56,27 +56,14 @@ exports.view_add_trip = function(req, res){
 	
     //  http://www.sitepoint.com/understanding-sql-joins-mysql-database/
     // http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html
-    
-    db.sequelize.query(
-	// all trip fields, + indication of whether has heeler/leader
-	['SELECT Trips.*,',
-	 'Heeler.TripToHeelId AS Heeler,',  // ids of associated signups
-	 'Leader.TripToLeadId AS Leader',
-	'FROM Trips',
-	// try to include leader and heeler signups if they exist
-	'LEFT JOIN Signups AS Leader ON Leader.TripToLeadId = Trips.id',
-	'LEFT JOIN Signups AS Heeler ON Heeler.TripToHeelId = Trips.id',
-	// if missing a leader or heeler signup, then select this trip
-	'WHERE Heeler.TripToHeelId IS NULL OR Leader.TripToLeadId IS NULL'].join(' '),
-	db.Trip) // load Trip object
-    .success(function(trips) {
-	res.render('lead_trip', {
-	    trips: trips
+
+    db.Trip
+	.find(function(err, trips) {
+	    if (err) throw err;
+	    res.render('lead_trip', {
+		trips: trips
+	    });
 	});
-    })
-    .error(function(err) {
-	throw err;
-    });
 
     // otherwise, display all trips that need heelers, with
     // 'want to heel' buttons and signup form.
@@ -127,6 +114,7 @@ exports.add_trip = function(req, res){
 
 	trip.save(function(err, trip) {
 	    if (err) throw err;
+	    console.log(trip);
 	    res.redirect('/this_week');
 	});
     });
