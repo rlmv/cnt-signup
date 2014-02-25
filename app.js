@@ -62,6 +62,7 @@ app.post('/this_week', views.trip_signup);
 app.post('/add_trip', views.add_trip);
 app.get('/lead_trip', views.get_lead_trip);
 app.post('/lead_trip', views.post_lead_trip);
+app.get('/manage_trips', views.get_manage_trips);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'))

@@ -192,3 +192,20 @@ exports.this_week = function(req, res){
 	});
 };
 
+
+/* 
+ * GET manage trips - show all trips user is currently signed up for/leading
+*/
+exports.get_manage_trips = function(req, res) {
+
+    // find signups for user
+    db.Signup.find({ user: req.user._id }, function (err, signups) {
+
+	console.log(signups);
+	if (err) throw err;
+
+	db.Trip.find({ });
+
+    });
+
+}
