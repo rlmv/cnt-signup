@@ -74,10 +74,46 @@ exports.view_add_trip = function(req, res){
 	    trips: trips
 	});
     });
-	    
 
 };
 
+/* 
+ * POST lead a trip
+ */
+exports.lead_trip = function(req, res) {
+
+    var body = req.body;
+
+    var signup = new db.Signup({
+	diet: body.diet,
+	comments: body.comments,
+	user: req.user._id
+    });
+
+    db.Trip
+	.findOne({ _id: body.trip_id }, function(err, trip) {
+	    if (err) throw err;
+
+	    signup.save(function(err, signup) {
+		if (err) throw err; 
+
+		if (body.signup_type == 'leader') {
+		    trip.leader_signup = signup._id;
+		} else if (body.signup_type == 'heeler') {
+		    trip.heeler_signup = signup._id;
+		} else {
+		    throw new Error('lead trip leader/heeler signup_type ' + 
+				    'not specified');
+		}
+		trip.save(function(err, signup) {
+		    if (err) throw err;
+		    res.redirect('/manage_trips');
+		});
+		
+	    });
+	});
+	
+}
 
 /*
  * POST adding a trip.
