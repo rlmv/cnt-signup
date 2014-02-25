@@ -134,10 +134,10 @@ exports.this_week = function(req, res){
 
     db.Trip.find()
 	.where('start_time').gt(new Date())
+	.where('leader_signup').ne(null)
 	.populate('leader_signup')
 	.populate('heeler_signup')
 	.sort('-start_time') // 'start_time'?
-    // include condition that trip is published - has leader
 	.exec(function(err, trips) {
 	    if (err) throw err;
 	    console.log(trips);
