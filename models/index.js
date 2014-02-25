@@ -9,12 +9,17 @@ var tripSchema = Schema({
     cost_doc: Number,
     cost_non_doc: Number,
     title: String,
-    description: String
+    description: String,
+    leader_signup: {type: Schema.Types.ObjectId, ref: 'Signup'},
+    heeler_signup: {type: Schema.Types.ObjectId, ref: 'Signup'},
+    waitlist_signups: [{type: Schema.Types.ObjectId, ref: 'Signup'}],
+    approved_signups: [{type: Schema.Types.ObjectId, ref: 'Signup'}]
 });
 
 var signupSchema = Schema({
     diet: String,
     comments: String,
+    user: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 var userSchema = Schema({
