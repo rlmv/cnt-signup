@@ -14,22 +14,26 @@ module.exports = function(req, res, next) {
     var auth = req.session.auth;
 
     // is it possible for a user's name to be changed in WebAuth?
-    // At some point we may want this to just findOrCreate on netid, 
-    // and then add/update name if created.
-    db.User.findOrCreate({ netid: auth.netid,
-			   name: auth.name,
-			   email: auth.netid + '@dartmouth.edu'
-			 })
-	.success(function(user, created) {
-	    if (created) {
-		console.log('created user ' + auth.name + 'in db');
-	    };
-	    // attach user to request and expose in template engine
+    db.User.findOne({ netid: auth.netid }, function(err, user) {
+	if (err) next(err);
+	
+	if (!user) { // not in db yet: create
+	    user = new db.User({ 
+		netid: auth.netid,
+		name: auth.name,
+		email: auth.netid + '@dartmouth.edu'
+	    });
+	    
+	    user.save(function(err, user) {
+		if (err) next(err);
+		req.user = res.locals.user = user;
+		next();
+	    });
+	}
+	else {
 	    req.user = res.locals.user = user;
 	    next();
-	})
-	.error(function(err) {
-	    next(err);
-	});
+	}
+    });
 }
     
