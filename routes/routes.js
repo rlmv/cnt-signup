@@ -57,7 +57,6 @@ exports.view_add_trip = function(req, res){
     //  http://www.sitepoint.com/understanding-sql-joins-mysql-database/
     // http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html
     
-    
     db.sequelize.query(
 	// all trip fields, + indication of whether has heeler/leader
 	['SELECT Trips.*,',

@@ -14,7 +14,9 @@
     "pg": "~2.11.1",
     "sqlite3": "*",
     "moment": "*",
-    "express-mailer": "~0.2.3"
+    "express-mailer": "~0.2.3",
+    "mongodb": "*",
+    "mongoose": "*"
   },
   "repository": {
     "type": "git",

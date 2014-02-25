@@ -26,6 +26,9 @@ var http = require('http');
 var path = require('path');
 var auth = require('./auth/auth');
 var db = require('./models');
+var mongoose = require('mongoose');
+
+var db = mongoose.connect('mongodb://localhost/cnt')
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -60,14 +63,6 @@ app.post('/this_week', views.trip_signup);
 app.post('/add_trip', views.add_trip);
 app.get('/add_trip', views.view_add_trip);
 
-db.sequelize
-    .sync()
-    .complete(function(err) {
-	if (err) {
-	    throw err
-	} else {
-	    http.createServer(app).listen(app.get('port'), function(){
-		console.log('Express server listening on port ' + app.get('port'))
-	    })
-	}
-    });
+http.createServer(app).listen(app.get('port'), function(){
+    console.log('Express server listening on port ' + app.get('port'))
+});
