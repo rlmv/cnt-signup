@@ -10,7 +10,7 @@ mixin _signup(trip, type, submit_text)
         br
         textarea(name='comments' rows='4' cols='50')
         br
-        input(type='text' name='trip_id' value='#{trip.id}' hidden='True')
+        input(type='text' name='trip_id' value='#{trip._id}' hidden='True')
         input(type='submit', value='#{submit_text}')
         input(type='text' name='signupType' value='#{type}' hidden='True')
 

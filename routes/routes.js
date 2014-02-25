@@ -14,29 +14,32 @@ exports.trip_signup = function(req, res){
      * It would be nice to sent them an email with the trip info saying we got their info. 
      */ 
     var body = req.body;
+    
+    db.Trip.findOne({ _id: body.trip_id }, function(err, trip) {
+	if (err) throw err;
 
-    db.Trip.find(body.trip_id).success(function(trip){
-      trip.createWaitlistSignup({
-        comments: body.comments,
-        dietary_restrictions: body.diet
-      }).success(function(signup){
-        req.user.addSignupAsTrippee(signup).success(function(){
-
-              res.mailer.send('signup_received', {
-                to: req.user.email, // REQUIRED. This can be a comma delimited string just like a normal email to field. 
-                subject: 'Signup for ' + trip.values.title, // REQUIRED.
-                user: req.user.name
-              }, function (err) {
-                if (err) {
-                  throw err
-                }
-              });
-        })
-      })
+	var signup = new db.Signup({
+	    comments: body.comments,
+	    diet: body.diet
+	});
+	signup.save(function(err, signup) {
+	    if (err) throw err;
+	    trip.waitlist_signups.push(signup)
+	    trip.save(function(err, trip) {
+		if (err) throw err;
+		console.log(trip);
+		res.mailer.send('signup_received', {
+		    to: req.user.email, // REQUIRED. This can be a comma 
+		    //  delimited string just like a normal email to field. 
+		    subject: 'Signup for ' + trip.values.title, // REQUIRED.
+		    user: req.user.name
+		}, function (err) {
+		    if (err) throw err;
+		});
+		res.redirect("/this_week");
+	    });
+	});
     });
-
-    //give them an error code based on the status of the trip
-    res.redirect("/this_week");
 };
 
 /*
@@ -53,9 +56,6 @@ exports.view_add_trip = function(req, res){
     // if leader, display all trips that have been suggested that need 
     // leaders or healers. each trip should, as appropriate, have 
     // buttons for 'lead this trip' and 'want to heel' signup form.
-	
-    //  http://www.sitepoint.com/understanding-sql-joins-mysql-database/
-    // http://www.codinghorror.com/blog/2007/10/a-visual-explanation-of-sql-joins.html
 
     db.Trip
 	.find(function(err, trips) {
@@ -93,7 +93,7 @@ exports.add_trip = function(req, res){
         end_time: moment(body.end, date_format),
         cost_doc: body.costDOC,
         cost_non_doc: body.costNonDOC
-     });
+    });
 
     var signup = new db.Signup({
 	diet: body.diet,
@@ -134,7 +134,7 @@ exports.this_week = function(req, res){
 
     db.Trip.find()
 	.where('start_time').gt(new Date())
-	.where('leader_signup').ne(null)
+//	.where('leader_signup').ne(null)
 	.populate('leader_signup')
 	.populate('heeler_signup')
 	.sort('-start_time') // 'start_time'?

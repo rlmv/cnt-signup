@@ -16,6 +16,11 @@ var tripSchema = Schema({
     approved_signups: [{type: Schema.Types.ObjectId, ref: 'Signup'}]
 });
 
+// do we want a field on the Signup which points 
+// back to the trip? This won't ever change once 
+// created (even if the signup changes from heeler to leader,
+// or gets approved/waitlisted/whatever) so it might
+// be very convenient
 var signupSchema = Schema({
     diet: String,
     comments: String,
