@@ -2,7 +2,7 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
-
+// what about heeler requests?
 var tripSchema = Schema({
     start_time : Date,
     end_time: Date,
@@ -24,7 +24,8 @@ var tripSchema = Schema({
 var signupSchema = Schema({
     diet: String,
     comments: String,
-    user: {type: Schema.Types.ObjectId, ref: 'User'}
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
+    trip: {type: Schema.Types.ObjectId, ref: 'Trip'}
 });
 
 var userSchema = Schema({

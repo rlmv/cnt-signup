@@ -1,6 +1,6 @@
 var db = require('../models');
 var moment = require('moment');
-var util = require('util');
+var async = require('async');
 
 /*
  * POST signup for a trip.
@@ -192,7 +192,6 @@ exports.this_week = function(req, res){
 	});
 };
 
-
 /* 
  * GET manage trips - show all trips user is currently signed up for/leading
 */
@@ -201,11 +200,35 @@ exports.get_manage_trips = function(req, res) {
     // find signups for user
     db.Signup.find({ user: req.user._id }, function (err, signups) {
 
+	if (err) throw err;	
 	console.log(signups);
-	if (err) throw err;
 
-	db.Trip.find({ });
+	// use a map here ??
+	var signup_ids = [];
+	signups.forEach(function (x) {signup_ids.push(x._id)});
 
+	async.parallel({
+	    leading: function(callback) {
+		db.Trip.find()
+		    .where('start_time').gt(new Date())
+		    .where('leader_signup').in(signup_ids)
+		    .exec(callback);
+	    },
+	    heeling: function(callback) {
+		db.Trip.find()
+		.where('start_time').gt(new Date())
+		.where('heeler_signup').in(signup_ids)
+		.exec(callback);
+	    }
+/*	    waitlisted_on: function(callback) {
+		db.Trip.find({ waitlist_signups: {
+		    .where('start_time').gt(new Date())
+		    .where(
+		    */ 
+	}, function (err, results) { // parallel callback
+	    if (err) throw err; 
+	    console.log(results);
+	});
     });
 
 }
