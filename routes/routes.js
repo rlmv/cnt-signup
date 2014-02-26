@@ -159,7 +159,6 @@ exports.add_trip = function(req, res){
 
 	trip.save(function(err, trip) {
 	    if (err) throw err;
-	    console.log(trip);
 	    res.redirect('/this_week');
 	});
     });
