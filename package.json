@@ -14,7 +14,8 @@
     "express-mailer": "~0.2.3",
     "mongodb": "*",
     "mongoose": "*",
-    "async": "*"
+    "async": "*",
+    "underscore": "*"
   },
   "repository": {
     "type": "git",

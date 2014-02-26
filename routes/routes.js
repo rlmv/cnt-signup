@@ -1,7 +1,8 @@
 var db = require('../models');
 var moment = require('moment');
 var async = require('async');
-
+var _ = require('underscore');
+ 
 /*
  * POST signup for a trip.
  */
@@ -21,7 +22,8 @@ exports.trip_signup = function(req, res){
 	var signup = new db.Signup({
 	    comments: body.comments,
 	    diet: body.diet,
-	    user: req.user._id
+	    user: req.user._id,
+	    trip: trip._id
 	});
 	signup.save(function(err, signup) {
 	    if (err) throw err;
@@ -85,15 +87,16 @@ exports.post_lead_trip = function(req, res) {
 
     var body = req.body;
 
-    var signup = new db.Signup({
-	diet: body.diet,
-	comments: body.comments,
-	user: req.user._id
-    });
-
     db.Trip
 	.findOne({ _id: body.trip_id }, function(err, trip) {
 	    if (err) throw err;
+
+	    var signup = new db.Signup({
+		diet: body.diet,
+		comments: body.comments,
+		user: req.user._id,
+		trip: trip._id
+	    });
 
 	    signup.save(function(err, signup) {
 		if (err) throw err; 
@@ -159,7 +162,11 @@ exports.add_trip = function(req, res){
 
 	trip.save(function(err, trip) {
 	    if (err) throw err;
-	    res.redirect('/this_week');
+	    signup.trip = trip._id;
+	    signup.save(function(err, signup) {
+		if (err) throw err;
+		res.redirect('/this_week');
+	    });
 	});
     });
 }
@@ -198,37 +205,47 @@ exports.this_week = function(req, res){
 exports.get_manage_trips = function(req, res) {
 
     // find signups for user
-    db.Signup.find({ user: req.user._id }, function (err, signups) {
+    db.Signup.find({ user: req.user._id })
+	.populate('trip')
+	.exec(function (err, signups) {
+	    if (err) throw err;
 
-	if (err) throw err;	
-	console.log(signups);
+	    // all trips in future
+	    var now = new Date();
+	    signups = _.filter(signups, function(s) { return s.trip.start_time > now });
+	    // use a map here ??
+	    var s = {
+		leading: [],
+		heeling: [],
+		waitlisted_on: [],
+		approved_on: []
+	    };
+	    
+	    // bleh, this is hackish but mongo can't support matching
+	    // multiple elements from arrays; that is, we can't do
+	    // a find({array contains elements in array2}) query.
+	    // This manual processing should never be to expensive
+	    signups.forEach(function (signup) {
+		var trip = signup.trip;
+		var sid = signup._id
+		console.log("trip.ls: " + trip.leader_signup + " sid: " + sid);
+		if (trip.leader_signup.equals(sid)) {
+		    s.leading.push(trip);
+		} else if (trip.heeler_signup.equals(sid)) {
+		    s.heeling.push(trip);
+		} else if (_.some(trip.waitlist_signups, 
+				  function(x) { x.equals(sid) })) {
+		    s.waitlisted_on.push(trip);
+		} else if (_.some(trip.approved_signups,
+				  function(x) { x.equals(sid) })) {
+		    s.approved_on.push(trip);
+		} else {
+		    throw new Error("signup not found in trip");
+		}
+	    });
+	    
+	    console.log(s);
 
-	// use a map here ??
-	var signup_ids = [];
-	signups.forEach(function (x) {signup_ids.push(x._id)});
-
-	async.parallel({
-	    leading: function(callback) {
-		db.Trip.find()
-		    .where('start_time').gt(new Date())
-		    .where('leader_signup').in(signup_ids)
-		    .exec(callback);
-	    },
-	    heeling: function(callback) {
-		db.Trip.find()
-		.where('start_time').gt(new Date())
-		.where('heeler_signup').in(signup_ids)
-		.exec(callback);
-	    }
-/*	    waitlisted_on: function(callback) {
-		db.Trip.find({ waitlist_signups: {
-		    .where('start_time').gt(new Date())
-		    .where(
-		    */ 
-	}, function (err, results) { // parallel callback
-	    if (err) throw err; 
-	    console.log(results);
+	    
 	});
-    });
-
 }

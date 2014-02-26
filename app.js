@@ -28,6 +28,7 @@ var auth = require('./auth/auth');
 var db = require('./models');
 var mongoose = require('mongoose');
 
+// should the app start in the callback of this?
 var db = mongoose.connect('mongodb://localhost/cnt')
 
 // all environments
