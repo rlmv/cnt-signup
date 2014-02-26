@@ -20,7 +20,8 @@ exports.trip_signup = function(req, res){
 
 	var signup = new db.Signup({
 	    comments: body.comments,
-	    diet: body.diet
+	    diet: body.diet,
+	    user: req.user._id
 	});
 	signup.save(function(err, signup) {
 	    if (err) throw err;
