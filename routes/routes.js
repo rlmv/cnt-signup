@@ -234,10 +234,10 @@ exports.get_manage_trips = function(req, res) {
 		} else if (trip.heeler_signup.equals(sid)) {
 		    s.heeling.push(trip);
 		} else if (_.some(trip.waitlist_signups, 
-				  function(x) { x.equals(sid) })) {
+				  function(x) { return x.equals(sid) })) {
 		    s.waitlisted_on.push(trip);
 		} else if (_.some(trip.approved_signups,
-				  function(x) { x.equals(sid) })) {
+				  function(x) { return x.equals(sid) })) {
 		    s.approved_on.push(trip);
 		} else {
 		    throw new Error("signup not found in trip");
