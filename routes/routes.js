@@ -213,14 +213,9 @@ exports.get_manage_trips = function(req, res) {
 	    // all trips in future
 	    var now = new Date();
 	    signups = _.filter(signups, function(s) { return s.trip.start_time > now });
-	    // use a map here ??
-	    var s = {
-		leading: [],
-		heeling: [],
-		waitlisted_on: [],
-		approved_on: []
-	    };
-	    
+
+	    var s = {};
+
 	    // bleh, this is hackish but mongo can't support matching
 	    // multiple elements from arrays; that is, we can't do
 	    // a find({array contains elements in array2}) query.
