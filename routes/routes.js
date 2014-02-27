@@ -188,7 +188,7 @@ exports.this_week = function(req, res){
 	.where('leader_signup').ne(null)
 	.populate('leader_signup')
 	.populate('heeler_signup')
-	.sort('-start_time') // 'start_time'?
+	.sort('start_time') // 'start_time'?
 	.exec(function(err, trips) {
 	    if (err) throw err;
 	    console.log(trips);
@@ -225,27 +225,27 @@ exports.get_manage_trips = function(req, res) {
 	    // multiple elements from arrays; that is, we can't do
 	    // a find({array contains elements in array2}) query.
 	    // This manual processing should never be to expensive
-	    signups.forEach(function (signup) {
-		var trip = signup.trip;
-		var sid = signup._id
-		console.log("trip.ls: " + trip.leader_signup + " sid: " + sid);
-		if (trip.leader_signup.equals(sid)) {
-		    s.leading.push(trip);
-		} else if (trip.heeler_signup.equals(sid)) {
-		    s.heeling.push(trip);
-		} else if (_.some(trip.waitlist_signups, 
-				  function(x) { return x.equals(sid) })) {
-		    s.waitlisted_on.push(trip);
-		} else if (_.some(trip.approved_signups,
-				  function(x) { return x.equals(sid) })) {
-		    s.approved_on.push(trip);
-		} else {
-		    throw new Error("signup not found in trip");
-		}
+
+	    s.leading = _.filter(signups, function(x) {
+		var leader = x.trip.leader_signup;
+		return !leader ? false : x._id.equals(leader);
+	    });
+	    s.heeling = _.filter(signups, function(x) {
+		var heeler = x.trip.heeler_signup;
+		return !heeler ? false : x._id.equals(heeler);
+	    });
+	    s.waitlisted_on = _.filter(signups, function(x) {
+		return _.some(x.trip.waitlist_signups, function(y) {
+		    return x._id.equals(y);
+		})
+	    });
+	    s.approved_on = _.filter(signups, function(x) {
+		return _.some(x.trip.approved_signups, function(y) {
+		    return x._id.equals(y);
+		})
 	    });
 	    
 	    console.log(s);
-
 	    
 	});
 }
