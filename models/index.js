@@ -4,11 +4,11 @@ var Schema = mongoose.Schema
 
 // what about heeler requests?
 var tripSchema = Schema({
-    start_time : Date,
-    end_time: Date,
-    cost_doc: Number,
-    cost_non_doc: Number,
-    title: String,
+    start_time : { type: Date, required: true },
+    end_time: { type: Date, required: true },
+    cost_doc: { type: Number, min: 0},
+    cost_non_doc: { type: Number, min: 0},
+    title: { type: String, required: true },
     description: String,
     leader_signup: {type: Schema.Types.ObjectId, ref: 'Signup'},
     heeler_signup: {type: Schema.Types.ObjectId, ref: 'Signup'},
@@ -29,9 +29,9 @@ var signupSchema = Schema({
 });
 
 var userSchema = Schema({
-    netid: String,
-    name: String,
-    email: String,
+    netid: { type: String, required: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
     is_leader: Boolean,
     is_chair: Boolean,
     is_admin: Boolean,
