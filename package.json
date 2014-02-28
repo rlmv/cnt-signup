@@ -8,14 +8,14 @@
   "dependencies": {
     "express": "3.4.8",
     "connect": "*",
-    "jade": "*",
     "stylus": "*",
     "moment": "*",
     "express-mailer": "~0.2.3",
     "mongodb": "*",
     "mongoose": "*",
     "async": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "ejs": "~0.8.5"
   },
   "repository": {
     "type": "git",

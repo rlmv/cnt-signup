@@ -5,6 +5,9 @@ body {
 a {
   color: #00b7ff;
 }
+#not_you {
+  float: right;
+}
 #top_navbar {
   background: #f96e5b;
   width: auto;

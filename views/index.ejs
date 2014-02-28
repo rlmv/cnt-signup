@@ -1,0 +1,14 @@
+<% include header.ejs %>
+<body>
+	<div id="trips_happening">
+		<ul>	
+			<% trips.forEach(function(trip){ %>
+				<li>
+					<% include display_trip.ejs %><br>
+		            <% include signup_forms/trippee_signup_form.ejs %><br>
+		        </li>
+			<% }) %> 
+		</ul>
+	</div>
+</body>
+<%include footer.ejs %>
