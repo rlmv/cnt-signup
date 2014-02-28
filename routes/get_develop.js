@@ -1,3 +1,5 @@
 module.exports = function(req, res){
-	res.render('develop');
+
+    console.log(req.user);
+    res.render('develop');
 };
