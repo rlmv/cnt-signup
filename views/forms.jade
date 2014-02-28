@@ -3,7 +3,7 @@
 // 
 mixin _signup(trip, submit_text)
     form(method='post' enctype='multipart/form-data')
-        +signup_body()
+        +_signup_body()
         input(type='text' name='trip_id' value='#{trip._id}' hidden='True')
         input(type='submit', value='#{submit_text}')
 
