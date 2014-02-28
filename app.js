@@ -20,7 +20,6 @@ mailer.extend(app, {
 });
 
 var routes = require('./routes');
-var views = require('./routes/routes.js');
 var user = require('./auth/user');
 var http = require('http');
 var path = require('path');
@@ -29,7 +28,7 @@ var db = require('./models');
 var mongoose = require('mongoose');
 
 // should the app start in the callback of this?
-var db = mongoose.connect('mongodb://localhost/cnt')
+var db = mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/cnt')
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -57,13 +56,12 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/this_week', views.this_week);
-app.post('/this_week', views.trip_signup);
-app.post('/add_trip', views.add_trip);
-app.get('/lead_trip', views.get_lead_trip);
-app.post('/lead_trip', views.post_lead_trip);
-app.get('/manage_trips', views.get_manage_trips);
+app.get('/', routes.get_trips_happening);
+app.post('/', routes.post_trippee_signup);
+app.post('/create_trip', routes.post_create_trip);
+app.get('/lead_trip', routes.get_lead_trip);
+app.post('/lead_trip', routes.post_claim_trip);
+app.get('/manage_trips', routes.get_manage_trips);
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'))

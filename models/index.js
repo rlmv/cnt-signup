@@ -1,3 +1,4 @@
+//Consider adding validation to require that relationships exist. tricker than it looks. 
 
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
@@ -6,8 +7,8 @@ var Schema = mongoose.Schema
 var tripSchema = Schema({
     start_time : { type: Date, required: true },
     end_time: { type: Date, required: true },
-    cost_doc: { type: Number, required: true, min: 0, default: 0},
-    cost_non_doc: { type: Number, required: true, min: 0, default: 0},
+    cost_doc: { type: Number, min: 0, default: 0},
+    cost_non_doc: { type: Number, min: 0, default: 0},
     title: { type: String, required: true },
     description: String,
     leader_signup: {type: Schema.Types.ObjectId, ref: 'Signup'},
@@ -16,16 +17,11 @@ var tripSchema = Schema({
     approved_signups: [{type: Schema.Types.ObjectId, ref: 'Signup'}]
 });
 
-// do we want a field on the Signup which points 
-// back to the trip? This won't ever change once 
-// created (even if the signup changes from heeler to leader,
-// or gets approved/waitlisted/whatever) so it might
-// be very convenient
 var signupSchema = Schema({
     diet: String,
     comments: String,
-    user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-    trip: {type: Schema.Types.ObjectId, ref: 'Trip', required: true}
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
+    trip: {type: Schema.Types.ObjectId, ref: 'Trip'}
 });
 
 var userSchema = Schema({
