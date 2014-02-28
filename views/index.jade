@@ -1,13 +1,25 @@
 extends layout
+include forms
+include models
 
 block content
-  h1#title=title
-  p#content Welcome #{user.name}
-  p. 
-     Your netid is 
-     #{user.netid}
-     and we are using 
-     #{user.email}
-     as your email.
-  a(href='/this_week') This Week in CnT
-  
+
+  #container
+    #header
+      h1#title=title
+      p Welcome #{user.name}
+    #content
+      #sidebar
+        h1 Your Tools!
+        ul
+          li: a(href='/manage_trips') Manage Trips
+          li: a(href='/lead_trip') Lead Trip
+      #main
+        ul
+          each trip in trips
+            li
+              ul
+                +display_trip(trip)
+                br
+                +trippee_signup(trip, user)
+                br

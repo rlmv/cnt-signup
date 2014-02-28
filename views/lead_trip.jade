@@ -13,7 +13,7 @@ block content
       br
     #content
     p
-      form(method='post' enctype='multipart/form-data' action='/add_trip')
+      form(method='post' enctype='multipart/form-data' action='/create_trip')
         text Trip Title: 
         input(type='text' name='title' style="width:200px;")
         br
@@ -39,22 +39,11 @@ block content
         textarea(name="description" rows="5" cols="60")
         br
         br
-        text I am this trip's: 
-        input(type="radio" name="whoCreated" value="leader")
-        text Leader 
-        input(type="radio" name="whoCreated" value="heeler")
-        text Heeler
-        br
-        text (If you selected "heeler", your leader will need to signup before the public can see your trip)
-        br
-        text My dietary restrictions:
-        input(type='text' name='diet' style="width:200px;")
-        br
-        text My additonal information (ex: my shoe size, gear I need from DOR, etc.):
-        br
-        textarea(name="comments" rows="4" cols="50")
-        br
-        input(type='submit', value='Add Trip')
+        +_signup_body()
+        if user.is_leader
+            input(type='submit', value='Create Trip')
+        else
+            input(type='submit', value='Propose Trip')
     p
       ul
         each trip in trips
