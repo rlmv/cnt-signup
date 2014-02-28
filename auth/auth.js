@@ -26,7 +26,7 @@ module.exports = function(service, logout_url) {
 
 	    req.session.destroy(function(err) {
 		if (err) return next(err);
-		// can add logout redirect params here, if we want:
+		// can add logout redirect params here
 		cas.logout(req, res); 
 	    });
 
@@ -46,7 +46,7 @@ module.exports = function(service, logout_url) {
 		    // the auth object contains {name, username, netid} fields
 		    req.session.auth = extended.attributes;
 		    
-		    // remove the ticket from url
+		    // remove the ticket query arg from url
 		    res.redirect(url.parse(req.url).pathname);
 		});
 	    });
