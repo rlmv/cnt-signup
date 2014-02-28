@@ -1,0 +1,11 @@
+
+
+{
+    "ignore": [
+	"cnt.db",
+	"readme.md",
+	".git/*",
+	".gitignore"
+    ]
+}
+

@@ -1,0 +1,25 @@
+// signup mixin prototype. we use these a lot, hence the 
+// generalized model
+// 
+mixin _signup(trip, type, submit_text)
+    form(method='post' enctype='multipart/form-data')
+        text Your Dietary Restrictions:
+        input(type='text' name='diet')
+        br
+        text Comments:
+        br
+        textarea(name='comments' rows='4' cols='50')
+        br
+        input(type='text' name='trip_id' value='#{trip._id}' hidden='True')
+        input(type='submit', value='#{submit_text}')
+        input(type='text' name='signup_type' value='#{type}' hidden='True')
+
+mixin leader_signup(trip)
+    +_signup(trip, 'leader', 'Lead this trip')
+
+mixin heeler_signup(trip)
+    +_signup(trip, 'heeler', 'Heel this trip')
+
+mixin trippee_signup(trip)
+    +_signup(trip, 'trippee', 'Signup')
+  
