@@ -9,11 +9,6 @@ block content
       h1#title=title
       p Welcome #{user.name}
     #content
-      #sidebar
-        h1 Your Tools!
-        ul
-          li: a(href='/manage_trips') Manage Trips
-          li: a(href='/lead_trip') Lead Trip
       #main
         ul
           each trip in trips

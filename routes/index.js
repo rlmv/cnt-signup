@@ -9,3 +9,7 @@ exports.get_manage_trips = require('./get_manage_trips');
 exports.get_lead_trip = require('./get_lead_trip');
 exports.post_create_trip = require('./post_create_trip');
 exports.post_claim_trip = require('./post_claim_trip');
+
+//develop
+exports.get_develop = require('./get_develop');
+exports.post_develop = require('./post_develop');
