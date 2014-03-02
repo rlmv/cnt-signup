@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- scripts -->
+    <script type = 'text/javascript' src="js/scripts.js"></script>
+    <script type = 'text/javascript' src="js/jquery.js"></script>
+    <script type = 'text/javascript' src="js/jquery.datetimepicker.js"></script>
+    <script type = 'text/javascript' src="js/onlyNumbers.js"></script>
+
+    <!-- styles -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    <link href='/stylesheets/jquery.datetimepicker.css' type='text/css' rel="stylesheet">
+
+  </head>
+  <div id="not_you">
+    Not <%= user.name %>? <a href='/logout'>Logout</a>
+  </div>
+  <br>
+  <div id="top_navbar">
+    <ul>
+      <li class="active"><a href='/'><span>Sign up for trips</span></a></li>
+      <li><a href='/lead_trip'><span>Lead a trip</span></a></li>
+      <li><a href='/manage_trips'><span>Manage my trips</span></a></li>
+      <li class="last"><a href='/develop'><span>Develop</span></a></li>
+    </ul>
+  </div>

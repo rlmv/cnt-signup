@@ -1,3 +1,6 @@
 module.exports = function(req, res){
-    res.render('develop');
+
+    res.render('develop', {
+    	title: 'Develop'
+    });
 };

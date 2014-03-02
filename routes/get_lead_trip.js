@@ -25,6 +25,7 @@ module.exports = function(req, res) {
     query.exec(function(err, trips) {
 	if (err) throw err;
 	res.render('lead_trip', {
+        title: 'Lead a trip',
 	    trips: trips
 	});
     });

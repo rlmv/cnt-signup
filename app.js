@@ -33,7 +33,7 @@ var db = mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/cnt')
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.logger('dev'));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));

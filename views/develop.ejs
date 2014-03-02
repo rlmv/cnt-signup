@@ -1,0 +1,16 @@
+<% include header.ejs %>
+<body>
+	<div class="content">
+	  Your permissions:<br>
+	  <form method='post' enctype='multipart/form-data'>
+	  	<input type='checkbox' name='be_leader' <% if(user.is_leader){ %> checked <% } %> >Leader<br>
+	  	<input type='checkbox' name='be_chair' <% if(user.is_chair){ %> checked <% } %> >Chair<br>
+	  	<input type='checkbox' name='be_opo' <% if(user.is_opo){ %> checked <% } %> >OPO<br>
+	  	<input type='checkbox' name='be_admin' <% if(user.is_admin){ %> checked <% } %> >Admin<br>
+	  	<!-- express will consider the req.body invalid without this if no boxes are checked -->
+	  	<input type='text' name='hack' value='hackity' hidden='True'> 
+	  	<input type='submit' value='Set Permissions'>
+	  </form>
+	</div>
+</body>
+<% include footer.ejs %>
