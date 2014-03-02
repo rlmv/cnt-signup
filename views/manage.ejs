@@ -1,3 +1,29 @@
 <% include header.ejs %>
+<body>
 
+    <div id="leading">
+        <h2>Trips I'm Leading</h2>
+        <% if (leader_signups.length == 0) { %>
+            <p> You are not currently leading any trips </p>
+        <% } else { %> 
+            <ul>
+                <% leader_signups.forEach(function(signup) { %>
+                    <% var trip = signup.trip; %>
+                    <li> <% include display_trip.ejs %> </li>
+                <% }); %>
+            </ul>
+        <% } %>
+    </div>
+
+    <div id="past_trips"> 
+        <h2>Past Trips</h2>
+        <ul>
+            <% old_signups.forEach(function(signup) { %>
+                <% var trip = signup.trip; %>
+                <li> <% include display_trip.ejs %> </li>
+            <% }); %>
+        </ul>
+    </div>
+
+</body>
 <% include footer.ejs %>

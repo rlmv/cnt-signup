@@ -41,6 +41,7 @@ module.exports = function(req, res) {
 
 	    res.render('manage', {
 		title: 'Manage my Trips',
+		old_signups: old_signups,
 		leader_signups: leader_signups,
 		heeler_signups: heeler_signups,
 		waitlisted_signups: waitlisted_signups,
