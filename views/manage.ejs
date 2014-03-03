@@ -1,7 +1,7 @@
 <% include header.ejs %>
 
 <div class="container">
-    
+
     <div class="row">
         <div class="col-md-6">
           
@@ -25,7 +25,7 @@
             <div id="heeling">
                 <h2>Trips I'm Heeling</h2>
                 <ul class="list-group">
-                    <% leader_signups.forEach(function(signup) { %>
+                    <% heeler_signups.forEach(function(signup) { %>
                     <% var trip = signup.trip; %>
                     <li class="list-group-item"> <% include display_trip.ejs %> </li>
                     <% }); %>
