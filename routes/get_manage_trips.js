@@ -12,7 +12,6 @@ module.exports = function(req, res) {
 	    db.Signup.deepPopulate(signups, function(err, signups) {
 		    
 		    if (err) throw err;
-		    console.log(signups);
 
 		    var now = new Date();
 		    var old_signups = _.filter(signups, function(s) { return s.trip.start_time <= now });
