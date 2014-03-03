@@ -1,7 +1,6 @@
 <% include header.ejs %>
 
 <div class="container">
- 
     <h2> Create a new trip </h2>   
     <form method='post' class="form-horizontal" role='form' enctype='multipart/form-data' action='/create_trip'>
         <div class="form-group">
@@ -60,17 +59,17 @@
         </button>
 
     </form>
-    
-    <h2> Heel/Lead existing trip </h2>
 
-    <ul>    
+    <h2>Heel/Lead existing trip</h2>
+
+    <ul class="list-group">   
         <% trips.forEach(function(trip){ %>
-        <li>
+        <li class="list-group-item">
             <% include display_trip.ejs %>
             <% if (trip.leader_signup){ %>
-            <% include signup_forms/heeler_signup_form.ejs %>
+                <% include signup_forms/heeler_signup_form.ejs %>
             <% } else { %>
-            <% include signup_forms/leader_signup_form.ejs %>
+                <% include signup_forms/leader_signup_form.ejs %>
             <% } %>
         </li>
         <% }) %> 
