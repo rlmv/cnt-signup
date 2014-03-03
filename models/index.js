@@ -21,8 +21,18 @@ var signupSchema = Schema({
     diet: String,
     comments: String,
     user: {type: Schema.Types.ObjectId, ref: 'User'},
-    trip: {type: Schema.Types.ObjectId, ref: 'Trip'}
+    trip: {type: Schema.Types.ObjectId, ref: 'Trip'},
+    // saving this embedded info is redundant, but
+    // simplifies queries where we want to display
+    // user information given a signup, but don't 
+    // want to run a second query
+    user_info: {  
+	netid: String,
+	name: String,
+	email: String
+    }
 });
+
 
 var userSchema = Schema({
     netid: { type: String, required: true },
