@@ -15,7 +15,7 @@ module.exports = function(req, res) {
 		trip: trip
 	    };
 
-	    db.Signup.createSignup(function(err, signup) {
+	    db.Signup.createSignup(fields, function(err, signup) {
 		if (err) throw err; 
 
 		if (req.user.is_leader && !trip.leader_signup) {
