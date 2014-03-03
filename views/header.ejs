@@ -42,9 +42,7 @@
             <li><a href="/develop">Develop</a></li>
           </ul>
           <!-- float to right side of navbar -->
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logout">Not <%= user.name %>? Logout</a></li>
-          </ul>
+          <div class="navbar-text navbar-right">Not <%= user.name %>? <a href="#" class="navbar-link">Logout</a></div>
         </div><!--/.nav-collapse -->
 
       </div>
