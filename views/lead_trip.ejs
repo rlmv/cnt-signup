@@ -1,85 +1,81 @@
 <% include header.ejs %>
 
 <div class="container">
-    <div id="create_trip_form">
-        <h2> Create a new trip </h2>
-        <form method='post' class="form-horizontal" role='form' enctype='multipart/form-data' action='/create_trip'>
-            <div class="form-group">
-                <label >Trip Title</label>
-                <input type='text' name='title' class="form-control">
-            </div>
+ 
+    <h2> Create a new trip </h2>   
+    <form method='post' class="form-horizontal" role='form' enctype='multipart/form-data' action='/create_trip'>
+        <div class="form-group">
+            <label >Trip Title</label>
+            <input type='text' name='title' class="form-control">
+        </div>
 
             <!-- Use this to have the label to left of input fields:
-            <div class="form-group">
+        <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
               <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
             </div>
-            </div>
-            -->
+        </div> -->
 
-            <div class="form-group">
-                <label>Start Time</label>
-                <input type='text' id='startpicker' name='start' class="form-control">
-                <script>
-                $(function(){$('#startpicker').datetimepicker({minDate:'0', step:30});});
-                </script> 
-            </div>
+        <div class="form-group">
+            <label>Start Time</label>
+            <input type='text' id='startpicker' name='start' class="form-control">
+            <script>
+            $(function(){$('#startpicker').datetimepicker({minDate:'0', step:30});});
+            </script> 
+        </div>
 
-            <div class="form-group">
-                <label>End Time</label>
+        <div class="form-group">
+            <label>End Time</label>
 
-                <input type='text' id='endpicker' name='end' class="form-control">
-                <script>
-                $(function(){$('#endpicker').datetimepicker({minDate:'0', step:30});});
-                </script>
-            </div>
+            <input type='text' id='endpicker' name='end' class="form-control">
+            <script>
+            $(function(){$('#endpicker').datetimepicker({minDate:'0', step:30});});
+            </script>
+        </div>
 
-            <div class="form-group">
-                <label>Cost for D.O.C. members</label>
-                <!-- from http://www.webstutorial.com/jquery-allow-only-numbers/jquery -->
-                <input type='text' name='costDOC' class="onlyNumbers form-control" >
-            </div>
+        <div class="form-group">
+            <label>Cost for D.O.C. members</label>
+            <!-- from http://www.webstutorial.com/jquery-allow-only-numbers/jquery -->
+            <input type='text' name='costDOC' class="onlyNumbers form-control" >
+        </div>
 
-            <div class="form-group">
-                <label>Cost for non-D.O.C. members</label>
-                <input type='text' name='costNonDOC' class="onlyNumbers form-control">
-            </div>
+        <div class="form-group">
+            <label>Cost for non-D.O.C. members</label>
+            <input type='text' name='costNonDOC' class="onlyNumbers form-control">
+        </div>
 
-            <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" class="form-control"></textarea>
-            </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" class="form-control"></textarea>
+        </div>
 
-            <% include signup_forms/signup_body %>
-            <button type='submit' class="btn btn-default">
-                <% if (user.is_leader){ %>
-                    Create Trip
-                <% }else{ %>
-                    Propose Trip
-                <% } %>
-            </button>
+        <% include signup_forms/signup_body %>
+        <button type='submit' class="btn btn-default">
+            <% if (user.is_leader){ %>
+            Create Trip
+            <% }else{ %>
+            Propose Trip
+            <% } %>
+        </button>
 
-        </form>
-    </div>
-
+    </form>
+    
     <h2> Heel/Lead existing trip </h2>
 
-    <div id="needs">
-        <ul>    
-            <% trips.forEach(function(trip){ %>
-                <li>
-                    <% include display_trip.ejs %><br>
-                    <% if (trip.leader_signup){ %>
-                        <% include signup_forms/heeler_signup_form.ejs %>
-                    <% }else{ %>
-                        <% include signup_forms/leader_signup_form.ejs %>
-                    <% } %>
-                    <br>
-                </li>
-            <% }) %> 
-        </ul>
-    </div>
-</div>
+    <ul>    
+        <% trips.forEach(function(trip){ %>
+        <li>
+            <% include display_trip.ejs %><br>
+            <% if (trip.leader_signup){ %>
+            <% include signup_forms/heeler_signup_form.ejs %>
+            <% } else { %>
+            <% include signup_forms/leader_signup_form.ejs %>
+            <% } %>
+            <br>
+        </li>
+        <% }) %> 
+    </ul>
 
+</div> 
 <% include footer.ejs %>

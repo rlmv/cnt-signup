@@ -10,6 +10,7 @@ module.exports = function(req, res) {
 	    if (err) throw err;
 
 	    var now = new Date();
+	    console.log(signups);
 	    var old_signups = _.filter(signups, function(s) { return s.trip.start_time <= now });
 
 	    // all trips in future
