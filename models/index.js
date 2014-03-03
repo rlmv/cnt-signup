@@ -25,13 +25,40 @@ var signupSchema = Schema({
     // saving this embedded info is redundant, but
     // simplifies queries where we want to display
     // user information given a signup, but don't 
-    // want to run a second query
+    // want to run a second query. Note that this information
+    // is (*should be*) immutable - it won't ever need to 
+    // be modified after creation
     user_info: {  
 	netid: String,
 	name: String,
 	email: String
     }
 });
+
+// Create a signup and associate it with the correct user and trip.
+// fields is a { diet, comments, user, trip } dict, 
+// callback has signature function(err, signup)
+signupSchema.statics.createForUser = function(fields, callback) {
+    
+    // send errors to callback
+    if (!fields.user) {
+	callback(new mongoose.Error('.user not specified in fields'));
+    } else if (!fields.trip) {
+	callback(new mongoose.Error('.trip not specified in fields)'));
+    }
+
+    fields.user_info = { 
+	netid: fields.user.netid, 
+	name: fields.user.name,
+	email: fields.user.email
+    };
+    fields.user = fields.user._id;
+    fields.trip = fields.trip._id;
+    
+    var signup = new this(fields);
+    signup.save(callback);
+       
+};
 
 
 var userSchema = Schema({

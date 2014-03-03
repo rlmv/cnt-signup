@@ -16,7 +16,6 @@ module.exports = function(req, res){
 	.sort('start_time') // 'start_time'?
 	.exec(function(err, trips) {
 	    if (err) throw err;
-	    console.log(trips);
 	    res.render('this_week', {
 		title: 'This Week in Cabin and Trail',
 		trips: trips

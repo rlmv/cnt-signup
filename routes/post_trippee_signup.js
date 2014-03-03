@@ -12,13 +12,13 @@ module.exports = function(req, res){
     db.Trip.findOne({ _id: body.trip_id }, function(err, trip) {
 	if (err) throw err;
 
-	var signup = new db.Signup({
+	var fields = {
 	    comments: body.comments,
 	    diet: body.diet,
-	    user: req.user._id,
-	    trip: trip._id
-	});
-	signup.save(function(err, signup) {
+	    user: req.user,
+	    trip: trip
+	};
+	db.Signup.createForUser(fields, function(err, signup) {
 	    if (err) throw err;
 	    trip.waitlist_signups.push(signup)
 	    trip.save(function(err, trip) {
