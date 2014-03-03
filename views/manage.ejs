@@ -21,19 +21,18 @@
             </div>
             <% } %>
 
+            <% if (heeler_signups.length > 0) { %>
             <div id="heeling">
                 <h2>Trips I'm Heeling</h2>
-                <% if (heeler_signups.length == 0) { %>
-                <p> You are not heeling any upcoming trips</p>
-                <% } else { %> 
                 <ul class="list-group">
                     <% leader_signups.forEach(function(signup) { %>
                     <% var trip = signup.trip; %>
                     <li class="list-group-item"> <% include display_trip.ejs %> </li>
                     <% }); %>
                 </ul>
-                <% } %>
             </div>
+            <% } %>
+
         </div>
 
         <div class="col-md-6">
@@ -41,7 +40,7 @@
                 <h2>Other trips you are on</h2>
                 <ul class="list-group">
                     <% if (approved_signups.length == 0) { %>
-                    <li class="list-group-item"> You are not going on any other trips</li>
+                    <li class="list-group-item"> You are not confirmed on any other trips</li>
                     <% } else { %> 
                     <% approved_signups.forEach(function(signup) { %>
                     <% var trip = signup.trip; %>
@@ -50,6 +49,21 @@
                 </ul>
                 <% } %>
             </div>
+
+
+            <% if (waitlisted_signups.length > 0) { %>
+            <div id="waitlisted">
+
+                <h2>Waitlisted</h2>
+                <ul class="list-group">
+                    <% waitlisted_signups.forEach(function(signup) { %>
+                    <% var trip = signup.trip; %>
+                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
+                    <% }); %>
+                </ul>
+            </div>
+            <% } %>
+
         </div>
     </div>
 
