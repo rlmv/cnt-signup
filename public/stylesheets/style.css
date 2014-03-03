@@ -2,116 +2,12 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
 a {
   color: #00b7ff;
 }
+
 #not_you {
   float: right;
 }
-#top_navbar {
-  background: #f96e5b;
-  width: auto;
-}
-#top_navbar ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  display: block;
-  zoom: 1;
-}
-#top_navbar ul:after {
-  content: ' ';
-  display: block;
-  font-size: 0;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
-#top_navbar ul li {
-  float: left;
-  display: block;
-  padding: 0;
-}
-#top_navbar ul li a {
-  color: #fff;
-  text-decoration: none;
-  display: block;
-  padding: 15px 25px;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 14px;
-  position: relative;
-  -webkit-transition: color 0.25s;
-  -moz-transition: color 0.25s;
-  -ms-transition: color 0.25s;
-  -o-transition: color 0.25s;
-  transition: color 0.25s;
-}
-#top_navbar ul li a:hover {
-  color: #333;
-}
-#top_navbar ul li a:hover:before {
-  width: 100%;
-}
-#top_navbar ul li a:after {
-  content: '';
-  display: block;
-  position: absolute;
-  right: -3px;
-  top: 19px;
-  height: 6px;
-  width: 6px;
-  background: #fff;
-  opacity: 0.5;
-}
-#top_navbar ul li a:before {
-  content: '';
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 0;
-  background: #333;
-  -webkit-transition: width 0.25s;
-  -moz-transition: width 0.25s;
-  -ms-transition: width 0.25s;
-  -o-transition: width 0.25s;
-  transition: width 0.25s;
-}
-#top_navbar ul li.last > a:after,
-#top_navbar ul li:last-child > a:after {
-  display: none;
-}
-#top_navbar ul li.active a {
-  color: #333;
-}
-#top_navbar ul li.active a:before {
-  width: 100%;
-}
-@media screen and (max-width: 768px) {
-  #top_navbar ul li {
-    float: none;
-  }
-  #top_navbar ul li a {
-    width: 100%;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  #top_navbar ul li a:after {
-    display: none;
-  }
-  #top_navbar ul li a:before {
-    height: 1px;
-    background: #fff;
-    width: 100%;
-    opacity: 0.2;
-  }
-  #top_navbar ul li.last > a:before,
-  #top_navbar ul li:last-child > a:before {
-    display: none;
-  }
-}
+
