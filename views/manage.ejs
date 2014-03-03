@@ -2,56 +2,63 @@
 
 <div class="container">
 
-    <% if (user.is_leader) { %>
-        <div id="leading">
-            <h2>Trips I'm Leading</h2>
-            <% if (leader_signups.length == 0) { %>
-            <p> You are not leading any upcoming trips </p>
-            <% } else { %> 
-            <ul>
-                <% leader_signups.forEach(function(signup) { %>
-                <% var trip = signup.trip; %>
-                <li> <% include display_trip.ejs %> </li>
-                <% }); %>
-            </ul>
+    <div class="row">
+        <div class="col-md-6">
+          
+            <% if (user.is_leader) { %>
+            <div id="leading">
+                <h2>Trips I'm Leading</h2>
+                <% if (leader_signups.length == 0) { %>
+                <p> You are not leading any upcoming trips </p>
+                <% } else { %> 
+                <ul class="list-group">
+                    <% leader_signups.forEach(function(signup) { %>
+                    <% var trip = signup.trip; %>
+                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
+                    <% }); %>
+                </ul>
+                <% } %>
+            </div>
             <% } %>
+
+            <div id="heeling">
+                <h2>Trips I'm Heeling</h2>
+                <% if (heeler_signups.length == 0) { %>
+                <p> You are not heeling any upcoming trips</p>
+                <% } else { %> 
+                <ul class="list-group">
+                    <% leader_signups.forEach(function(signup) { %>
+                    <% var trip = signup.trip; %>
+                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
+                    <% }); %>
+                </ul>
+                <% } %>
+            </div>
         </div>
-    <% } %>
 
-    <div id="heeling">
-        <h2>Trips I'm Heeling</h2>
-        <% if (heeler_signups.length == 0) { %>
-            <p> You are not heeling any upcoming trips</p>
-        <% } else { %> 
-            <ul>
-                <% leader_signups.forEach(function(signup) { %>
+        <div class="col-md-6">
+            <div id="other">
+                <h2>Other trips you are on</h2>
+                <ul class="list-group">
+                    <% if (approved_signups.length == 0) { %>
+                    <li class="list-group-item"> You are not going on any other trips</li>
+                    <% } else { %> 
+                    <% approved_signups.forEach(function(signup) { %>
                     <% var trip = signup.trip; %>
-                    <li> <% include display_trip.ejs %> </li>
-                <% }); %>
-            </ul>
-        <% } %>
-    </div>
-
-    <div id="other">
-        <h2>Other trips you are on</h2>
-        <% if (approved_signups.length == 0) { %>
-            <p> You are not going on any other trips</p>
-        <% } else { %> 
-            <ul>
-                <% approved_signups.forEach(function(signup) { %>
-                    <% var trip = signup.trip; %>
-                    <li> <% include display_trip.ejs %> </li>
-                <% }); %>
-            </ul>
-        <% } %>
+                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
+                    <% }); %>
+                </ul>
+                <% } %>
+            </div>
+        </div>
     </div>
 
     <div id="past_trips"> 
         <h2>Past Trips</h2>
-        <ul>
+        <ul class="list-group">
             <% old_signups.forEach(function(signup) { %>
                 <% var trip = signup.trip; %>
-                <li> <% include display_trip.ejs %> </li>
+                <li class="list-group-item"> <% include display_trip.ejs %> </li>
             <% }); %>
         </ul>
     </div>
