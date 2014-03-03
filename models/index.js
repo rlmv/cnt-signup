@@ -56,8 +56,7 @@ signupSchema.statics.createSignup = function(fields, callback) {
     fields.user = fields.user._id;
     fields.trip = fields.trip._id;
     
-    var signup = new this(fields);
-    signup.save(callback);
+    this.create(fields, callback);
        
 };
 
