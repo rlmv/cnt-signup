@@ -1,15 +1,17 @@
 <% include header.ejs %>
 <div class="container">
-	<div id="trips_happening">
-		<h2> Upcoming Trips </h2>
-		<ul class="list-group">	
-			<% trips.forEach(function(trip){ %>
+	<div class="row">
+		<div class="col-md-6">
+			<h2> Upcoming Trips </h2>
+			<ul class="list-group">	
+				<% trips.forEach(function(trip){ %>
 				<li class="list-group-item">
 					<% include display_trip.ejs %>
 					<% include signup_forms/trippee_signup_form.ejs %>
-		        </li>
-			<% }) %> 
-		</ul>
+				</li>
+				<% }) %> 
+			</ul>
+		</div>
 	</div>
 </div>
 <%include footer.ejs %>
