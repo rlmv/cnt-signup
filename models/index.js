@@ -36,9 +36,10 @@ var signupSchema = Schema({
 });
 
 // Create a signup and associate it with the correct user and trip.
+// This method should be used exclusively when creating signups.
 // fields is a { diet, comments, user, trip } dict, 
 // callback has signature function(err, signup)
-signupSchema.statics.createForUser = function(fields, callback) {
+signupSchema.statics.createSignup = function(fields, callback) {
     
     // send errors to callback
     if (!fields.user) {

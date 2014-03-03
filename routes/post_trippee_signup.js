@@ -18,7 +18,8 @@ module.exports = function(req, res){
 	    user: req.user,
 	    trip: trip
 	};
-	db.Signup.createForUser(fields, function(err, signup) {
+	db.Signup.createSignup(fields, function(err, signup) {
+	    console.log(signup);
 	    if (err) throw err;
 	    trip.waitlist_signups.push(signup)
 	    trip.save(function(err, trip) {

@@ -8,19 +8,19 @@ module.exports = function(req, res) {
 	.findOne({ _id: body.trip_id }, function(err, trip) {
 	    if (err) throw err;
 
-	    var signup = new db.Signup({
-		diet: body.diet,
+	    var fields = {
 		comments: body.comments,
-		user: req.user._id,
-		trip: trip._id
-	    });
+		diet: body.diet,
+		user: req.user,
+		trip: trip
+	    };
 
-	    signup.save(function(err, signup) {
+	    db.Signup.createSignup(function(err, signup) {
 		if (err) throw err; 
 
-		if (req.user.is_leader && ~trip.leader_signup) {
+		if (req.user.is_leader && !trip.leader_signup) {
 			trip.leader_signup = signup._id;
-		}
+		} // else, indicate wants to heel
 
 		trip.save(function(err, signup) {
 		    if (err) throw err;

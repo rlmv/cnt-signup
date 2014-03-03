@@ -22,28 +22,29 @@ module.exports = function(req, res){
         cost_non_doc: body.costNonDOC || 0
     });
 
-    var signup = new db.Signup({
-	diet: body.diet,
-	comments: body.comments,
-	user: req.user._id // link user
-    });
+    trip.save(function(err, trip) {
+	if (err) throw err;
 
-    signup.save(function(err, signup) {
-    	if (err) throw err;
+	var signup_fields = {
+	    comments: body.comments,
+	    diet: body.diet,
+	    user: req.user,
+	    trip: trip
+	};
 
-    	if (req.user.is_leader) {
-    	    trip.leader_signup = signup;
-    	} else {
-    	    trip.heeler_signup = signup;
-    	}
+	db.Signup.createSignup(signup_fields, function(err, signup) {
+    	    if (err) throw err;
+	    
+    	    if (req.user.is_leader) {
+    		trip.leader_signup = signup;
+    	    } else {
+    		trip.heeler_signup = signup;
+    	    }
 
-    	trip.save(function(err, trip) {
-    	   if (err) throw err;
-    	   signup.trip = trip._id;
-    	   signup.save(function(err, signup) {
-    		  if (err) throw err;
-    		  res.redirect('/');
-    	   });
-    	});
+    	    trip.save(function(err, trip) {
+    		if (err) throw err;
+    		res.redirect('/');
+    	    });
+	});
     });
 }
