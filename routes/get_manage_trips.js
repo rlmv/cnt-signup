@@ -27,11 +27,11 @@ module.exports = function(req, res) {
 
 		    var leader_signups = _.filter(signups, function(x) {
 			var leader = x.trip.leader_signup;
-			return !leader ? false : x._id.equals(leader);
+			return !leader ? false : x._id.equals(leader._id)
 		    });
 		    var heeler_signups = _.filter(signups, function(x) {
 			var heeler = x.trip.heeler_signup;
-			return !heeler ? false : x._id.equals(heeler);
+			return !heeler ? false : x._id.equals(heeler._id);
 		    });
 		    var waitlisted_signups = _.filter(signups, function(x) {
 			return _.some(x.trip.waitlist_signups, function(y) {
