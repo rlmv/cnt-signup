@@ -61,6 +61,26 @@ signupSchema.statics.createSignup = function(fields, callback) {
 };
 
 
+// Given a signup (or array of signups) populate the trip,
+// trip.leader_signup, and trip.heeler_signup fields of the 
+// signup. It does not matter (I think) if
+// any of these fields have already been populated.
+// http://mongoosejs.com/docs/api.html#model_Model.populate
+signupSchema.statics.deepPopulate = function(signups, callback) {
+
+    var model = this;
+
+    model.populate(signups, { path: 'trip', model: 'Trip' }, function(err, signups) {
+	if (err) callback(err);
+	
+	model.populate(signups, [
+	    { path: 'trip.leader_signup', model: 'Signup'},                  
+            { path: 'trip.heeler_signup', model: 'Signup'}], callback);
+    });
+}
+    
+    
+
 var userSchema = Schema({
     netid: { type: String, required: true },
     name: { type: String, required: true },

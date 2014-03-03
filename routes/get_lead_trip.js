@@ -21,13 +21,14 @@ module.exports = function(req, res) {
     } else {
 	query.where('heeler_signup').equals(null);
     }
-	
-    query.exec(function(err, trips) {
-	if (err) throw err;
-	res.render('lead_trip', {
-        title: 'Lead a trip',
-	    trips: trips
+    query
+	.populate('leader_signup')
+	.populate('heeler_signup')
+	.exec(function(err, trips) {
+	    if (err) throw err;
+	    res.render('lead_trip', {
+		title: 'Lead a trip',
+		trips: trips
+	    });
 	});
-    });
-
 };
