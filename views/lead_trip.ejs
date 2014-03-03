@@ -66,13 +66,12 @@
     <ul>    
         <% trips.forEach(function(trip){ %>
         <li>
-            <% include display_trip.ejs %><br>
+            <% include display_trip.ejs %>
             <% if (trip.leader_signup){ %>
             <% include signup_forms/heeler_signup_form.ejs %>
             <% } else { %>
             <% include signup_forms/leader_signup_form.ejs %>
             <% } %>
-            <br>
         </li>
         <% }) %> 
     </ul>
