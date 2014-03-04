@@ -36,20 +36,20 @@ module.exports = function(req, res){
 		// ahh - id is string version of ._id
 		if (trip.leader_signup && trip.leader_signup.user == user.id) {
 		    trip.user_signup = trip.leader_signup;
-		    trip.user_is_leader = true;
+		    trip.user_signup_type = 'leader';
 		} else if (trip.heeler_signup && trip.heeler_signup.user == user.id) {
 		    trip.user_signup = trip.heeler_signup;
-		    trip.user_is_heeler = true;
+		    trip.user_signup_type = 'heeler';
 		} else if (_.some(trip.waitlist_signups, function(signup) {
 		    return signup.user == user.id;
 		})) {
 		    trip.user_signup = signup;
-		    trip.user_is_waitlisted = true;
+		    trip.signup_type = 'waitlisted';
 		} else if (_.some(trip.approved_signups, function(signup) {
 		    return signup.user == user.id; 
 		})) {
 		    trip.user_signup = signup;
-		    trip.user_is_approved = true;
+		    trip.user_signup_type = 'approved';
 		}
 		return trip;
 	    });
