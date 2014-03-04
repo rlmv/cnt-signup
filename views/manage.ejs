@@ -14,7 +14,11 @@
                 <ul class="list-group">
                     <% leader_signups.forEach(function(signup) { %>
                     <% var trip = signup.trip; %>
-                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
+                    <li class="list-group-item"> 
+                        <% include display_trip.ejs %> 
+                        <a href="/manage_trips/<%= trip.id %>">Manage</a>
+                    </li>
+
                     <% }); %>
                 </ul>
                 <% } %>
@@ -27,7 +31,10 @@
                 <ul class="list-group">
                     <% heeler_signups.forEach(function(signup) { %>
                     <% var trip = signup.trip; %>
-                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
+                    <li class="list-group-item"> 
+                        <% include display_trip.ejs %> 
+                        <a href="/manage_trips/<%= trip.id %>">Manage</a>
+                    </li>
                     <% }); %>
                 </ul>
             </div>

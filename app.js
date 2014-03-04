@@ -62,6 +62,7 @@ app.post('/create_trip', routes.post_create_trip);
 app.get('/lead_trip', routes.get_lead_trip);
 app.post('/lead_trip', routes.post_claim_trip);
 app.get('/manage_trips', routes.get_manage_trips);
+app.get('/manage_trips/:trip_id', routes.get_trip_control);
 app.get('/develop', routes.get_develop);
 app.post('/develop', routes.post_develop);
 
