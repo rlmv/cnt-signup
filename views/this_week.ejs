@@ -13,7 +13,8 @@
 				    <% } %>
 
 					<% include display_trip.ejs %>
-					<% if (trip.user_signup) { %>
+					<% /*# COMMENTED OUT FOR TESTING if (trip.user_signup) { */%>
+					<% if (false) { %>
 					    <br><span class="glyphicon glyphicon-ok"></span> You are signed up for this trip as <b><%= trip.user_signup_type %></b>
 					<% } else { %>
 					    <% include signup_forms/trippee_signup_form.ejs %>

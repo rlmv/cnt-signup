@@ -21,7 +21,8 @@ module.exports = function(req, res) {
             }
 
             res.render('trip_control', {
-                title: 'Trip Control Panel'
+                title: 'Trip Control Panel', 
+                trip: trip
             });
         });
 }
