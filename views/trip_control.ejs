@@ -7,18 +7,20 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <b>Waitlisted signups: </b> 
-                    <ul class="list-group">   
+                    <b>Signups: </b><br>
+                    <div class="button-group-vertical"> 
                         <% trip.waitlist_signups.forEach(function(signup){ %>
-                        <li class="list-group-item"><%= signup.user_info.name %></li>
+                            <button type="button" class="btn btn-warning">
+                                <%= signup.user_info.name %>
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
                         <% }); %>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <b>Approved signups: </b> 
-                    <ul class="list-group">   
+                    </div>
                         <% trip.approved_signups.forEach(function(signup){ %>
-                        <li class="list-group-item"><%= signup.user_info.name %></li>
+                            <button type="button" class="btn btn-success">
+                               <%= signup.user_info.name %>
+                               <span class="glyphicon glyphicon-remove"></span>
+                           </button>
                         <% }); %>
                     </ul>
                 </div>
