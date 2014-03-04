@@ -4,10 +4,25 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <% include display_trip.ejs %>
-            <b>Waitlisted signups: </b> 
-            <%= trip.waitlist_signups.length == 0 ? 'None' : trip.waitlist_signups %><br>
-            <b>Approved signups: </b> 
-            <%= trip.approved_signups.length == 0 ? 'None' : trip.approved_signups %><br>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <b>Waitlisted signups: </b> 
+                    <ul class="list-group">   
+                        <% trip.waitlist_signups.forEach(function(signup){ %>
+                        <li class="list-group-item"><%= signup.user_info.name %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <b>Approved signups: </b> 
+                    <ul class="list-group">   
+                        <% trip.approved_signups.forEach(function(signup){ %>
+                        <li class="list-group-item"><%= signup.user_info.name %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>    
