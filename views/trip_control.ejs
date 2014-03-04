@@ -19,7 +19,7 @@
                             </button>
                         </form>
                         <% }); %>
-                    </div>
+          
                         <% trip.approved_signups.forEach(function(signup){ %>
                         <form method="post" role="form" enctype="multipart/form-data">
                             <input type='text' name='waitlist_signup' value=<%= signup.id%> hidden="True">
@@ -29,7 +29,7 @@
                            </button>
                        </form>
                         <% }); %>
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
