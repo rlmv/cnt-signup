@@ -16,7 +16,7 @@
     "async": "*",
     "underscore": "*",
     "ejs": "~0.8.5",
-    "dart-auth": "rlmv/node-dart-auth"
+    "dart-auth": "*"
   },
   "repository": {
     "type": "git",
