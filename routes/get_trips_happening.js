@@ -38,7 +38,7 @@ module.exports = function(req, res){
 		    trip.user_signup = trip.leader_signup;
 		    trip.user_is_leader = true;
 		} else if (trip.heeler_signup && trip.heeler_signup.user == user.id) {
-		    trip.user_signup = heeler_signup;
+		    trip.user_signup = trip.heeler_signup;
 		    trip.user_is_heeler = true;
 		} else if (_.some(trip.waitlist_signups, function(signup) {
 		    return signup.user == user.id;
