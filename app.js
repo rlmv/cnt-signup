@@ -23,7 +23,7 @@ var routes = require('./routes');
 var user = require('./auth/user');
 var http = require('http');
 var path = require('path');
-var auth = require('./auth/auth');
+var auth = require('dart-auth');
 var db = require('./models');
 var mongoose = require('mongoose');
 
