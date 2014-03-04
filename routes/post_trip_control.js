@@ -28,7 +28,17 @@ module.exports = function(req, res) {
                     res.redirect(req.url);
 
                 });
-            }
+            } else if (body.waitlist_signup) {
+                var signup_id = body.waitlist_signup;
 
+                trip.approved_signups.remove(signup_id);
+                trip.waitlist_signups.push(signup_id);
+                trip.save(function(err, trip) {
+                    if (err) throw err;
+
+                    // redirect to GET
+                    res.redirect(req.url);
+                });
+            }
         });
 }

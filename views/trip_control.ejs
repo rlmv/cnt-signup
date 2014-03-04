@@ -12,7 +12,7 @@
                     <div class="button-group-vertical"> 
                         <% trip.waitlist_signups.forEach(function(signup){ %>
                         <form method="post" role="form" enctype='multipart/form-data'>
-                            <input type='text' name='approve_signup' value=<%= signup._id%> hidden='True'>
+                            <input type='text' name='approve_signup' value=<%= signup.id%> hidden='True'>
                             <button type="submit" class="btn btn-warning">
                                 <%= signup.user_info.name %>
                                 <span class="glyphicon glyphicon-ok"></span>
@@ -21,10 +21,13 @@
                         <% }); %>
                     </div>
                         <% trip.approved_signups.forEach(function(signup){ %>
-                            <button type="button" class="btn btn-success">
+                        <form method="post" role="form" enctype="multipart/form-data">
+                            <input type='text' name='waitlist_signup' value=<%= signup.id%> hidden="True">
+                            <button type="submit" class="btn btn-success">
                                <%= signup.user_info.name %>
                                <span class="glyphicon glyphicon-remove"></span>
                            </button>
+                       </form>
                         <% }); %>
                     </ul>
                 </div>
