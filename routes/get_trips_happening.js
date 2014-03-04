@@ -28,20 +28,27 @@ module.exports = function(req, res){
 	.exec(function(err, trips) {
 	    if (err) throw err;
 	    
-	    // tag trips for dispaly
+	    // tag trips for display. We use these fields in the view.
+	    // If trip.user_signup is set then then the user is going 
+	    // on the trip.
+
 	    trips = _.map(trips, function(trip) {
 		// ahh - id is string version of ._id
 		if (trip.leader_signup && trip.leader_signup.user == user.id) {
+		    trip.user_signup = trip.leader_signup;
 		    trip.user_is_leader = true;
 		} else if (trip.heeler_signup && trip.heeler_signup.user == user.id) {
+		    trip.user_signup = heeler_signup;
 		    trip.user_is_heeler = true;
 		} else if (_.some(trip.waitlist_signups, function(signup) {
 		    return signup.user == user.id;
 		})) {
+		    trip.user_signup = signup;
 		    trip.user_is_waitlisted = true;
 		} else if (_.some(trip.approved_signups, function(signup) {
 		    return signup.user == user.id; 
 		})) {
+		    trip.user_signup = signup;
 		    trip.user_is_approved = true;
 		}
 		return trip;

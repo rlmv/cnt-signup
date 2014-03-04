@@ -5,18 +5,15 @@
 			<h2> Upcoming Trips </h2>
 			<ul class="list-group">	
 				<% trips.forEach(function(trip){ %>
-				
-				    <% if (trip.user_is_leader) { %>
+
+				    <% if (trip.user_signup) { %>
 				        <li class="list-group-item list-group-item-success">
 			    	<% } else { %>
 				    	<li class="list-group-item">
 				    <% } %>
 
 					<% include display_trip.ejs %>
-					<% if (!trip.user_is_leader 
-						&& !trip.user_is_heeler
-						&& !trip.user_is_waitlisted
-						&& !trip.user_is_approved ) { %>
+					<% if (!trip.user_signup) { %>
 					    <% include signup_forms/trippee_signup_form.ejs %>
 					<% } %>
 				</li>
