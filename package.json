@@ -15,7 +15,8 @@
     "mongoose": "*",
     "async": "*",
     "underscore": "*",
-    "ejs": "~0.8.5"
+    "ejs": "~0.8.5",
+    "dart-auth": "rlmv/node-dart-auth"
   },
   "repository": {
     "type": "git",
