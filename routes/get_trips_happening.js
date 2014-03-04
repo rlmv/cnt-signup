@@ -1,4 +1,5 @@
 var db = require('../models');
+var _ = require('underscore');
 
 module.exports = function(req, res){
     /* 
@@ -8,14 +9,47 @@ module.exports = function(req, res){
      * guarantee you a spot. You need a confirmation email. 
      */
 
+    var user = req.user;
+
+
+    /* Could this processing be done more efficiently by,
+       instead of populating, also querying for all signups 
+       for this user and then mixing and matchin with the 
+       trips results? */
+
     db.Trip.find()
 	.where('start_time').gt(new Date())
 	.where('leader_signup').ne(null)
 	.populate('leader_signup')
 	.populate('heeler_signup')
+	.populate('waitlist_signups')
+	.populate('approved_signups')
 	.sort('start_time') // 'start_time'?
 	.exec(function(err, trips) {
 	    if (err) throw err;
+	    
+	    // tag trips for dispaly
+	    trips = _.map(trips, function(trip) {
+		// ahh - id is string version of ._id
+		if (trip.leader_signup && trip.leader_signup.user == user.id) {
+		    trip.user_is_leader = true;
+		}
+		if (trip.heeler_signup && trip.heeler_signup.user == user.id) {
+		    trip.user_is_heeler = true;
+		}
+		if (_.some(trip.waitlist_signups, function(signup) {
+		    return signup.user == user.id;
+		})) {
+		    trip.user_is_waitlisted = true;
+		}
+		if (_.some(trip.approved_signups, function(signup) {
+		    return signup.user == user.id;
+		})) {
+		    trip.user_is_approved = true;
+		}
+		return trip;
+	    });
+
 	    res.render('this_week', {
 		title: 'This Week in Cabin and Trail',
 		trips: trips

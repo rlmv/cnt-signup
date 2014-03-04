@@ -3,6 +3,14 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
+/* Q: should we save the leader signup, heeler_signup, etc as
+   references to users, and then have query signup objects 
+   separately? This would simplify (fewer populate calls) 
+   on pages like manage and this week 
+   where we want to check whether a user is signed up
+   for a specific trip.
+*/
+
 // what about heeler requests?
 var tripSchema = Schema({
     start_time : { type: Date, required: true },

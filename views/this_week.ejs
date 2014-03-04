@@ -7,7 +7,12 @@
 				<% trips.forEach(function(trip){ %>
 				<li class="list-group-item">
 					<% include display_trip.ejs %>
-					<% include signup_forms/trippee_signup_form.ejs %>
+					<% if (!trip.user_is_leader 
+						&& !trip.user_is_heeler
+						&& !trip.user_is_waitlisted
+						&& !trip.user_is_approved ) { %>
+					    <% include signup_forms/trippee_signup_form.ejs %>
+					<% } %>
 				</li>
 				<% }) %> 
 			</ul>
