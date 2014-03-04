@@ -33,17 +33,14 @@ module.exports = function(req, res){
 		// ahh - id is string version of ._id
 		if (trip.leader_signup && trip.leader_signup.user == user.id) {
 		    trip.user_is_leader = true;
-		}
-		if (trip.heeler_signup && trip.heeler_signup.user == user.id) {
+		} else if (trip.heeler_signup && trip.heeler_signup.user == user.id) {
 		    trip.user_is_heeler = true;
-		}
-		if (_.some(trip.waitlist_signups, function(signup) {
+		} else if (_.some(trip.waitlist_signups, function(signup) {
 		    return signup.user == user.id;
 		})) {
 		    trip.user_is_waitlisted = true;
-		}
-		if (_.some(trip.approved_signups, function(signup) {
-		    return signup.user == user.id;
+		} else if (_.some(trip.approved_signups, function(signup) {
+		    return signup.user == user.id; 
 		})) {
 		    trip.user_is_approved = true;
 		}
