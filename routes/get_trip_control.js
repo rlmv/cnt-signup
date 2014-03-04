@@ -15,7 +15,8 @@ module.exports = function(req, res) {
             if (err) throw err;
 
             // the user field is not populated in the signup
-            if (!trip.leader_signup.user == req.user.id) {
+            if (!trip.leader_signup.user == req.user.id ||
+                !trip.heeler_signup.user == req.user.id) {
                 // change this to display 403 page
                 res.status(403).send('Permission denied');
             }
