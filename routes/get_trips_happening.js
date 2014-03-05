@@ -44,7 +44,7 @@ module.exports = function(req, res){
 		    return signup.user == user.id;
 		})) {
 		    trip.user_signup = signup;
-		    trip.signup_type = 'waitlisted';
+		    trip.user_signup_type = 'waitlisted';
 		} else if (_.some(trip.approved_signups, function(signup) {
 		    return signup.user == user.id; 
 		})) {
