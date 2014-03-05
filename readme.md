@@ -1,11 +1,9 @@
 
-Nodemon:
---------
-`nodemon` is a sweet continuous deployment tool for Node. It can watches your files and reloads the running app when changes have been made. 
-``` 
-npm install -g nodemon
-nodemon app.js
-```
+Design Questions
+===============
+* Can we combine the Manage Trips and This Week page into one? Perhap show in one column all unsignued up for upcoming trips, and in another column all trips that the user is leading/heeling/signed up for in chronological order, with some sort of color / other indication as to trip status. Or just have one long list, with non-signed up for trips collapsed. This simplifies the general flow of the site. I'm thinking fewer pags == better user flow. 
+* Build a separate Past Trips page? This makes good sense - it could be in the navbar.
+* Regarding models - it might be nice to save the signup type on the signup, but maybe not necessary. It might make atomic saves/updates more difficult (eg, promoting to heeler requires updating the trip model, and the associated signup, and then rolling that back on an error.) OR: We do away with the approved/waitlist/leader/heeler signup fields on the trip, and just save the signup type on the signup model. Then it's easy to move signups around, and still easy to get all signups of a certain type for a trip, and do sorting for the all upcoming signups for a user. Would any queries be made more difficult? (Perhaps if we have a trip, and need to see if we have aleder for it? This would require a second database hit.) Something to think about though... 
 
 
 Spec
