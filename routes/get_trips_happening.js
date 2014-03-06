@@ -20,10 +20,6 @@ module.exports = function(req, res){
     db.Trip.find()
 	.where('start_time').gt(new Date())
 	.where('leader_signup').ne(null)
-	.populate('leader_signup')
-	.populate('heeler_signup')
-	.populate('waitlist_signups')
-	.populate('approved_signups')
 	.sort('start_time') // 'start_time'?
 	.exec(function(err, trips) {
 	    if (err) throw err;
@@ -31,7 +27,7 @@ module.exports = function(req, res){
 	    // tag trips for display. We use these fields in the view.
 	    // If trip.user_signup is set then then the user is going 
 	    // on the trip.
-
+/* TODO: change this logic to use new models:
 	    trips = _.map(trips, function(trip) {
 		// ahh - id is string version of ._id
 		if (trip.leader_signup && trip.leader_signup.user == user.id) {
@@ -53,7 +49,7 @@ module.exports = function(req, res){
 		}
 		return trip;
 	    });
-
+*/
 	    res.render('this_week', {
 		title: 'This Week in Cabin and Trail',
 		trips: trips
