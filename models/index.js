@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 var signupSchema = Schema({
     diet: String,
     comments: String,
-    // should be one of 'heeler', 'leader', 'approved', 'waitlisted':
+    // should be one of 'heeler', 'leader', 'approved', 'waitlisted'.
+    // this should be validated
     type: String,
     // saving this embedded info is redundant, but
     // simplifies queries where we want to display

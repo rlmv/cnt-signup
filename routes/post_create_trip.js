@@ -19,32 +19,23 @@ module.exports = function(req, res){
         start_time: moment(body.start, date_format),
         end_time: moment(body.end, date_format),
         cost_doc: body.costDOC || 0, 
-        cost_non_doc: body.costNonDOC || 0
+        cost_non_doc: body.costNonDOC || 0,
+	signups: [{
+	    diet: body.diet,
+	    comments: body.comments,
+	    type: req.user.is_leader ? 'leader' : 'heeler',
+	    user: req.user.id,
+	    user_info: {
+		netid: req.user.netid,
+		name: req.user.name, 
+		email: req.user.email
+	    }
+	}]
     });
 
     trip.save(function(err, trip) {
 	if (err) throw err;
-
-	var signup_fields = {
-	    comments: body.comments,
-	    diet: body.diet,
-	    user: req.user,
-	    trip: trip
-	};
-
-	db.Signup.createSignup(signup_fields, function(err, signup) {
-    	    if (err) throw err;
-	    
-    	    if (req.user.is_leader) {
-    		trip.leader_signup = signup;
-    	    } else {
-    		trip.heeler_signup = signup;
-    	    }
-
-    	    trip.save(function(err, trip) {
-    		if (err) throw err;
-    		res.redirect('/');
-    	    });
-	});
+	console.log(trip);
+    	res.redirect('/');
     });
 }
