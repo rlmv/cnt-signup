@@ -12,21 +12,22 @@ module.exports = function(req, res) {
     // leaders or healers. each trip should, as appropriate, have 
     // buttons for 'lead this trip' and 'want to heel' signup form.
 
-    var query = db.Trip
-	.find()
-	.where('start_time').gt(new Date());
+    var query = db.Trip.find().where('start_time').gt(new Date());
     
     if (req.user.is_leader) {
-        // ???? FIX THIS:
-        query.where({'signups.type' : { $ne: 'leader' }}); 
-
+        query.or([
+            { 'signups.type': { $ne: 'leader' }},
+            { 'signups.type': { $ne: 'heeler' }}
+        ]);
     } else {
-        // and this??
-        query.where('signups.type').equals('leader');
-        query.where('signups.type').ne('heeler');
+        query.and([
+            { 'signups.type': 'leader' }, 
+            { 'signups.type': { $ne: 'heeler' }}
+        ]);
     }
     query.exec(function(err, trips) {
        if (err) throw err;
+       console.log(trips);
        res.render('lead_trip', {
           title: 'Lead a trip',
           trips: trips
