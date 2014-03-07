@@ -17,14 +17,14 @@ module.exports = function(req, res) {
 	.where('start_time').gt(new Date());
     
     if (req.user.is_leader) {
-	query.or([{ leader_signup: null }, { heeler_signup: null }]);
+        // ???? FIX THIS:
+        query.where({ 'signups.type': { $ne : 'leader' }});
     } else {
-	query.where('heeler_signup').equals(null);
+        // and this??
+        query.where('signups.type').equals('leader');
+        query.where('signups.type').ne('heeler');
     }
-    query
-	.populate('leader_signup')
-	.populate('heeler_signup')
-	.exec(function(err, trips) {
+    query.exec(function(err, trips) {
 	    if (err) throw err;
 	    res.render('lead_trip', {
 		title: 'Lead a trip',

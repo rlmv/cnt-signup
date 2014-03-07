@@ -15,9 +15,9 @@ var signupSchema = Schema({
     // is (*should be*) immutable - it won't ever need to 
     // be modified after creation
     user_info: {  
-	netid: String,
-	name: String,
-	email: String
+       netid: String,
+       name: String,
+       email: String
     },
     user: {type: Schema.Types.ObjectId, ref: 'User'}
 });
