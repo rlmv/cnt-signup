@@ -18,17 +18,18 @@ module.exports = function(req, res) {
     
     if (req.user.is_leader) {
         // ???? FIX THIS:
-        query.where({ 'signups.type': { $ne : 'leader' }});
+        query.where({'signups.type' : { $ne: 'leader' }}); 
+
     } else {
         // and this??
         query.where('signups.type').equals('leader');
         query.where('signups.type').ne('heeler');
     }
     query.exec(function(err, trips) {
-	    if (err) throw err;
-	    res.render('lead_trip', {
-		title: 'Lead a trip',
-		trips: trips
-	    });
-	});
+       if (err) throw err;
+       res.render('lead_trip', {
+          title: 'Lead a trip',
+          trips: trips
+      });
+   });
 };
