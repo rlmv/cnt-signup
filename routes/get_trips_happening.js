@@ -11,19 +11,12 @@ module.exports = function(req, res){
 
     var user = req.user;
 
-
-    /* Could this processing be done more efficiently by,
-       instead of populating, also querying for all signups 
-       for this user and then mixing and matchin with the 
-       trips results? */
-
     db.Trip.find()
 	.where('start_time').gt(new Date())
-	.where('leader_signup').ne(null)
+	.where('signups.type').equals('leader')
 	.sort('start_time') // 'start_time'?
 	.exec(function(err, trips) {
 	    if (err) throw err;
-	    
 	    // tag trips for display. We use these fields in the view.
 	    // If trip.user_signup is set then then the user is going 
 	    // on the trip.
@@ -51,8 +44,8 @@ module.exports = function(req, res){
 	    });
 */
 	    res.render('this_week', {
-		title: 'This Week in Cabin and Trail',
-		trips: trips
+          title: 'This Week in Cabin and Trail',
+          trips: trips
 	    });
 	});
 };

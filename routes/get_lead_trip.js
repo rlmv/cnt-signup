@@ -21,7 +21,7 @@ module.exports = function(req, res) {
         ]);
     } else {
         query.and([
-            { 'signups.type': 'leader' }, 
+            { 'signups.type': 'leader' },  
             { 'signups.type': { $ne: 'heeler' }}
         ]);
     }
