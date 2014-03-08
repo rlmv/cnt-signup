@@ -19,8 +19,9 @@ module.exports = function(req, res) {
             if (body.approve_signup) {
                 var signup_id = body.approve_signup;
 
-                trip.waitlist_signups.remove(signup_id);
-                trip.approved_signups.push(signup_id);
+                var signup = trip.getSignupById(signup_id);
+                signup.type = 'approved';
+
                 trip.save(function(err, trip) {
                     if (err) throw err;
 
@@ -31,8 +32,9 @@ module.exports = function(req, res) {
             } else if (body.waitlist_signup) {
                 var signup_id = body.waitlist_signup;
 
-                trip.approved_signups.remove(signup_id);
-                trip.waitlist_signups.push(signup_id);
+                var signup = trip.getSignupById(signup_id);
+                signup.type = 'waitlisted';
+
                 trip.save(function(err, trip) {
                     if (err) throw err;
 

@@ -73,7 +73,12 @@ tripSchema.methods.getSignupForUser = function(user) {
         return signup.user == user.id;
     });
 };
-
+// find the signup in the trip with id == id
+tripSchema.methods.getSignupById = function(id) {
+    return _.find(this.signups, function(signup) {
+        return signup.id == id;
+    });
+};
 
 var userSchema = Schema({
     netid: { type: String, required: true },
