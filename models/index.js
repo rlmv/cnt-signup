@@ -1,6 +1,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var _ = require('underscore');
 
 var signupSchema = Schema({
     diet: String,
@@ -32,6 +33,36 @@ var tripSchema = Schema({
     description: String,
     signups: [signupSchema] // this is a 'subdocument'
 });
+// get the leader signup for the trip, using a snazzy
+// virtual property. Is undefined if no leader signup.
+tripSchema.virtual('leader_signup').get(function () {
+    return _.find(this.signups, function(signup) {
+        return signup.type == 'leader';
+    });
+});
+tripSchema.virtual('heeler_signup').get(function () {
+    return _.find(this.signups, function(signup) {
+        return signup.type == 'heeler';
+    });
+});
+// check if the specified user is a leader
+tripSchema.methods.isLeader = function(user) {
+    var leader_signup = this.leader_signup;
+    return leader_signup ? leader_signup.user == user.id : false;
+};
+tripSchema.methods.isHeeler = function(user) {
+    var heeler_signup = this.heeler_signup;
+    return heeler_signup ? heeler_signup.user == user.id : false;
+};
+tripSchema.methods.getSignupFor = function(user) {
+    return _.find(this.signups, function(signup) {
+        return signup.user == user.id;
+    });
+};
+tripSchema.methods.inSignups = function(user) { 
+    return !!this.getSignupFor(user);
+};
+
 
 var userSchema = Schema({
     netid: { type: String, required: true },
@@ -42,51 +73,6 @@ var userSchema = Schema({
     is_admin: { type: Boolean, default: false },
     is_opo: { type: Boolean, default: false }
 });
-
-
-// Create a signup and associate it with the correct user and trip.
-// This method should be used exclusively when creating signups.
-// fields is a { diet, comments, user, trip } dict, 
-// callback has signature function(err, signup)
-signupSchema.statics.createSignup = function(fields, callback) {
-    
-    // send errors to callback
-    if (!fields.user) {
-	callback(new mongoose.Error('.user not specified in fields'));
-    } else if (!fields.trip) {
-	callback(new mongoose.Error('.trip not specified in fields)'));
-    }
-
-    fields.user_info = { 
-	netid: fields.user.netid, 
-	name: fields.user.name,
-	email: fields.user.email
-    };
-    fields.user = fields.user._id;
-    fields.trip = fields.trip._id;
-    
-    this.create(fields, callback);
-       
-};
-
-
-// Given a signup (or array of signups) populate the trip,
-// trip.leader_signup, and trip.heeler_signup fields of the 
-// signup. It does not matter (I think) if
-// any of these fields have already been populated.
-// http://mongoosejs.com/docs/api.html#model_Model.populate
-signupSchema.statics.deepPopulate = function(signups, callback) {
-
-    var model = this;
-
-    model.populate(signups, { path: 'trip', model: 'Trip' }, function(err, signups) {
-	if (err) callback(err);
-	
-	model.populate(signups, [
-	    { path: 'trip.leader_signup', model: 'Signup'},                  
-            { path: 'trip.heeler_signup', model: 'Signup'}], callback);
-    });
-}
     
 
 module.exports = {

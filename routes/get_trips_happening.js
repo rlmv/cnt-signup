@@ -17,32 +17,7 @@ module.exports = function(req, res){
 	.sort('start_time') // 'start_time'?
 	.exec(function(err, trips) {
 	    if (err) throw err;
-	    // tag trips for display. We use these fields in the view.
-	    // If trip.user_signup is set then then the user is going 
-	    // on the trip.
-/* TODO: change this logic to use new models:
-	    trips = _.map(trips, function(trip) {
-		// ahh - id is string version of ._id
-		if (trip.leader_signup && trip.leader_signup.user == user.id) {
-		    trip.user_signup = trip.leader_signup;
-		    trip.user_signup_type = 'leader';
-		} else if (trip.heeler_signup && trip.heeler_signup.user == user.id) {
-		    trip.user_signup = trip.heeler_signup;
-		    trip.user_signup_type = 'heeler';
-		} else if (_.some(trip.waitlist_signups, function(signup) {
-		    return signup.user == user.id;
-		})) {
-		    trip.user_signup = signup;
-		    trip.user_signup_type = 'waitlisted';
-		} else if (_.some(trip.approved_signups, function(signup) {
-		    return signup.user == user.id; 
-		})) {
-		    trip.user_signup = signup;
-		    trip.user_signup_type = 'approved';
-		}
-		return trip;
-	    });
-*/
+
 	    res.render('this_week', {
           title: 'This Week in Cabin and Trail',
           trips: trips
