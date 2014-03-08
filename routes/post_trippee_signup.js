@@ -7,35 +7,35 @@ module.exports = function(req, res){
      * the signup later. 
      * It would be nice to sent them an email with the trip info saying we got their info. 
      */ 
-    var body = req.body;
-    
-    db.Trip.findOne({ _id: body.trip_id }, function(err, trip) {
-	if (err) throw err;
+     var body = req.body;
 
-	var fields = {
-	    comments: body.comments,
-	    diet: body.diet,
-	    user: req.user,
-	    trip: trip
-	};
-	db.Signup.createSignup(fields, function(err, signup) {
-	    console.log(signup);
-	    if (err) throw err;
-	    trip.waitlist_signups.push(signup)
-	    trip.save(function(err, trip) {
-		if (err) throw err;
+     db.Trip.findById(body.trip_id, function(err, trip) {
+         if (err) throw err;
 
-		res.mailer.send('signup_received', {
-		    to: req.user.email, // REQUIRED. This can be a comma 
-		    //  delimited string just like a normal email to field. 
-		    subject: 'Signup for ' + trip.title, // REQUIRED.
-		    user: req.user.name
-		}, function (err) {
-		    if (err) throw err;
-		});
+        trip.signups.push({
+            diet: body.diet,
+            comments: body.comments,
+            type: 'waitlisted',
+            user: req.user.id,
+            user_info: {
+                netid: req.user.netid,
+                name: req.user.name, 
+                email: req.user.email
+            }
+        });
+        trip.save(function(err, trip) {
 
-		res.redirect("/");
-	    });
-	});
-    });
-};
+            if (err) throw err;
+            console.log(trip);
+
+            res.mailer.send('signup_received', {
+		        to: req.user.email, // REQUIRED. This can be a comma 
+		        //  delimited string just like a normal email to field. 
+		        subject: 'Signup for ' + trip.title, // REQUIRED.
+                user: req.user
+		    }, function (err) { if (err) throw err; });
+
+            res.redirect("/");
+         });
+     });
+ };
