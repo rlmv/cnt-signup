@@ -33,6 +33,7 @@ var tripSchema = Schema({
     description: String,
     signups: [signupSchema] // this is a 'subdocument'
 });
+
 // get the leader signup for the trip, using a snazzy
 // virtual property. Is undefined if no leader signup.
 tripSchema.virtual('leader_signup').get(function () {
@@ -40,20 +41,33 @@ tripSchema.virtual('leader_signup').get(function () {
         return signup.type == 'leader';
     });
 });
+
 tripSchema.virtual('heeler_signup').get(function () {
     return _.find(this.signups, function(signup) {
         return signup.type == 'heeler';
     });
 });
+
+tripSchema.virtual('waitlist_signups').get(function () {
+    return _.where(this.signups, { type: 'waitlisted' });
+});
+
+tripSchema.virtual('approved_signups').get(function () {
+    return _.where(this.signups, { type: 'approved' });
+})
+
+
 // check if the specified user is a leader
 tripSchema.methods.isLeader = function(user) {
     var leader_signup = this.leader_signup;
     return leader_signup ? leader_signup.user == user.id : false;
 };
+
 tripSchema.methods.isHeeler = function(user) {
     var heeler_signup = this.heeler_signup;
     return heeler_signup ? heeler_signup.user == user.id : false;
 };
+
 tripSchema.methods.getSignupForUser = function(user) {
     return _.find(this.signups, function(signup) {
         return signup.user == user.id;

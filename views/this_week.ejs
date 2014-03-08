@@ -15,8 +15,8 @@
 					<% include display_trip.ejs %>
 
 					<% var signup = trip.getSignupForUser(user); %>
-					<% //if (false) { %>
-					<% if (signup) { %>
+					<% if (false) { %>
+					<% // COMMENTED OUT TO TEST SIGNUPS if (signup) { %>
 					    <br><span class="glyphicon glyphicon-ok"></span> You are signed up for this trip as <b><%= signup.type %></b>
 					    <% if (signup.type == 'leader' || signup.type == 'heeler') { %>
 					    <br><a href="/manage_trips/<%= trip.id %>">Manage</a>
