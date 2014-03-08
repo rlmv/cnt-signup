@@ -18,8 +18,10 @@ var signupSchema = Schema({
     diet: String,
     comments: String,
     // should be one of 'heeler', 'leader', 'approved', 'waitlisted'.
-    // this should be validated
-    type: String,
+    type: { type: String, validate: function(type) {
+        return 'heeler' == type || 'leader' == type ||
+        'approved' == type || 'waitlisted' == type;
+    }},
     // saving this embedded info is redundant, but
     // simplifies queries where we want to display
     // user information given a signup, but don't 
