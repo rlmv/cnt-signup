@@ -9,17 +9,19 @@
 				    <% if (trip.isLeader(user)) { %>
 				        <li class="list-group-item list-group-item-success">
 			    	<% } else { %>
-			    	<li class="list-group-item">
-				    <% } %>
+			    	    <li class="list-group-item">
+	    	    	<% } %>
 
 					<% include display_trip.ejs %>
 
-					<% //if (trip.isLeader(user) || trip.isHeeler(user)) { %>
-					<% if (false) { %>
-					<a href="/manage_trips/<%= trip.id %>">Manage</a>
-					<% } else if (trip.inSignups(user)){ %>
-					<br><span class="glyphicon glyphicon-ok"></span> You are signed up for this trip as <b><%= trip.getSignupFor(user).type %></b>
-					<% } else { %>
+					<% var signup = trip.getSignupForUser(user); %>
+					<% //if (false) { %>
+					<% if (signup) { %>
+					    <br><span class="glyphicon glyphicon-ok"></span> You are signed up for this trip as <b><%= signup.type %></b>
+					    <% if (signup.type == 'leader' || signup.type == 'heeler') { %>
+					    <br><a href="/manage_trips/<%= trip.id %>">Manage</a>
+					    <% } %>
+				    <% } else { %>
 					    <% include signup_forms/trippee_signup_form.ejs %>
 					<% } %>
 				</li>

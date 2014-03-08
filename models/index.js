@@ -54,13 +54,10 @@ tripSchema.methods.isHeeler = function(user) {
     var heeler_signup = this.heeler_signup;
     return heeler_signup ? heeler_signup.user == user.id : false;
 };
-tripSchema.methods.getSignupFor = function(user) {
+tripSchema.methods.getSignupForUser = function(user) {
     return _.find(this.signups, function(signup) {
         return signup.user == user.id;
     });
-};
-tripSchema.methods.inSignups = function(user) { 
-    return !!this.getSignupFor(user);
 };
 
 
