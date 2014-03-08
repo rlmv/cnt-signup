@@ -33,9 +33,9 @@ module.exports = function(req, res){
 		        //  delimited string just like a normal email to field. 
 		        subject: 'Signup for ' + trip.title, // REQUIRED.
                 user: req.user
-		    }, function (err) { if (err) throw err; });
+            }, function (err) { if (err) throw err; });
 
             res.redirect("/");
-         });
-     });
+        });
+    });
  };

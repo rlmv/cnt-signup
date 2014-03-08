@@ -20,17 +20,17 @@ module.exports = function(req, res){
         end_time: moment(body.end, date_format),
         cost_doc: body.costDOC || 0, 
         cost_non_doc: body.costNonDOC || 0,
-	signups: [{
-	    diet: body.diet,
-	    comments: body.comments,
-	    type: req.user.is_leader ? 'leader' : 'heeler',
-	    user: req.user.id,
-	    user_info: {
-		netid: req.user.netid,
-		name: req.user.name, 
-		email: req.user.email
-	    }
-	}]
+        signups: [{
+            diet: body.diet,
+            comments: body.comments,
+            type: req.user.is_leader ? 'leader' : 'heeler',
+            user: req.user.id,
+            user_info: {
+              netid: req.user.netid,
+              name: req.user.name, 
+              email: req.user.email
+            }
+        }]
     });
 
     trip.save(function(err, trip) {

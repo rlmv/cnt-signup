@@ -5,88 +5,28 @@
     <div class="row">
         <div class="col-md-6">
           
-          <ul class="list-group">
-            
+            <ul class="list-group">
+                <% trips.forEach(function(trip) { %>
+                    <% var signup_type = trip.getSignupForUser(user).type; %>
+                    
+                    <li class="list-group-item">
+                    <% include display_trip.ejs %>
 
-          </ul>
-            <% if (user.is_leader) { %>
-            <div id="leading">
-                <h2>Trips I'm Leading</h2>
-                <% if (leader_signups.length == 0) { %>
-                <p> You are not leading any upcoming trips </p>
-                <% } else { %> 
-                <ul class="list-group">
-                    <% leader_signups.forEach(function(signup) { %>
-                    <% var trip = signup.trip; %>
-                    <li class="list-group-item"> 
-                        <% include display_trip.ejs %> 
+                    <% if ('leader' == signup_type) { %>
                         <a href="/manage_trips/<%= trip.id %>">Manage</a>
-                    </li>
-
-                    <% }); %>
-                </ul>
-                <% } %>
-            </div>
-            <% } %>
-
-            <% if (heeler_signups.length > 0) { %>
-            <div id="heeling">
-                <h2>Trips I'm Heeling</h2>
-                <ul class="list-group">
-                    <% heeler_signups.forEach(function(signup) { %>
-                    <% var trip = signup.trip; %>
-                    <li class="list-group-item"> 
-                        <% include display_trip.ejs %> 
+                    <% } else if ('heeler' == signup_type) { %>
                         <a href="/manage_trips/<%= trip.id %>">Manage</a>
+                    <% } else if ('waitlisted' == signup_type) { %>
+
+                    <% } else if ('approved' == signup_type) { %>
+
+                    <% } %>
+                    <br> You are signed up for this trip as <b><%= signup_type %></b>
                     </li>
-                    <% }); %>
-                </ul>
-            </div>
-            <% } %>
-
-        </div>
-        <div class="col-md-6">
-
-            <div id="other">
-                <h2>Other trips you are on</h2>
-                <ul class="list-group">
-                    <% if (approved_signups.length == 0) { %>
-                    <li class="list-group-item"> You are not confirmed on any other trips</li>
-                    <% } else { %> 
-                    <% approved_signups.forEach(function(signup) { %>
-                    <% var trip = signup.trip; %>
-                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
-                    <% }); %>
-                </ul>
-                <% } %>
-            </div>
-
-
-            <% if (waitlisted_signups.length > 0) { %>
-            <div id="waitlisted">
-                <h2>Waitlisted</h2>
-                <ul class="list-group">
-                    <% waitlisted_signups.forEach(function(signup) { %>
-                    <% var trip = signup.trip; %>
-                    <li class="list-group-item"> <% include display_trip.ejs %> </li>
-                    <% }); %>
-                </ul>
-            </div>
-            <% } %>
-
+                <% }); %>
+            </ul>
         </div>
     </div>
-
-    <div id="row"<> 
-        <h2>Past Trips</h2>
-        <ul class="list-group">
-            <% old_signups.forEach(function(signup) { %>
-                <% var trip = signup.trip; %>
-                <li class="list-group-item"> <% include display_trip.ejs %> </li>
-            <% }); %>
-        </ul>
-    </div>
-
 </div>
 
 <% include footer.ejs %>
