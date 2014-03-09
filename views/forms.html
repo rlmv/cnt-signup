@@ -1,0 +1,20 @@
+
+{% macro signup_body() %}
+<div class="form-group">
+   <label>Dietary Restrictions</label>
+   <input type='text' name='diet' class="form-control" placeholder="Vegetarian, gluten free, etc.">
+</div>
+
+<div class="form-group">
+    <label>Additonal Information</label>
+    <textarea name='comments' class="form-control" placeholder="Shoe size, any gear you need from DOR, etc."></textarea>
+</div>
+{% endmacro %}
+
+{% macro signup_form(trip, submit_text) %}
+<form method='post' enctype='multipart/form-data'>
+    {{ signup_body() }}
+    <input type='text' name='trip_id' value='{{ trip.id }}' hidden='True'>
+    <button type='submit' class="btn btn-default">{{ submit_text }}</button>
+</form>
+{% endmacro %}

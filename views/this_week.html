@@ -1,33 +1,37 @@
-<% include header.ejs %>
+{% extends "base.html" %}
+{% import "forms.html" as forms %}
+{% import "displays.html" as display %}
+
+{% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">
 			<h2> Upcoming Trips </h2>
 			<ul class="list-group">	
-				<% trips.forEach(function(trip){ %>
+				{% for trip in trips %}
 
-				    <% if (trip.isLeader(user)) { %>
+				    {% if trip.isLeader(user) %}
 				        <li class="list-group-item list-group-item-success">
-			    	<% } else { %>
+			    	{% else %}
 			    	    <li class="list-group-item">
-	    	    	<% } %>
+			    	{% endif %}
 
-					<% include display_trip.ejs %>
+					{{ displays.display_trip(trip) }}
 
-					<% var signup = trip.getSignupForUser(user); %>
-					<% if (false) { %>
-					<% // COMMENTED OUT TO TEST SIGNUPS if (signup) { %>
-					    <br><span class="glyphicon glyphicon-ok"></span> You are signed up for this trip as <b><%= signup.type %></b>
-					    <% if (signup.type == 'leader' || signup.type == 'heeler') { %>
-					    <br><a href="/manage_trips/<%= trip.id %>">Manage</a>
-					    <% } %>
-				    <% } else { %>
-					    <% include signup_forms/trippee_signup_form.ejs %>
-					<% } %>
+					{% set signup = trip.getSignupForUser(user) %}
+					{% if false %}
+					{# COMMENTED OUT TO TEST SIGNUPS if signup #}
+					    <br><span class="glyphicon glyphicon-ok"></span> You are signed up for this trip as <b>{{ signup.type }}</b>
+					    {% if signup.type == 'leader' or signup.type == 'heeler' %}
+					        <br><a href="/manage_trips/{{ trip.id }}">Manage</a>
+					    {% endif %}
+					{% else %}
+					    {{ forms.signup_form(trip, 'Signup') }}
+					{% endif %}
 				</li>
-				<% }) %> 
+				{% endfor %}
 			</ul>
 		</div>
 	</div>
 </div>
-<%include footer.ejs %>
+{% endblock %}

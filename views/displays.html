@@ -1,0 +1,15 @@
+
+{% macro display_trip(trip) %}
+<h3>{{ trip.title }}</h3>
+<b>Description:</b> {{ trip.description }}<br>
+{% if trip.leader_signup %}
+    <b>Leader:</b> {{ trip.leader_signup.user_info.name }}<br>
+{% endif %}
+{% if trip.heeler_signup %}
+    <b>Heeler:</b> {{ trip.heeler_signup.user_info.name }}<br>
+{% endif %}
+<b>Starts:</b> {{ trip.start_time }}<br>
+<b>Ends:</b> {{ trip.end_time }}<br>
+<b>Cost for D.O.C. members:</b> {{ trip.cost_doc }}<br>
+<b>Cost for non-members:</b> {{ trip.cost_non_doc }}<br>
+{% endmacro %}
