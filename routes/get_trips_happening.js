@@ -18,7 +18,7 @@ module.exports = function(req, res){
 	.exec(function(err, trips) {
 	    if (err) throw err;
 
-	    res.render('this_week', {
+	    res.render('this_week.html', {
           title: 'This Week in Cabin and Trail',
           trips: trips
 	    });

@@ -26,14 +26,19 @@ var path = require('path');
 var auth = require('dart-auth');
 var db = require('./models');
 var mongoose = require('mongoose');
+var nunjucks = require('nunjucks');
+
+// template engine
+nunjucks.configure(path.join(__dirname, 'views'), {
+  autoescape: true,
+  express: app
+});
 
 // should the app start in the callback of this?
 var db = mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/cnt')
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.logger('dev'));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));

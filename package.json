@@ -16,7 +16,8 @@
     "async": "*",
     "underscore": "*",
     "ejs": "~0.8.5",
-    "dart-auth": "*"
+    "nunjucks": "*",
+    "dart-auth": "rlmv/node-dart-auth"
   },
   "repository": {
     "type": "git",
