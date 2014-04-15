@@ -101,7 +101,6 @@ Sort from most recent to least recent.
 To-Do
 ======
 
-* Switch from Jade to EJS
 * An in-app utility to collect each of a number of selected trip statistics during a given time period.
 * We need to spec out how to incorporate OPO. Julie needs to be able to check trips, for instance. 
 * We need to spec out how to incorporate the CnT chairs. 
@@ -110,7 +109,6 @@ To-Do
 * Work out how trips should be transferred between leaders/heelers
 * Figure out protection for various parts of the site. The "Trip control" page, for instance, needs to be inaccessible by everyone except the trip's leader and heeler. 
 * Will problems arise if a heeler is promoted to leader? 
-
 
 Other
 ======

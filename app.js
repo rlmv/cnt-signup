@@ -17,7 +17,19 @@ mailer.extend(app, {
     user: 'doc.trip.manager@gmail.com',
     pass: 'supersecure'
   }
-});
+}, 'gmail');
+
+mailer.extend(app, {
+  from: 'Cabin.and.Trail@dartmouth.edu',
+  host: 'smtp.office365.com', // hostname
+  secureConnection: false, // use STARTTLS, which starts in plaintext mode
+  port: 587, // port for STARTTLS
+  transportMethod: 'SMTP', 
+  auth: {
+    user: 'dz99058@kiewit.dartmouth.edu',
+    pass: 'dbrown'
+  }
+}, 'outlook');
 
 var routes = require('./routes');
 var user = require('./auth/user');

@@ -28,7 +28,7 @@ module.exports = function(req, res){
             if (err) throw err;
             console.log(trip);
 
-            res.mailer.send('signup_received', {
+            res.mailers.gmail.send('signup_received', {
 		        to: req.user.email, // REQUIRED. This can be a comma 
 		        //  delimited string just like a normal email to field. 
 		        subject: 'Signup for ' + trip.title, // REQUIRED.
