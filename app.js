@@ -5,18 +5,16 @@
 
 var express = require('express');
 var app = express();
+var config = require('./config'); // keep all secure passwords here, DO NOT UPLOAD TO GIT!
 
-var mailer = require('express-mailer');
+var mailer = require('express-multimailer');
 mailer.extend(app, {
   from: 'no-reply@example.com',
   host: 'smtp.gmail.com', // hostname
   secureConnection: true, // use SSL
   port: 465, // port for secure SMTP
   transportMethod: 'SMTP', // default is SMTP. Accepts anything that nodemailer accepts
-  auth: {
-    user: 'doc.trip.manager@gmail.com',
-    pass: 'supersecure'
-  }
+  auth: config.gmail_auth
 }, 'gmail');
 
 mailer.extend(app, {
@@ -25,10 +23,7 @@ mailer.extend(app, {
   secureConnection: false, // use STARTTLS, which starts in plaintext mode
   port: 587, // port for STARTTLS
   transportMethod: 'SMTP', 
-  auth: {
-    user: 'dz99058@kiewit.dartmouth.edu',
-    pass: 'dbrown'
-  }
+  auth: config.outlook_auth
 }, 'outlook');
 
 var routes = require('./routes');
