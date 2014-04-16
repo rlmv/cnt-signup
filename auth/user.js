@@ -1,8 +1,9 @@
 
 var db = require('../models');
 
-// pull the user object from the database and save
-// it on the request
+// Middleware for pulling the user object from the database 
+// and saving it on the request. Needs to follow dart-auth 
+// in the middleware chain.
 module.exports = function(req, res, next) {
     
     if (!req.session.auth) { 

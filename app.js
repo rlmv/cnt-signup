@@ -3,13 +3,16 @@
  * Module dependencies.
  */
 
+var http = require('http');
+var path = require('path');
+var config = require('./config'); // keep all secure passwords here
 var express = require('express');
+
 var app = express();
-var config = require('./config'); // keep all secure passwords here, DO NOT UPLOAD TO GIT!
 
 var mailer = require('express-multimailer');
 mailer.extend(app, {
-  from: 'no-reply@example.com',
+  from: 'doc.trip.manager@gmail.com',
   host: 'smtp.gmail.com', // hostname
   secureConnection: true, // use SSL
   port: 465, // port for secure SMTP
@@ -26,16 +29,8 @@ mailer.extend(app, {
   auth: config.outlook_auth
 }, 'outlook');
 
-var routes = require('./routes');
-var user = require('./auth/user');
-var http = require('http');
-var path = require('path');
-var auth = require('dart-auth');
-var db = require('./models');
-var mongoose = require('mongoose');
-
 // should the app start in the callback of this?
-var db = mongoose.connect(process.env.MONGOHQ_URL || 'mongodb://localhost/cnt')
+require('mongoose').connect(process.env.MONGOHQ_URL || 'mongodb://localhost/cnt')
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -53,8 +48,8 @@ app.use(express.methodOverride());
 // auth stuff
 app.use(express.cookieParser('secret goes here'));
 app.use(express.session());
-app.use(auth({ service: 'http:/localhost:3000' }));
-app.use(user); // save user object on req - should evt. pull from db
+app.use(require('dart-auth')({ service: 'http:/localhost:3000' }));
+app.use(require('./auth/user')); 
 app.use(app.router);
 
 // development only
@@ -62,6 +57,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+var routes = require('./routes');
 app.get('/', routes.get_trips_happening);
 app.post('/', routes.post_trippee_signup);
 app.post('/create_trip', routes.post_create_trip);
@@ -73,6 +69,6 @@ app.post('/manage_trips/:trip_id', routes.post_trip_control);
 app.get('/develop', routes.get_develop);
 app.post('/develop', routes.post_develop);
 
-http.createServer(app).listen(app.get('port'), function(){
+app.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'))
 });
