@@ -1,0 +1,16 @@
+
+/* To config the app, move this file to config.js and add the 
+ CnT account password. DON'T add it to this file and push! */
+
+var config = {
+    gmail_auth: {
+        user: 'doc.trip.manager@gmail.com',
+        pass: 'supersecure'
+    }, 
+    outlook_auth: {
+        user: 'dz99058@kiewit.dartmouth.edu',
+        pass: PASSWORD
+    }
+  };
+
+module.exports = config;
