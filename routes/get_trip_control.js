@@ -10,15 +10,17 @@ module.exports = function(req, res) {
         if (err) throw err;
 
         // does user have permissions to modifiy the trip?
-        if ((trip.leader_signup && trip.leader_signup.user != req.user.id) ||
-            (trip.heeler_signup && trip.heeler_signup.user != req.user.id)) {
-                // change this to display 403 page
+        if ((trip.leader_signup && trip.leader_signup.user == req.user.id) ||
+            (trip.heeler_signup && trip.heeler_signup.user == req.user.id)) {
+             
+            res.render('trip_control', {
+                title: 'Trip Control Panel', 
+                trip: trip
+            });
+
+        } else {
+            // change this to display 403 page
             res.status(403).send('Permission denied');
         }
-
-        res.render('trip_control', {
-            title: 'Trip Control Panel', 
-            trip: trip
-        });
     });
 }
