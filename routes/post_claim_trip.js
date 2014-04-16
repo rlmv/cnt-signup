@@ -19,12 +19,19 @@ module.exports = function(req, res) {
 	    		email: req.user.email
 	    	}
 	    };
+
      	// TODO: check that trip doesnt already have a leader. This could
      	// be caused by two leaders loading the page at the same
      	// time and signing up right after each other. If there is a conflict, 
      	// show an error message. 
      	// Actually, should there be validation at the database level? It
      	// is possible to get a race condition after this validation...
+
+        // If the trip already has a leader, and a leader signs up as heeler, 
+        // then the leader should have want_to_heel set on the signup. To 
+        // perform the above validation, we need to be able to distinguish the
+        // two cases...
+        
   	    if (req.user.is_leader) { 
 	    	signup.type = 'leader';
 	    } else {
