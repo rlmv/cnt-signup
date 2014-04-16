@@ -20,51 +20,37 @@ module.exports = function(req, res) {
 
     var body = req.body;
 
-    db.Trip.findById(req.params.trip_id) 
-        .exec(function(err, trip) {
+    db.Trip.findById(req.params.trip_id, function(err, trip) {
 
-            if (err) throw err;
+        if (err) throw err;
 
-            // approve/unapprove user 
-            console.log(body);
-            if (body.approve_signup) {
-                var signup_id = body.approve_signup;
+        // approve/unapprove user 
+        if (body.approve_signup) {
 
-                var signup = trip.getSignupById(signup_id);
-                signup.type = 'approved';
+            var signup_id = body.approve_signup;
+            var signup = trip.getSignupById(signup_id);
+            signup.type = 'approved';
 
-                trip.save(function(err, trip) {
-                    if (err) throw err;
+        } else if (body.waitlist_signup) {
 
-                    // redirect to GET
-                    res.redirect(req.url);
+            var signup_id = body.waitlist_signup;
+            var signup = trip.getSignupById(signup_id);
+            signup.type = 'waitlisted';
 
-                });
-            } else if (body.waitlist_signup) {
-                var signup_id = body.waitlist_signup;
+        } else if (body.make_heeler) {
 
-                var signup = trip.getSignupById(signup_id);
-                signup.type = 'waitlisted';
-
-                trip.save(function(err, trip) {
-                    if (err) throw err;
-
-                    // redirect to GET
-                    res.redirect(req.url);
-                });
-            } else if (body.make_heeler) {
-                var signup_id = body.make_heeler;
-
-                var signup = trip.getSignupById(signup_id);
-                signup.type = 'heeler';
-
-                trip.save(function(err, trip) {
-                    if (err) throw err;
-
-                    // redirect to GET
-                    res.redirect(req.url);
-                });
+            if (trip.heeler_signup) {
+                throw new Error('heeler signup already exists');
             }
 
+            var signup = trip.getSignupById(body.make_heeler);
+            signup.type = 'heeler';
+        }
+
+        trip.save(function(err, trip) {
+            if (err) throw err;
+            // redirect to GET
+            res.redirect(req.url);
         });
+    });
 }
