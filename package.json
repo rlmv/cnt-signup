@@ -10,7 +10,7 @@
     "connect": "*",
     "stylus": "*",
     "moment": "*",
-    "express-mailer": "git://github.com/grahamfindlay/express-mailer.git#master",
+    "express-multimailer": "git://github.com/grahamfindlay/express-multimailer.git#master",
     "mongodb": "*",
     "mongoose": "*",
     "async": "*",

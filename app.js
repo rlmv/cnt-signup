@@ -6,7 +6,7 @@
 var express = require('express');
 var app = express();
 
-var mailer = require('express-mailer');
+var mailer = require('express-multimailer');
 mailer.extend(app, {
   from: 'no-reply@example.com',
   host: 'smtp.gmail.com', // hostname
