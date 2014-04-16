@@ -19,7 +19,7 @@ module.exports = function(req, res) {
 	    		email: req.user.email
 	    	}
 	    };
-     	// TODO: check that trip doesnt already have leader. This could
+     	// TODO: check that trip doesnt already have a leader. This could
      	// be caused by two leaders loading the page at the same
      	// time and signing up right after each other. If there is a conflict, 
      	// show an error message. 

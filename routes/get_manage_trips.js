@@ -8,9 +8,8 @@ module.exports = function(req, res) {
     db.Trip.find({'signups.user': req.user.id})
     .where('start_time').gt(new Date())
     .exec(function (err, trips) {
+        
 	    if (err) throw err;
-
-	    console.log(trips);
 
 	    res.render('manage', {
 	    	title: 'Manage my Trips',

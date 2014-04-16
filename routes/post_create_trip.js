@@ -1,13 +1,15 @@
 var db = require('../models');
 var moment = require('moment');
 
-module.exports = function(req, res){
-    /* create a trip object and a signup object and store each in the database
-     * with the proper associations. check the radio button result to see 
-     * if the person signing up is leader/heeler to choose the right association. 
-     * Maybe moment.js has a utility for calculating trip durations, etc. 
+
+/* create a trip object and a signup object and store each in the database
+ * with the proper associations. check the radio button result to see 
+ * if the person signing up is leader/heeler to choose the right association. 
+ * Maybe moment.js has a utility for calculating trip durations, etc. 
      */
     
+module.exports = function(req, res){
+   
     var body = req.body;
 
     // formatted by datetimepicker: 2014/02/27 10:15      

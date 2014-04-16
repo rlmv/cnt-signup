@@ -1,16 +1,19 @@
 var db = require('../models');
 
-module.exports = function(req, res) {
-    /* 
-     * --> 'Lead a trip' page. This should have the add_trip form 
-     * at the top of the page, and below list all trips which have 
-     * unclaimed leader/heeler spots (depend on whether the user is
-     * a leader. We need separate claim_trip_as_leader/healer POSTS.
-     */
 
-    // if leader, display all trips that have been suggested that need 
-    // leaders or healers. each trip should, as appropriate, have 
-    // buttons for 'lead this trip' and 'want to heel' signup form.
+/*
+// 'Lead a trip' page. Let's all users add a trip. Lists those trips 
+// which need leaders or healers, and lets heelers and leaders claim 
+// those trips.
+*/
+
+// TODO: the list of existing trips should not contain trips for which
+// the user is signed up as a leader. I think (?) it should contain 
+// trips for which the user is approved or waitlisted, since requesting 
+// to be a heeler after already signing up is fine. Could be implemented
+// as part of the query or as post-db processing.
+
+module.exports = function(req, res) {
 
     var query = db.Trip.find().where('start_time').gt(new Date());
     
