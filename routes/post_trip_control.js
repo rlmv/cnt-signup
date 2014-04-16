@@ -26,6 +26,7 @@ module.exports = function(req, res) {
             if (err) throw err;
 
             // approve/unapprove user 
+            console.log(body);
             if (body.approve_signup) {
                 var signup_id = body.approve_signup;
 
@@ -51,6 +52,19 @@ module.exports = function(req, res) {
                     // redirect to GET
                     res.redirect(req.url);
                 });
+            } else if (body.make_heeler) {
+                var signup_id = body.make_heeler;
+
+                var signup = trip.getSignupById(signup_id);
+                signup.type = 'heeler';
+
+                trip.save(function(err, trip) {
+                    if (err) throw err;
+
+                    // redirect to GET
+                    res.redirect(req.url);
+                });
             }
+
         });
 }

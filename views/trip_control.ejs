@@ -8,28 +8,72 @@
             <div class="row">
                 <div class="col-md-3">
                     <b>Signups: </b><br>
-
-                    <div class="btn-group-vertical"> 
                         <% trip.waitlist_signups.forEach(function(signup){ %>
-                        <form method="post" role="form" enctype='multipart/form-data'>
-                            <input type='text' name='approve_signup' value=<%= signup.id%> hidden='True'>
-                            <button type="submit" class="btn btn-warning">
-                                <%= signup.user_info.name %>
-                                <!--<span class="glyphicon glyphicon-remove-circle"></span>-->
+                        <!-- Single button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                            <%= signup.user_info.name %>
+                            <span class="caret"></span>
                             </button>
-                        </form>
+
+                            <ul class="dropdown-menu" role="menu">
+
+                            <li>
+                                <form method="post" role="form" enctype='multipart/form-data'>
+                                <input type='text' name='approve_signup' value=<%= signup.id%> hidden='True'>
+                                <button type="submit" class="btn btn-success" > Add to Trip
+                                </button>
+                            
+                                </form>
+                            </li>
+
+                            <% if (!trip.heeler_signup) { %>
+                            <li>   
+                                <form method="post" role="form" enctype='multipart/form-data'>
+                                <input type='text' name='make_heeler' value=<%= signup.id%> hidden='True'>
+                                <button type="submit" class="btn btn-primary" > Make Heeler
+                                </button>
+                                </form>
+                            </li>
+                            <% }; %>
+
+                            </ul>
+                        </div>
+                    
                         <% }); %>
           
                         <% trip.approved_signups.forEach(function(signup){ %>
-                        <form method="post" role="form" enctype="multipart/form-data">
-                            <input type='text' name='waitlist_signup' value=<%= signup.id%> hidden="True">
-                            <button type="submit" class="btn btn-success">
-                               <%= signup.user_info.name %>
-                               <span class="glyphicon glyphicon-ok"></span>
-                           </button>
-                       </form>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                            <%= signup.user_info.name %>
+                            <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu" role="menu">
+
+                            <li>
+                                <form method="post" role="form" enctype='multipart/form-data'>
+                                <input type='text' name='waitlist_signup' value=<%= signup.id%> hidden='True'>
+                                <button type="submit" class="btn btn-warning" > Remove from Trip
+                                </button>
+                            
+                                </form>
+                            </li>
+
+                            <% if (!trip.heeler_signup) { %>
+                            <li>   
+                                <form method="post" role="form" enctype='multipart/form-data'>
+                                <input type='text' name='make_heeler' value=<%= signup.id%> hidden='True'>
+                                <button type="submit" class="btn btn-primary" > Make Heeler
+                                </button>
+                                </form>
+                            </li>
+                            <% }; %>
+                            
+                            </ul>
+                        </div>
                         <% }); %>
-                    </div>
+                    
                 </div>
             </div>
         </div>
