@@ -27,7 +27,7 @@
                                 </form>
                             </li>
 
-                            <% if (!trip.heeler_signup) { %>
+                            <% if (!trip.heeler_signup && signup.want_to_heel) { %>
                             <li>   
                                 <form method="post" role="form" enctype='multipart/form-data'>
                                 <input type='text' name='make_heeler' value=<%= signup.id%> hidden='True'>
@@ -60,7 +60,7 @@
                                 </form>
                             </li>
 
-                            <% if (!trip.heeler_signup) { %>
+                            <% if (!trip.heeler_signup && signup.want_to_heel) { %>
                             <li>   
                                 <form method="post" role="form" enctype='multipart/form-data'>
                                 <input type='text' name='make_heeler' value=<%= signup.id%> hidden='True'>

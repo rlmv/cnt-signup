@@ -5,9 +5,6 @@ var db = require('../models');
 // greatly enhanced, at least with batch update/
 // edit buttons and eventually with AJAX. 
 
-// TODO: allow leaders to select a heeler from those signups 
-// the want_to_heel field set to true. 
-
 // TODO: make it more difficult to remove users from a trip. 
 // approving a trippee should be committing.
 
