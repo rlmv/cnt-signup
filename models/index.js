@@ -17,11 +17,20 @@ var userSchema = Schema({
 var signupSchema = Schema({
     diet: String,
     comments: String,
-    // should be one of 'heeler', 'leader', 'approved', 'waitlisted'.
+
+    // must be one of 'heeler', 'leader', 'approved', 'waitlisted'.
     type: { type: String, validate: function(type) {
         return 'heeler' == type || 'leader' == type ||
         'approved' == type || 'waitlisted' == type;
     }},
+
+    // indicates that the user wants to be a heeler for this trip.
+    // Rational for this being a boolean field instead of another
+    // type: it should be possible for a user to transition from waitlisted
+    // to approved and still maintain the heeler interest information.*/
+    want_to_heel: { type: Boolean, default: false },
+
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
     // saving this embedded info is redundant, but
     // simplifies queries where we want to display
     // user information given a signup, but don't 
@@ -32,11 +41,9 @@ var signupSchema = Schema({
        netid: String,
        name: String,
        email: String
-    },
-    user: {type: Schema.Types.ObjectId, ref: 'User'}
+    }
 });
 
-// what about heeler requests?
 var tripSchema = Schema({
     start_time : { type: Date, required: true },
     end_time: { type: Date, required: true },
@@ -60,6 +67,11 @@ tripSchema.virtual('heeler_signup').get(function () {
     return _.find(this.signups, function(signup) {
         return signup.type == 'heeler';
     });
+});
+
+// get all signups for people who want to heel the trip
+tripSchema.virtual('want_to_heel_signups').get(function () {
+    return _.where(this.signups, { want_to_heel: true });
 });
 
 // get all waitlisted signups
